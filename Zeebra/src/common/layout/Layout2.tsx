@@ -7,7 +7,7 @@ function Layout2()
 {
     return (
         <>
-            <div className="flex justify-center flex-row gap-x-[50px] font-pretendard text-main-text text-xl pt-[131px]">
+            <div className="flex justify-center flex-row gap-x-[50px] font-pretendard text-main-text text-xl pt-[130px]">
                 <Navi/>
                 <div className="w-[900px]">
                 <Outlet/>

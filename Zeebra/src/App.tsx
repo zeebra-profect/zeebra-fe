@@ -3,8 +3,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout1 from "./common/layout/Layout1";
 import Layout2 from "./common/layout/Layout2";
-import Main from "./pages/Main";
-import MyPage from "./pages/MyPage";
+import Main from "./pages/mains/Main";
+import MyPage from "./pages/mains/MyPage";
 
  function App() {
   return (
