@@ -11,8 +11,8 @@ function Layout2()
                 <Navi/>
                 <div className="w-[900px]">
                 <Outlet/>
+                </div>
             </div>
-        </div>
         </>
     )
 }
