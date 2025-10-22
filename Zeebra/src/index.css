@@ -1,1 +1,18 @@
-@import "tailwindcss"
+@import "tailwindcss";
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+/* 
+:root
+{
+    --main-bg-color: white;
+    --main-text-color: #222222;
+    --main-font: 'Pretendard', system-ui, sans-serif;
+} 
+*/
+
+@theme {
+    --font-family-pretendard: 'Pretendard', system-ui, sans-serif;
+    --letter-spacing-pretendard: -0.025em;
+    --color-main-bg: white;
+    --color-main-text: #222222;
+    --color-grey: rgba(0,0,0,0.1);
+}

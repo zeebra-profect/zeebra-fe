@@ -1,8 +1,30 @@
+// import Header from "./common/header/Header";
 
-export default function App() {
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Layout1 from "./common/layout/Layout1";
+import Layout2 from "./common/layout/Layout2";
+import Main from "./pages/Main";
+import MyPage from "./pages/MyPage";
+
+ function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white">
-      <h1 className="text-4xl font-bold">Tailwind v4 + Vite OK</h1>
-    </div>
+    <>
+      <BrowserRouter>
+      <Routes>
+        {/* 레이아웃1: 기본 페이지들 */}
+        <Route path="/" element={<Layout1/>}>
+          <Route index element={<Main/>}/>
+        <Route/>
+        {/* 레이아웃2: 마이페이지 내의 페이지들 */}
+        <Route path="/mypage" element={<Layout2/>}>
+          <Route index element={<MyPage/>} >
+
+          </Route>
+        </Route>
+        </Route>
+      </Routes>
+      </BrowserRouter>
+    </>
   );
 }
+export default App;
