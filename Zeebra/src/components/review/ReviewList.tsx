@@ -27,14 +27,14 @@ function ReviewList() {
   return (
     <>
     <hr className="text-grey"/>
-      <div className="flex flex-col items-center">
-        <p className="text-xl font-medium mb-[20px]">리뷰 21,515</p>
-        <div className="flex flex-row gap-x-[20px] gap-y-[5px] max-w-[1200px] flex-wrap">
+      <div className="flex flex-col items-center px-4 md:px-0">
+        <p className="text-lg md:text-xl font-medium mb-4 md:mb-[20px]">리뷰 21,515</p>
+        <div className="flex flex-row gap-x-2 md:gap-x-4 lg:gap-x-[20px] gap-y-3 md:gap-y-[5px] w-full lg:max-w-[1200px] flex-wrap justify-center lg:justify-start">
           {reviews.map((review) => (
             <Review key={review.id} />
           ))}
         </div>
-        <button className="button-productDetail !mt-[40px]" onClick={more}>
+        <button className="button-productDetail !mt-6 md:!mt-[40px]" onClick={more}>
           더보기
         </button>
       </div>

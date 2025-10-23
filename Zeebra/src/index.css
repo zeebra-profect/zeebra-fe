@@ -26,17 +26,16 @@
     font-family: "Pretendard", system-ui, sans-serif;
     letter-spacing: -0.025em;
   }
-  .button-productDetail {
-    /* all: unset; */
+.button-productDetail {
     cursor: pointer;
     background-color: white;
-    width: 130px;
-    height: 40px;
+    width: 100px;
+    height: 36px;
     border: 1px solid rgba(0,0,0,0.1);
     border-radius: 10px;
     font-family: "Pretendard", system-ui, sans-serif;
     color: #222222;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     display: flex;
     flex-direction: row;
@@ -45,18 +44,32 @@
     gap: 5px;
   }
 
+  @media (min-width: 768px) {
+    .button-productDetail {
+      width: 130px;
+      height: 40px;
+      font-size: 12px;
+    }
+  }
+
   .button-ProductDetail2 {
     cursor: pointer;
-    width: 255px;
+    width: 100%;
     height: 50px;
     border-radius: 10px;
     font-family: "Pretendard", system-ui, sans-serif;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     padding: 10px;
     color: white;
   }
 
+  @media (min-width: 640px) {
+    .button-ProductDetail2 {
+      width: 255px;
+      gap: 10px;
+    }
+  }
 }
