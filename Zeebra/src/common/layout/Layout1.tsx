@@ -8,13 +8,11 @@ function Layout1()
 {
     return(
         <>
-            <div className="fixed">
+            <div className="static">
                 <Header></Header>
             </div>
-            <div className="flex justify-center flex-row font-pretendard pt-[130px]">
-                <div className="w-max-[1200px]">
-                    <Outlet/>
-                </div>
+            <div className="flex justify-center flex-row font-pretendard pt-[100px] md:pt-[150px] px-4 md:px-0">
+                <Outlet/>
             </div>
             <Footer/>
         </>
