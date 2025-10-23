@@ -16,10 +16,9 @@ function App() {
           <Route path="/" element={<Layout1 />}>
             <Route index element={<Main />} />
             <Route path="/product" element={<ProductDetailPage />} />
-            <Route />
             {/* 레이아웃2: 마이페이지 내의 페이지들 */}
-            <Route path="/mypage" element={<Layout2 />}>
-              <Route index element={<MyPage />}></Route>
+            <Route path="mypage" element={<Layout2 />}>
+              <Route index element={<MyPage />} />
             </Route>
           </Route>
         </Routes>

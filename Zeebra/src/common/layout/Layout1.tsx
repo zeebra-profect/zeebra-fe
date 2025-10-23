@@ -11,7 +11,7 @@ function Layout1()
             <div className="static">
                 <Header></Header>
             </div>
-            <div className="flex justify-center flex-row font-pretendard pt-[150px]">
+            <div className="flex justify-center flex-row font-pretendard pt-[100px] md:pt-[150px] px-4 md:px-0">
                 <Outlet/>
             </div>
             <Footer/>

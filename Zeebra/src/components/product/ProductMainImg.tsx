@@ -28,40 +28,40 @@ function ProductMainImg() {
   };
 
   return (
-    <div className="pl-[40px] flex flex-col gap-y-[20px]">
+    <div className="pl-0 md:pl-[40px] flex flex-col gap-y-[20px]">
       {/* 이미지 창고 */}
-      <div className="max-h-[560px] max-w-[560px] flex flex-col justify-center items-center bg-gray-100">
-        <div className="flex flex-row">
-          <button onClick={changeImgLeft} className="relative left-10">
+      <div className="max-h-[350px] max-w-[350px] md:max-h-[450px] md:max-w-[450px] lg:max-h-[560px] lg:max-w-[560px] flex flex-col justify-center items-center bg-gray-100">
+        <div className="flex flex-row w-full">
+          <button onClick={changeImgLeft} className="relative left-2 md:left-10 z-10">
             <svg
-              width="30"
-              height="30"
+              width="24"
+              height="24"
               viewBox="0 0 24 24"
               fill="none"
-              className="text-grey2 cursor-pointer"
+              className="text-grey2 cursor-pointer md:w-[30px] md:h-[30px]"
             >
               <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" />
             </svg>
           </button>
-          <img src={imgs[curImgIdx]} className="max-h-[560px] max-w-[560px]" />
-          <button onClick={changeImgRight} className="relative right-10">
+          <img src={imgs[curImgIdx]} className="max-h-[350px] max-w-[350px] md:max-h-[450px] md:max-w-[450px] lg:max-h-[560px] lg:max-w-[560px] object-contain" />
+          <button onClick={changeImgRight} className="relative right-2 md:right-10 z-10">
             <svg
-              width="30"
-              height="30"
+              width="24"
+              height="24"
               viewBox="0 0 24 24"
               fill="none"
-              className="text-grey2 cursor-pointer"
+              className="text-grey2 cursor-pointer md:w-[30px] md:h-[30px]"
             >
               <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" />
             </svg>
           </button>
         </div>
-        <div className="min-w-[500px] flex flex-row relative bottom-10">
+        <div className="w-[300px] md:w-[400px] lg:min-w-[500px] flex flex-row relative bottom-10">
           {imgs.map((img, index) => (
             <div
               key={index}
-              style={{ width: `${500 / imgs.length}px` }}
-              className={`h-[3px] ${
+              style={{ width: `${100 / imgs.length}%` }}
+              className={`h-[2px] md:h-[3px] ${
                 index === curImgIdx ? "bg-grey2" : "bg-gray-200"
               }`}
             ></div>
