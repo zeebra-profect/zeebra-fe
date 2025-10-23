@@ -3,7 +3,7 @@ import testImg from "../../img/test/testImg.png";
 function Product3() {
   return (
     <div className="max-h-[250px] md:max-h-[297px] flex flex-col gap-y-[8px]">
-      <div className="w-[160px] h-[160px] md:w-[200px] md:h-[200px] lg:max-w-[230px] lg:max-h-[230px] bg-gray-100 rounded-[10px] flex-shrink-0">
+      <div className="w-[160px] h-[160px] md:w-[230px] md:h-[230px] lg:max-w-[230px] lg:max-h-[230px] bg-gray-100 rounded-[10px] flex-shrink-0">
         <img src={testImg} className="w-full h-full object-cover rounded-[10px]" />
       </div>
       <div className="flex flex-col gap-y-[5px] font-pretendard text-main-text line-height">
