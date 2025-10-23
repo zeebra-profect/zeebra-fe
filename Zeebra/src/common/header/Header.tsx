@@ -4,7 +4,7 @@ import bagIcon from "../../img/icons/bag.png";
 export default function Header() {
     return(
         <>
-        <div className="z-[3px] w-full min-h-[130px] max-h-[130px] font-pretendard fixed flex flex-col items-center
+        <div className="z-30 w-full min-h-[130px] max-h-[130px] font-pretendard fixed flex flex-col items-center
   bg-main-bg border-b border-grey">
             <div className="relative justify-end min-w-[1200px] max-w-[1200px] min-h-[40px] max-h-[40px] flex font-pretendard text-xs tracking-tight font-light">
                 <div className="flex flex-row gap-x-[22px]">
@@ -29,11 +29,11 @@ export default function Header() {
                     <img src={bagIcon} className="w-[22px] h-[19px] cursor-pointer"/>
                 </div>
             </div>
-            <div className="w-[1200px] flex-row flex items-center justify-end gap-x-[5px] mt-auto relative t-[1px]">
+            <div className="w-[1200px] flex-row flex items-center justify-end gap-x-[5px] mt-auto relative top-[1px]">
                     <input type="text" id="search-input" name="search-input"
                     className="border-b-3 outline-none w-[200px] relative left-5
                     placeholder:text-grey pr-[20px]"/>
-                    <button className="cursor-pointer">
+                    <button className="z-[3px] cursor-pointer">
                         <img src={searchIcon} alt="searchIcon" className="w-[15px] h-[15px]"/>
                     </button>
             </div>

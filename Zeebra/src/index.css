@@ -11,20 +11,52 @@
 */
 
 @theme {
-    --font-family-pretendard: 'Pretendard', system-ui, sans-serif;
-    --letter-spacing-pretendard: -0.025em;
-    --color-main-bg: white;
-    --color-main-text: #222222;
-    --color-grey: rgba(0,0,0,0.1);
-    --color-grey2: rgba(34,34,34,0.5);
-    --color-orange: #EE6846;
-    --color-green: #59A564;
+  --font-family-pretendard: "Pretendard", system-ui, sans-serif;
+  --letter-spacing-pretendard: -0.025em;
+  --color-main-bg: white;
+  --color-main-text: #222222;
+  --color-grey: rgba(0, 0, 0, 0.1);
+  --color-grey2: rgba(34, 34, 34, 0.5);
+  --color-orange: #ee6846;
+  --color-green: #59a564;
 }
 
 @layer utilities {
-    .font-pretendard {
-        font-family: 'Pretendard', system-ui, sans-serif;
-        letter-spacing: -0.025em;
-    }
-}
+  .font-pretendard {
+    font-family: "Pretendard", system-ui, sans-serif;
+    letter-spacing: -0.025em;
+  }
+  .button-productDetail {
+    /* all: unset; */
+    cursor: pointer;
+    background-color: white;
+    width: 130px;
+    height: 40px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 10px;
+    font-family: "Pretendard", system-ui, sans-serif;
+    color: #222222;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
 
+  .button-ProductDetail2 {
+    cursor: pointer;
+    width: 255px;
+    height: 50px;
+    border-radius: 10px;
+    font-family: "Pretendard", system-ui, sans-serif;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    color: white;
+  }
+
+}
