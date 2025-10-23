@@ -24,10 +24,10 @@ function ProductDetailImg() {
   ];
 
   const [imgs, setImgs] = useState<string[]>(detail);
-  const [bHeight, setBHeight] = useState<number>(1000);
+  const [bHeight, setBHeight] = useState<number>(1600);
   
   const more = () => {
-    setBHeight(imgs.length * 650 + (imgs.length - 1) * 20);
+    setBHeight(imgs.length * 1060 + (imgs.length - 1) * 20);
   };
 
   return (
@@ -44,7 +44,7 @@ function ProductDetailImg() {
               <img key={index} src={img} className="w-full md:w-[800px] lg:w-[1000px] h-auto object-contain mx-auto" />
             ))}
           </div>
-          {bHeight < imgs.length * 650 + (imgs.length - 1) * 20 && (
+          {bHeight < imgs.length * 1060 + (imgs.length - 1) * 20 && (
             <>
               <div className="relative bottom-12 md:bottom-20 h-[100px] md:h-[150px] w-full lg:w-[1200px] bg-gradient-to-b from-transparent via-[rgba(255,255,255,0.95)] to-white flex flex-col items-center"></div>
               <button

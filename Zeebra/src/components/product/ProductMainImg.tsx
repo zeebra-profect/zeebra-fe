@@ -31,8 +31,12 @@ function ProductMainImg() {
     <div className="pl-0 md:pl-[40px] flex flex-col gap-y-[20px]">
       {/* 이미지 창고 */}
       <div className="max-h-[350px] max-w-[350px] md:max-h-[450px] md:max-w-[450px] lg:max-h-[560px] lg:max-w-[560px] flex flex-col justify-center items-center bg-gray-100">
-        <div className="flex flex-row w-full">
-          <button onClick={changeImgLeft} className="relative left-2 md:left-10 z-10">
+        <div className="flex flex-row w-full relative">
+          <img
+            src={imgs[curImgIdx]}
+            className="max-h-[350px] max-w-[350px] md:max-h-[450px] md:max-w-[450px] lg:max-h-[560px] lg:max-w-[560px] object-contain"
+          />
+          <button onClick={changeImgLeft} className="absolute top-1/2 -translate-y-1/2 z-10">
             <svg
               width="24"
               height="24"
@@ -43,8 +47,7 @@ function ProductMainImg() {
               <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" />
             </svg>
           </button>
-          <img src={imgs[curImgIdx]} className="max-h-[350px] max-w-[350px] md:max-h-[450px] md:max-w-[450px] lg:max-h-[560px] lg:max-w-[560px] object-contain" />
-          <button onClick={changeImgRight} className="relative right-2 md:right-10 z-10">
+          <button onClick={changeImgRight} className="absolute top-1/2 -translate-y-1/2 z-10 right-0.5">
             <svg
               width="24"
               height="24"
