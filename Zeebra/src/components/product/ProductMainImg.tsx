@@ -28,7 +28,7 @@ function ProductMainImg() {
   };
 
   return (
-    <div className="pl-0 md:pl-[40px] flex flex-col gap-y-[20px]">
+    <div className="pl-0 md:pl-10 flex flex-col gap-y-5">
       {/* 이미지 창고 */}
       <div className="max-h-[350px] max-w-[350px] md:max-h-[450px] md:max-w-[450px] lg:max-h-[560px] lg:max-w-[560px] flex flex-col justify-center items-center bg-gray-100">
         <div className="flex flex-row w-full relative">
@@ -64,7 +64,7 @@ function ProductMainImg() {
             <div
               key={index}
               style={{ width: `${100 / imgs.length}%` }}
-              className={`h-[2px] md:h-[3px] ${
+              className={`h-0.5 md:h-[3px] ${
                 index === curImgIdx ? "bg-grey2" : "bg-gray-200"
               }`}
             ></div>

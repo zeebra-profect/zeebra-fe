@@ -4,14 +4,14 @@ import like from "../../img/icons/like.png"
 function Product2()
 {
     return(
-        <div className="w-[160px] md:w-[200px] lg:w-[238px] h-auto flex flex-col gap-y-[8px] cursor-pointer">
-            <img src={testImg} className="w-[160px] h-[160px] md:w-[200px] md:h-[200px] lg:w-[238px] lg:h-[238px] object-cover rounded-lg"/>
+        <div className="w-40 md:w-[200px] lg:w-[238px] h-auto flex flex-col gap-y-2 cursor-pointer">
+            <img src={testImg} className="w-40 h-40 md:w-[200px] md:h-[200px] lg:w-[238px] lg:h-[238px] object-cover rounded-lg"/>
             <div className="flex flex-col gap-y-[5px] font-pretendard text-main-text">
                 <div className="flex flex-row justify-between items-center">
                     <p className="font-light text-[10px] md:text-xs line-clamp-2 flex-1">
                         무신사 스탠다드 시티 레저 후드 라이트 다...
                     </p>
-                    <button className="flex-shrink-0 ml-1">
+                    <button className="shrink-0 ml-1">
                         <img src={like} className="w-[13px] h-[11px] md:w-[15px] md:h-[13px]" />
                     </button>
                 </div>
