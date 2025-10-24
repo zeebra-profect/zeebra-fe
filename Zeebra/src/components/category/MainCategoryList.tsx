@@ -3,7 +3,7 @@ import Category from "./category";
 function MainCategoryList()
 {
     return (
-        <div className="flex flex-row gap-x-[30px] gap-y-[20px] max-w-[1200px] flex-wrap">
+        <div className="flex flex-row gap-x-4 md:gap-x-6 lg:gap-x-[30px] gap-y-4 md:gap-y-[20px] w-full max-w-[1200px] flex-wrap justify-center md:justify-start">
             <Category/>
             <Category/>
             <Category/>
