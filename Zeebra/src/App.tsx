@@ -9,6 +9,7 @@ import ProductDetailPage from "./pages/product/ProductDetailPage";
 import CartPage from "./pages/cart/CartPage";
 import Layout4 from "./common/layout/Layout4";
 import OrderPage from "./pages/order/OrderPage";
+import OrderResultPage from "./pages/order/OrderResultPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<Layout1 />}>
             <Route index element={<Main />} />
             <Route path="/product" element={<ProductDetailPage />} />
+            <Route path="/order/result" element={<OrderResultPage result={false}/>} />
             {/* 레이아웃2: 마이페이지 내의 페이지들 */}
             <Route path="mypage" element={<Layout2 />}>
               <Route index element={<MyPage />} />
