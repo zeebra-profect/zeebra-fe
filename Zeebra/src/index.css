@@ -11,20 +11,19 @@
 */
 
 @theme {
-    --font-family-pretendard: 'Pretendard', system-ui, sans-serif;
-    --letter-spacing-pretendard: -0.025em;
-    --color-main-bg: white;
-    --color-main-text: #222222;
-    --color-grey: rgba(0,0,0,0.1);
-    --color-grey2: rgba(34,34,34,0.5);
-    --color-orange: #EE6846;
-    --color-green: #59A564;
+  --font-family-pretendard: "Pretendard", system-ui, sans-serif;
+  --letter-spacing-pretendard: -0.025em;
+  --color-main-bg: white;
+  --color-main-text: #222222;
+  --color-grey: rgba(0, 0, 0, 0.1);
+  --color-grey2: rgba(34, 34, 34, 0.5);
+  --color-orange: #ee6846;
+  --color-green: #59a564;
 }
 
 @layer utilities {
-    .font-pretendard {
-        font-family: 'Pretendard', system-ui, sans-serif;
-        letter-spacing: -0.025em;
-    }
+  .font-pretendard {
+    font-family: "Pretendard", system-ui, sans-serif;
+    letter-spacing: -0.025em;
+  }
 }
-
