@@ -1,6 +1,7 @@
 function CartItem() {
   return (
     <>
+      <hr className="text-grey"/>
       <div className="w-full max-h-[700px] p-5 flex flex-col text-main-text">
         <div className="flex flex-row justify-between items-center mb-2.5">
           <input type="checkbox" className="input-checkBox" id="all" />
@@ -46,7 +47,6 @@ function CartItem() {
           </button>
         </div>
       </div>
-      <hr className="text-grey"/>
     </>
   );
 }
