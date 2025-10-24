@@ -6,6 +6,9 @@ import Layout2 from "./common/layout/Layout2";
 import Main from "./pages/main/Main";
 import MyPage from "./pages/main/MyPage";
 import ProductDetailPage from "./pages/product/ProductDetailPage";
+import CartPage from "./pages/cart/CartPage";
+import Layout4 from "./common/layout/Layout4";
+import OrderPage from "./pages/pay/OrderPage";
 
 function App() {
   return (
@@ -19,6 +22,10 @@ function App() {
             {/* 레이아웃2: 마이페이지 내의 페이지들 */}
             <Route path="mypage" element={<Layout2 />}>
               <Route index element={<MyPage />} />
+            </Route>
+            <Route element={<Layout4/>}>
+              <Route path="/cart" element={<CartPage/>} />
+              <Route path="/pay" element={<OrderPage/>} />
             </Route>
           </Route>
         </Routes>

@@ -33,11 +33,11 @@ function ProductDetailImg() {
   return (
     <>
       <hr className="text-grey" />
-      <div className="flex flex-col items-center gap-y-4 md:gap-y-[20px] px-4 md:px-0">
+      <div className="flex flex-col items-center gap-y-4 md:gap-y-5 px-4 md:px-0">
         <p className="text-lg md:text-xl font-medium">상세 정보</p>
         <div className="w-full lg:w-[1200px] flex flex-col justify-center items-center">
           <div
-            className="flex flex-col gap-y-3 md:gap-y-[20px] overflow-hidden w-full"
+            className="flex flex-col gap-y-3 md:gap-y-5 overflow-hidden w-full"
             style={{ maxHeight: bHeight }}
           >
             {imgs?.map((img, index) => (
@@ -46,7 +46,7 @@ function ProductDetailImg() {
           </div>
           {bHeight < imgs.length * 1060 + (imgs.length - 1) * 20 && (
             <>
-              <div className="relative bottom-12 md:bottom-20 h-[100px] md:h-[150px] w-full lg:w-[1200px] bg-gradient-to-b from-transparent via-[rgba(255,255,255,0.95)] to-white flex flex-col items-center"></div>
+              <div className="relative bottom-12 md:bottom-20 h-[100px] md:h-[150px] w-full lg:w-[1200px] bg-linear-to-b from-transparent via-[rgba(255,255,255,0.95)] to-white flex flex-col items-center"></div>
               <button
                 className="relative bottom-20 md:bottom-30 button-productDetail"
                 onClick={more}
