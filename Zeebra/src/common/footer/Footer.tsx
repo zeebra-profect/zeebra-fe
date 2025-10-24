@@ -6,8 +6,8 @@ function Footer()
 {
     return (
         <div className="w-full min-h-[570px] mt-[50px] border-t border-grey flex flex-col items-center px-4 md:px-6 lg:px-0">
-            <div className="w-full lg:w-[1200px] mt-8 md:mt-[50px] mb-8 md:mb-[50px] flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap gap-y-8 gap-x-6 lg:gap-x-[80px]">
-                <div className="flex flex-col gap-y-3 md:gap-y-[16px] font-pretendard">
+            <div className="w-full lg:w-[1200px] mt-8 md:mt-[50px] mb-8 md:mb-[50px] flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap gap-y-8 gap-x-6 lg:gap-x-20">
+                <div className="flex flex-col gap-y-3 md:gap-y-4 font-pretendard">
                     <p className="font-bold text-sm md:text-base text-main-text">
                         이용안내
                     </p>
@@ -24,7 +24,7 @@ function Footer()
                         커뮤니티 가이드라인
                     </p>
                 </div>
-                <div className="flex flex-col gap-y-3 md:gap-y-[16px] font-pretendard">
+                <div className="flex flex-col gap-y-3 md:gap-y-4 font-pretendard">
                     <p className="font-bold text-sm md:text-base text-main-text">
                         고객지원
                     </p>
@@ -41,7 +41,7 @@ function Footer()
                         판매자 방문접수
                     </p>
                 </div>
-                <div className="flex flex-col gap-y-3 md:gap-y-[16px] font-pretendard lg:ml-auto">
+                <div className="flex flex-col gap-y-3 md:gap-y-4 font-pretendard lg:ml-auto">
                     <p className="font-bold text-sm md:text-base text-main-text">
                         고객센터 1111-2222
                     </p>
@@ -59,8 +59,8 @@ function Footer()
                 </div>
             </div>
             <div className="w-full lg:w-[1200px] flex flex-col lg:flex-row gap-y-8 lg:gap-x-[100px] border-t border-grey">
-                <div className="pt-6 md:pt-[30px] flex flex-col gap-y-2 md:gap-y-[10px] font-pretendard flex-1">
-                    <div className="flex flex-row flex-wrap gap-x-4 md:gap-x-[20px] gap-y-2">
+                <div className="pt-6 md:pt-[30px] flex flex-col gap-y-2 md:gap-y-2.5 font-pretendard flex-1">
+                    <div className="flex flex-row flex-wrap gap-x-4 md:gap-x-5 gap-y-2">
                         <p className="text-xs md:text-sm text-main-text font-extralight cursor-pointer">
                             회사소개
                         </p>
@@ -77,12 +77,12 @@ function Footer()
                             개인정보처리방침
                         </p>
                     </div>
-                    <p className="text-[10px] md:text-xs font-light text-grey2 font-pretendard pt-4 md:pt-[20px]">
+                    <p className="text-[10px] md:text-xs font-light text-grey2 font-pretendard pt-4 md:pt-5">
                         지브라 주식회사 · 대표 ㅁㅁㅁ    사업자등록번호 : 123-45-67891  사업자정보확인    통신판매업 : 제 2025-ㅇㅇㅇㅇC-0001호 <br/>
                         사업장소재지 : 서울특별시 강남구 ~~~    호스팅 서비스 : ~~~    전화 : 1111-2222 <br/>
                         이메일 : help@zeebra.com
                     </p>
-                    <p className="text-[10px] md:text-xs font-medium text-main-text font-pretendard pt-4 md:pt-[20px]">
+                    <p className="text-[10px] md:text-xs font-medium text-main-text font-pretendard pt-4 md:pt-5">
                         ㅇㅇ은행 채무지급보증 안내
                     </p>
                     <p className="text-[10px] md:text-xs font-light text-grey2 font-pretendard">
@@ -94,11 +94,11 @@ function Footer()
                     에 대한 책임은 ZEEBRA에 있습니다.
                     </p>
                 </div>
-                <div className="pt-6 md:pt-[30px] flex flex-col gap-y-4 md:gap-y-[10px] font-pretendard justify-between">
-                    <div className="flex flex-row gap-x-6 md:gap-x-[40px] items-center">
-                        <img src={notion} className="w-[24px] h-[24px] md:w-[28px] md:h-[29px] cursor-pointer"/>
+                <div className="pt-6 md:pt-[30px] flex flex-col gap-y-4 md:gap-y-2.5 font-pretendard justify-between">
+                    <div className="flex flex-row gap-x-6 md:gap-x-10 items-center">
+                        <img src={notion} className="w-6 h-6 md:w-7 md:h-[29px] cursor-pointer"/>
                         <img src={git} className="w-[26px] h-[26px] md:w-[30px] md:h-[30px] cursor-pointer"/>
-                        <img src={jira} className="w-[24px] h-[24px] md:w-[28px] md:h-[28px] cursor-pointer"/>
+                        <img src={jira} className="w-6 h-6 md:w-7 md:h-7 cursor-pointer"/>
                     </div>
                     <p className="text-[10px] md:text-xs font-light text-grey2 font-pretendard pb-6 md:pb-0">
                        © ZEEBRA Corp. 
