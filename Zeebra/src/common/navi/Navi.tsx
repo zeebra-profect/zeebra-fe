@@ -1,7 +1,7 @@
 function Navi()
 {
     return(
-            <div className="pt-[170px] flex flex-col w-[250px] h-[530px] font-pretendard font-light text-main-text text-lg gap-y-3" >
+            <div className="flex flex-col w-[250px] h-[530px] font-pretendard font-light text-main-text text-lg gap-y-3" >
                 <p className="hover:font-bold">
                     메인
                 </p>
