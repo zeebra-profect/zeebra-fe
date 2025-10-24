@@ -76,6 +76,7 @@
   }
 
   .button-smallButton {
+    cursor: pointer;
     width: 70px;
     height: 25px;
     background-color: white;
@@ -85,9 +86,9 @@
   }
 
   .button-payment {
+    cursor: pointer;
     border-radius: 5px;
     font-weight: 700;
-    cursor: pointer;
     color: white;
   }
 

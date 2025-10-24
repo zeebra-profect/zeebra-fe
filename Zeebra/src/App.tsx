@@ -8,7 +8,7 @@ import MyPage from "./pages/main/MyPage";
 import ProductDetailPage from "./pages/product/ProductDetailPage";
 import CartPage from "./pages/cart/CartPage";
 import Layout4 from "./common/layout/Layout4";
-import OrderPage from "./pages/pay/OrderPage";
+import OrderPage from "./pages/order/OrderPage";
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
             </Route>
             <Route element={<Layout4/>}>
               <Route path="/cart" element={<CartPage/>} />
-              <Route path="/pay" element={<OrderPage/>} />
+              <Route path="/order" element={<OrderPage/>} />
             </Route>
           </Route>
         </Routes>
