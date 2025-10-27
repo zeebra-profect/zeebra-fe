@@ -88,12 +88,20 @@
   .scrollbar::-webkit-scrollbar {
     width: 3px;
     height: auto;
+    position: relative;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 10px 0; /* 👈 위아래 여백 */
+
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
   }
+
   .input-checkBox {
     appearance: none;
     -webkit-appearance: none;
