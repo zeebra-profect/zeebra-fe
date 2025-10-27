@@ -13,6 +13,7 @@ import OrderPage from "./pages/order/OrderPage";
 import OrderResultPage from "./pages/order/OrderResultPage";
 import Signup from "./pages/users/Signup";
 import Login from "./pages/users/Login";
+import OrderHistoryPage from "./pages/myPage/OrderHistoryPage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             {/* 레이아웃2: 마이페이지 내의 페이지들 */}
             <Route path="mypage" element={<Layout2 />}>
               <Route index element={<MyPage />} />
+              <Route path="orderhistory" element={<OrderHistoryPage/>} />
             </Route>
             <Route element={<Layout3 />}>
               <Route path="login" element={<Login />} />
