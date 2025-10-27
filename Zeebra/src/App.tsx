@@ -14,6 +14,7 @@ import OrderResultPage from "./pages/order/OrderResultPage";
 import Signup from "./pages/users/Signup";
 import Login from "./pages/users/Login";
 import ShopPage from "./pages/shop/ShopPage";
+import Search from "./pages/search/Search";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
               <Route path="/order" element={<OrderPage />} />
             </Route>
           </Route>
+          <Route path="/search" element={<Search />}></Route>
         </Routes>
       </BrowserRouter>
     </>
