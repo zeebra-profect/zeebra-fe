@@ -76,7 +76,7 @@ function SignupForm() {
           value={formData.loginId}
           onChange={handleChange}
           required
-          className="w-full border-b-2 border-grey outline-none focus:border-b-4 focus:border-b-main-text"
+          className="w-full border-b-2 h-5 border-grey outline-none focus:border-b-4 focus:border-b-main-text"
         />
       </div>
       <div className="w-[30vh] focus-within:font-bold">
@@ -91,7 +91,7 @@ function SignupForm() {
             value={formData.password}
             onChange={handleChange}
             required
-            className="w-full border-b-2 border-grey outline-none focus:border-b-4 focus:border-b-main-text"
+            className="w-full h-5 border-b-2 border-grey outline-none focus:border-b-4 focus:border-b-main-text"
           />
           <button
             type="button"
@@ -125,7 +125,7 @@ function SignupForm() {
             value={formData.confirmPassword}
             onChange={handleChange}
             required
-            className="w-full border-b-2 border-grey outline-none focus:border-b-4 focus:border-b-main-text"
+            className="w-full h-5 border-b-2 border-grey outline-none focus:border-b-4 focus:border-b-main-text"
           />
           <button
             type="button"
@@ -147,7 +147,7 @@ function SignupForm() {
           value={formData.nickname}
           onChange={handleChange}
           required
-          className="w-full border-b-2 border-grey outline-none focus:border-b-4 focus:border-b-main-text font-normal"
+          className="w-full h-5 border-b-2 border-grey outline-none focus:border-b-4 focus:border-b-main-text font-normal"
         />
         {formData.nickname !== "" &&
           (isPossibleNickname ? (
@@ -169,7 +169,7 @@ function SignupForm() {
           value={formData.name}
           onChange={handleChange}
           required
-          className="w-full border-b-2 border-grey outline-none focus:border-b-4 focus:border-b-main-text font-normal"
+          className="w-full h-5 border-b-2 border-grey outline-none focus:border-b-4 focus:border-b-main-text font-normal"
         />
       </div>
       <div className="w-[30vh] mt-[20px] focus-within:font-bold flex flex-row justify-between items-center">
