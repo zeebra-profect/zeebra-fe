@@ -1,7 +1,12 @@
 import searchIcon from "../../img/icons/search.png";
 import bagIcon from "../../img/icons/bag.png";
+import NotificationModal from "../../components/notification/NotificationModal";
+import { useState } from "react";
 
 export default function Header() {
+
+    const [ isNotiModalOpen, setIsNotiModalOpen ] = useState(false);
+  
   return (
     <>
       <div
@@ -14,7 +19,10 @@ export default function Header() {
             <p className="cursor-pointer">채팅방</p>
             <p className="cursor-pointer">마이페이지</p>
             <p className="cursor-pointer">관심</p>
-            <p className="cursor-pointer">알림</p>
+            <div className="relative">
+            <p className="cursor-pointer" onClick={() => setIsNotiModalOpen(true)}>알림</p>
+                  <NotificationModal isOpen={isNotiModalOpen} onClose={() => setIsNotiModalOpen(false)} children={undefined}/>
+            </div>
             <p className="cursor-pointer">로그인</p>
           </div>
         </div>
