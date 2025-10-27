@@ -5,6 +5,7 @@ function OrderHistoryPage() {
 
     //true면 구매 완료 탭
     const [tab, setTab] = useState<boolean>(false);
+    const [period, setPeriod] = useState(0);
 
   return (
     <>
@@ -27,10 +28,10 @@ function OrderHistoryPage() {
           </div>
         </div>
         <div className="flex flex-row gap-x-5 mb-5">
-            <button className="button-smallButton">1개월</button>
-            <button className="button-smallButton">3개월</button>
-            <button className="button-smallButton">6개월</button>
-            <button className="button-smallButton">전체</button>
+            <button className={period === 1 ? "button-smallButton2" : "button-smallButton"} onClick={() => setPeriod(1)}>1개월</button>
+            <button className={period === 2 ? "button-smallButton2" : "button-smallButton"} onClick={() => setPeriod(2)}>3개월</button>
+            <button className={period === 3 ? "button-smallButton2" : "button-smallButton"} onClick={() => setPeriod(3)}>6개월</button>
+            <button className={period === 0 ? "button-smallButton2" : "button-smallButton"} onClick={() => setPeriod(0)}>전체</button>
         </div>
         <div className="flex flex-col gap-y-3 w-full items-center">
             <OrderHistory/>
