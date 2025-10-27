@@ -1,8 +1,15 @@
+import { useState } from "react";
 import like from "../../img/icons/like.png";
 import GroupChat from "../chat/GroupChat";
+import PurchaseModal from "./PurchaseModal";
 
 function ProductInfo() {
+
+  const [ isPurModalOpen, setIsPurModalOpen ] = useState(false);
+
+
   return (
+    <>
     <div className="flex flex-col gap-y-4 md:gap-y-5 w-full lg:w-[519px] px-4 md:px-0">
       <div className="flex flex-col sm:flex-row justify-between gap-y-4">
         {/* 텍스트 부분 */}
@@ -27,7 +34,7 @@ function ProductInfo() {
       {/* 구매/판매버튼 */}
       <div className="flex flex-col gap-y-6 md:gap-y-10">
         <div className="flex flex-col sm:flex-row gap-y-2 gap-x-2 md:gap-x-2.5">
-          <button className="button-productDetail2 bg-orange flex-1">
+          <button className="button-productDetail2 bg-orange flex-1" onClick={() => setIsPurModalOpen(true)}>
             <p className="text-base md:text-lg font-bold">구매</p>
             <div className="h-[50px] w-px bg-grey"></div>
             <div className="flex flex-col m-0 text-left">
@@ -48,6 +55,8 @@ function ProductInfo() {
       <hr className="w-full text-grey" />
       <GroupChat/>
     </div>
+        <PurchaseModal isOpen={isPurModalOpen} onClose={() => setIsPurModalOpen(false)} children={undefined}/>
+    </>
   );
 }
 
