@@ -6,8 +6,9 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-function ChatModal({isOpen, onClose, children} : ModalProps)
-{
+function ChatModal({ isOpen, onClose, children }: ModalProps) {
+
+    
   if (!isOpen) return null;
 
   return (

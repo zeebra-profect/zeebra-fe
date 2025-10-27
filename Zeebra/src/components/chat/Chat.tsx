@@ -1,10 +1,16 @@
+import { useState } from "react";
+import PrivateChatModal from "./PrivateChatModal";
+
 function Chat() {
+
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+
   return (
     <>
       <div className="w-full flex justify-center">
         <hr className="text-grey w-11/12" />
       </div>
-      <div className="flex flex-row justify-between mt-2.5 mb-2.5 ml-5 mr-5">
+      <div className="flex flex-row justify-between mt-2.5 mb-2.5 ml-5 mr-5 cursor-pointer" onClick={() => setIsOpen(true)}>
         <div className="flex flex-row gap-y-2.5 gap-x-2.5">
           <img src="" className="w-12 h-12 rounded-full" />
           <div className="flex flex-col text-left">
@@ -22,6 +28,7 @@ function Chat() {
           <p>15:34</p>
         </div>
       </div>
+      <PrivateChatModal isOpen={isOpen} onClose={() => setIsOpen(false)} children={undefined}/>
     </>
   );
 }
