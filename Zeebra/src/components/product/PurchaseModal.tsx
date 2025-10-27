@@ -37,7 +37,7 @@ function PurchaseModal({ isOpen, onClose, children }: ModalProps) {
           </div>
         </div>
 
-        <div className="flex flex-row flex-wrap gap-x-3 gap-y-2 overflow-y-auto scrollbar-thin max-h-[200px] justify-center scrollbar">
+        <div className="flex flex-row flex-wrap gap-x-3 gap-y-2 overflow-y-auto max-h-[200px] justify-center scrollbar">
           <SizeButton
             size={230}
             price={110000}
