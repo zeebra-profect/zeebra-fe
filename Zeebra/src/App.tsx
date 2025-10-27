@@ -14,6 +14,7 @@ import OrderResultPage from "./pages/order/OrderResultPage";
 import Signup from "./pages/users/Signup";
 import Login from "./pages/users/Login";
 import OrderHistoryPage from "./pages/myPage/OrderHistoryPage";
+import ShopPage from "./pages/shop/ShopPage";
 
 function App() {
   return (
@@ -24,7 +25,11 @@ function App() {
           <Route path="/" element={<Layout1 />}>
             <Route index element={<Main />} />
             <Route path="/product" element={<ProductDetailPage />} />
-            <Route path="/order/result" element={<OrderResultPage result={false}/>} />
+            <Route
+              path="/order/result"
+              element={<OrderResultPage result={false} />}
+            />
+            <Route path="/shopPage" element={<ShopPage />} />
             {/* 레이아웃2: 마이페이지 내의 페이지들 */}
             <Route path="mypage" element={<Layout2 />}>
               <Route index element={<MyPage />} />
@@ -34,9 +39,9 @@ function App() {
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<Signup />} />
             </Route>
-            <Route element={<Layout4/>}>
-              <Route path="/cart" element={<CartPage/>} />
-              <Route path="/order" element={<OrderPage/>} />
+            <Route element={<Layout4 />}>
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/order" element={<OrderPage />} />
             </Route>
           </Route>
         </Routes>
