@@ -1,8 +1,14 @@
 import searchIcon from "../../img/icons/search.png";
 import bagIcon from "../../img/icons/bag.png";
+import NotificationModal from "../../components/notification/NotificationModal";
+import ChatModal from "../../components/chat/ChatModal";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function Header() {
+  const [isNotiModalOpen, setIsNotiModalOpen] = useState(false);
+  const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+
   return (
     <>
       <div
@@ -12,10 +18,29 @@ export default function Header() {
         {/* 상단 메뉴 */}
         <div className="relative justify-end w-full lg:min-w-[1200px] lg:max-w-[1200px] min-h-[30px] md:min-h-10 max-h-10 flex font-pretendard text-[10px] md:text-xs tracking-tight font-light">
           <div className="flex flex-row gap-x-3 md:gap-x-[22px]">
-            <p className="cursor-pointer">채팅방</p>
+            <div className="relative">
+              <p className="cursor-pointer" onClick={() => setIsChatModalOpen(true)}>채팅방</p>
+              <ChatModal
+                isOpen={isChatModalOpen}
+                onClose={() => setIsChatModalOpen(false)}
+                children={undefined}
+              />
+            </div>
             <p className="cursor-pointer">마이페이지</p>
             <p className="cursor-pointer">관심</p>
-            <p className="cursor-pointer">알림</p>
+            <div className="relative">
+              <p
+                className="cursor-pointer"
+                onClick={() => setIsNotiModalOpen(true)}
+              >
+                알림
+              </p>
+              <NotificationModal
+                isOpen={isNotiModalOpen}
+                onClose={() => setIsNotiModalOpen(false)}
+                children={undefined}
+              />
+            </div>
             <p className="cursor-pointer">로그인</p>
           </div>
         </div>
