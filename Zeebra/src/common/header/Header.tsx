@@ -18,7 +18,7 @@ export default function Header() {
         <div className="relative justify-end w-full lg:min-w-[1200px] lg:max-w-[1200px] min-h-[30px] md:min-h-10 max-h-10 flex font-pretendard text-[10px] md:text-xs tracking-tight font-light">
           <div className="flex flex-row gap-x-3 md:gap-x-[22px]">
             <div className="relative">
-              <p className="cursor-pointer" onClick={() => setIsChatModalOpen(true) }>채팅방</p>
+              <p className="cursor-pointer" onClick={() => setIsChatModalOpen(true)}>채팅방</p>
               <ChatModal
                 isOpen={isChatModalOpen}
                 onClose={() => setIsChatModalOpen(false)}
