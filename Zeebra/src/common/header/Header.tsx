@@ -1,5 +1,6 @@
 import searchIcon from "../../img/icons/search.png";
 import bagIcon from "../../img/icons/bag.png";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -21,16 +22,20 @@ export default function Header() {
 
         {/* 메인 헤더 */}
         <div className="w-full lg:w-[1200px] max-h-9 flex flex-row justify-between items-center">
-          <p className="font-pretendard text-2xl md:text-3xl lg:text-4xl font-black text-main-text">
-            ZEEBRA
-          </p>
+          <Link to="/">
+            <p className="font-pretendard text-2xl md:text-3xl lg:text-4xl font-black text-main-text">
+              ZEEBRA
+            </p>
+          </Link>
           <div className="font-pretendard text-lg md:text-xl lg:text-2xl flex flex-row gap-x-3 md:gap-x-6 text-main-text items-center">
             <p className="hover:font-bold active:font-bold w-[50px] md:w-[70px] cursor-pointer">
               HOME
             </p>
-            <p className="hover:font-bold active:font-bold w-[50px] md:w-[70px] cursor-pointer">
-              SHOP
-            </p>
+            <Link to="/shopPage">
+              <p className="hover:font-bold active:font-bold w-[50px] md:w-[70px] cursor-pointer">
+                SHOP
+              </p>
+            </Link>
             <img
               src={bagIcon}
               className="w-[18px] h-4 md:w-[22px] md:h-[19px] cursor-pointer"
