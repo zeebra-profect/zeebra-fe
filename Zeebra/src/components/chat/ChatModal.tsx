@@ -7,8 +7,6 @@ interface ModalProps {
 }
 
 function ChatModal({ isOpen, onClose, children }: ModalProps) {
-
-    
   if (!isOpen) return null;
 
   return (
@@ -19,18 +17,20 @@ function ChatModal({ isOpen, onClose, children }: ModalProps) {
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex flex-col max-h-[450px] overflow-auto scrollbar">
-            <div className="flex flex-col font-bold text-lg m-5 items-center justify-center text-center">
-              <p className="text-center">내 채팅방 목록</p>
+            <div className="p-5 border-b-grey">
+              <p className="font-bold text-lg text-center">내 채팅방 목록</p>
             </div>
-            <Chat />
-            <Chat />
-            <Chat />
-            <Chat />
-            <Chat />
-            <Chat />
-            <Chat />
-            <Chat />
-            <Chat />
+            <div className="h-[calc(450px-73px)] overflow-y-auto scrollbar">
+              <Chat />
+              <Chat />
+              <Chat />
+              <Chat />
+              <Chat />
+              <Chat />
+              <Chat />
+              <Chat />
+              <Chat />
+            </div>
           </div>
         </div>
       </div>
