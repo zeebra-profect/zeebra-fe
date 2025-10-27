@@ -6,11 +6,11 @@ import Navi from "../navi/Navi";
 function Layout2() {
   return (
     <>
-      <div className="flex justify-center flex-col lg:flex-row gap-y-4 lg:gap-x-[50px] font-pretendard text-main-text text-lg md:text-xl pt-[50px] md:pt-[130px] px-4 md:px-6 lg:px-0">
+      <div className="flex flex-col lg:flex-row gap-y-4 lg:gap-x-[50px] font-pretendard text-main-text text-lg md:text-xl pt-[50px] md:pt-[100px] md:mr-[50px] px-4 md:px-6 lg:px-0">
         <Navi />
-        <div className="w-full lg:w-[900px]">
-          <Outlet />
-        </div>
+      </div>
+      <div className="w-full lg:w-[900px]">
+        <Outlet />
       </div>
     </>
   );
