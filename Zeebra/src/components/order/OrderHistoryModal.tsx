@@ -2,7 +2,7 @@ import OrderHistoryItem from "./OrderHistoryItem";
 import OrderSummary from "./OrderSummary";
 import testImg from "../../img/test/nike4.webp";
 import { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 
 interface OrderHistoryProps {
   isOpen: boolean;
@@ -11,10 +11,10 @@ interface OrderHistoryProps {
   // children?: React.ReactNode;
 }
 
-function handleReviewSubmit() {
-  const params = new URLSearchParams();
-  params.append("", { id });
-}
+// function handleReviewSubmit() {
+//   const params = new URLSearchParams();
+//   params.append("", { id });
+// }
 
 function OrderHistoryModal({
   isOpen,
@@ -160,7 +160,7 @@ function OrderHistoryModal({
 
               <div className="flex flex-row justify-center gap-x-2 mt-2.5">
                 <button
-                  onClick={handleReviewSubmit}
+                  // onClick={handleReviewSubmit}
                   className="button-cancelButton"
                 >
                   리뷰 등록
