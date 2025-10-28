@@ -1,6 +1,7 @@
 import { useState } from "react";
 import testImg from "../../img/test/nike4.webp";
 import OrderHistoryModal from "./OrderHistoryModal";
+import ReviewBtn from "../btn/ReviewBtn";
 
 interface OrderHistoryProps {
     // id? : number,
@@ -24,14 +25,21 @@ function OrderHistory({ status, orderTime} : OrderHistoryProps) {
           </div>
         </div>
         <div className="flex flex-col mr-10 justify-center items-center text-center gap-y-1">
-          <p className="font-light text-xs text-grey2">2025. 10. 14. 12:12 주문{orderTime}</p>
+          <p className="font-light text-xs text-grey2">
+            2025. 10. 14. 12:12 주문{orderTime}
+          </p>
           <p className="text-sm font-bold">{status}</p>
-            {
-                status === '배송 전' ? (<button className="button-cancelButton" onClick={() => setIsModalOpen(true)}>주문 취소</button>) : null 
-            }
-            {
-                status === '구매 완료' ? (<button className="button-cancelButton"onClick={() => setIsModalOpen(true)}>리뷰 작성</button>) : null
-            }
+          {status === "배송 전" ? (
+            <button
+              className="button-cancelButton"
+              onClick={() => setIsModalOpen(true)}
+            >
+              주문 취소
+            </button>
+          ) : null}
+          {status === "구매 완료" ? (
+            <ReviewBtn setIsModalOpen={setIsModalOpen} />
+          ) : null}
           <p className="font-light text-xs">상세보기 &gt;</p>
         </div>
       </div>
