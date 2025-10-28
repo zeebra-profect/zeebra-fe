@@ -6,7 +6,7 @@ const user = {
   email: "2onesound@naver.com",
 };
 
-function InfoPage() {
+function MyPage() {
   return (
     <div className="flex flex-col w-full items-center mt-6 gap-4 font-bold text-2xl ">
       내 정보
@@ -19,7 +19,10 @@ function InfoPage() {
         <div className="flex flex-col w-[30vh] ml-10 items-start gap-4">
           <div className="flex flex-row items-start gap-1">
             <p className="text-xl font-semibold">{user.nickname}</p>
-            <button className="text-sm font-extralight mt-auto text-grey2 cursor-pointer" onClick={() => alert("닉네임 변경 추가 예정")}>
+            <button
+              className="text-sm font-extralight mt-auto text-grey2 cursor-pointer"
+              onClick={() => alert("닉네임 변경 추가 예정")}
+            >
               닉네임 변경
             </button>
           </div>
@@ -44,4 +47,4 @@ function InfoPage() {
   );
 }
 
-export default InfoPage;
+export default MyPage;
