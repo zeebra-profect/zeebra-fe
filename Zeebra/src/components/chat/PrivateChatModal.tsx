@@ -1,4 +1,4 @@
-import Message from "./Message";
+// import Message from "./Message";
 import chatIcon from "../../img/icons/chat.png";
 
 interface ModalProps {
