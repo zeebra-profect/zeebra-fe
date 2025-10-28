@@ -8,7 +8,7 @@ interface OrderHistoryProps {
   isOpen: boolean;
   onClose: () => void;
   status: string;
-  children: React.ReactNode;
+  // children?: React.ReactNode;
 }
 
 function handleReviewSubmit() {
@@ -20,7 +20,7 @@ function OrderHistoryModal({
   isOpen,
   onClose,
   status,
-  children,
+  // children,
 }: OrderHistoryProps) {
   const [imgs, setImgs] = useState<string[]>([]);
 

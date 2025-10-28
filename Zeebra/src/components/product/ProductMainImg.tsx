@@ -13,7 +13,7 @@ import { useState } from "react";
 function ProductMainImg() {
   const nike = [nike1, nike2, nike3, nike4, nike5, nike6, nike7, nike8, nike9];
 
-  const [imgs, setImgs] = useState<string[]>(nike);
+  const [imgs, _setImgs] = useState<string[]>(nike);
   const [curImgIdx, setCurImgIdx] = useState<number>(0);
 
   const changeImgRight = () => {
@@ -60,7 +60,7 @@ function ProductMainImg() {
           </button>
         </div>
         <div className="w-[300px] md:w-[400px] lg:min-w-[500px] flex flex-row relative bottom-10">
-          {imgs.map((img, index) => (
+          {imgs.map((_, index) => (
             <div
               key={index}
               style={{ width: `${100 / imgs.length}%` }}
