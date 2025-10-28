@@ -7,7 +7,7 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-function PurchaseModal({ isOpen, onClose, children }: ModalProps) {
+function PurchaseModal({ isOpen, onClose, _children }: ModalProps) {
   const [checkedButton, setCheckedButton] = useState<number | null>(null);
   if (!isOpen) return null;
 

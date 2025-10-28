@@ -7,11 +7,11 @@ interface MessageProps {
 }
 
 function Message({
-  messageId,
+  _messageId,
   memberId,
   myMemberId,
   content,
-  time,
+  _time,
 }: MessageProps) {
   if (memberId != myMemberId) {
     return (

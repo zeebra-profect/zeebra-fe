@@ -6,7 +6,7 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-function NotificationModal({ isOpen, onClose, children }: ModalProps) {
+function NotificationModal({ isOpen, onClose, _children }: ModalProps) {
   if (!isOpen) return null;
 
   return (
