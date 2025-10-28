@@ -14,7 +14,7 @@ function OrderHistoryModal({
   isOpen,
   onClose,
   status,
-  children,
+  _children,
 }: OrderHistoryProps) {
   const [imgs, setImgs] = useState<string[]>([]);
 

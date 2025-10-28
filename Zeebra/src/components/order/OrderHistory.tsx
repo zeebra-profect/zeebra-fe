@@ -8,7 +8,7 @@ interface OrderHistoryProps {
     orderTime: string,
 }
 
-function OrderHistory({id, status, orderTime} : OrderHistoryProps) {
+function OrderHistory({_id, status, orderTime} : OrderHistoryProps) {
 
     status = '구매 완료';
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);

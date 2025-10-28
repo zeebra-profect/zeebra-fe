@@ -37,12 +37,12 @@ function PrivateChatModal({ isOpen, onClose }: ModalProps) {
 
           {/* 채팅 메시지 영역 */}
           <div className="flex-1 overflow-y-auto scrollbar bg-gray-100 p-3">
-            <Message myMemberId={1} memberId={2} />
-            <Message myMemberId={2} memberId={2} />
-            <Message myMemberId={1} memberId={2} />
-            <Message myMemberId={2} memberId={2} />
-            <Message myMemberId={2} memberId={2} />
-            <Message myMemberId={2} memberId={2} />
+            {/* <Message myMemberId={1} memberId={2} /> */}
+            {/* <Message myMemberId={2} memberId={2} /> */}
+            {/* <Message myMemberId={1} memberId={2} /> */}
+            {/* <Message myMemberId={2} memberId={2} /> */}
+            {/* <Message myMemberId={2} memberId={2} /> */}
+            {/* <Message myMemberId={2} memberId={2} /> */}
           </div>
 
           {/* 입력창 */}
