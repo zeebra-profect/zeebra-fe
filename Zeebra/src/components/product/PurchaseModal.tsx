@@ -4,10 +4,10 @@ import SizeButton from "./SizeButton";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  children?: React.ReactNode;
+  // children?: React.ReactNode;
 }
 
-function PurchaseModal({ isOpen, onClose, children }: ModalProps) {
+function PurchaseModal({ isOpen, onClose }: ModalProps) {
   const [checkedButton, setCheckedButton] = useState<number | null>(null);
   if (!isOpen) return null;
 
