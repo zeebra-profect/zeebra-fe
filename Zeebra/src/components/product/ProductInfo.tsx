@@ -55,7 +55,7 @@ function ProductInfo() {
       <hr className="w-full text-grey" />
       <GroupChat/>
     </div>
-        <PurchaseModal isOpen={isPurModalOpen} onClose={() => setIsPurModalOpen(false)} children={undefined}/>
+        <PurchaseModal isOpen={isPurModalOpen} onClose={() => setIsPurModalOpen(false)}/>
     </>
   );
 }
