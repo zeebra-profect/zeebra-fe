@@ -36,7 +36,7 @@ function OrderHistory({ status, orderTime} : OrderHistoryProps) {
         </div>
       </div>
 
-      <OrderHistoryModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} children={undefined} status="3"/>
+      <OrderHistoryModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} status="3"/>
     </>
   );
 }
