@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import PaymentButton from "../footer/paymentButton";
+import PaymentButton from '../footer/PaymentButton';
 
 // 기본 레이아웃
 

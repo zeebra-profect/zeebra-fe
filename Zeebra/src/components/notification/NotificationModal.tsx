@@ -3,10 +3,10 @@ import Notification from "./Notification";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  children: React.ReactNode;
+  // children?: React.ReactNode;
 }
 
-function NotificationModal({ isOpen, onClose, children }: ModalProps) {
+function NotificationModal({ isOpen, onClose }: ModalProps) {
   if (!isOpen) return null;
 
   return (

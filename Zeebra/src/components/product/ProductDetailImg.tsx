@@ -23,7 +23,7 @@ function ProductDetailImg() {
     detail9,
   ];
 
-  const [imgs, setImgs] = useState<string[]>(detail);
+  const [imgs, _setImgs] = useState<string[]>(detail);
   const [bHeight, setBHeight] = useState<number>(1600);
   
   const more = () => {

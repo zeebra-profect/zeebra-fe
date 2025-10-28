@@ -1,17 +1,17 @@
 interface MessageProps {
-  messageId: number;
+  // messageId?: number;
   memberId: number;
   myMemberId: number;
   content: string;
-  time: string;
+  // time?: string;
 }
 
 function Message({
-  messageId,
+  // messageId,
   memberId,
   myMemberId,
   content,
-  time,
+  // time,
 }: MessageProps) {
   if (memberId != myMemberId) {
     return (

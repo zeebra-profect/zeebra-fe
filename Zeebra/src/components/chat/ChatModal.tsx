@@ -3,10 +3,10 @@ import Chat from "./Chat";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  children: React.ReactNode;
+  // children?: React.ReactNode;
 }
 
-function ChatModal({ isOpen, onClose, children }: ModalProps) {
+function ChatModal({ isOpen, onClose }: ModalProps) {
   if (!isOpen) return null;
 
   return (
