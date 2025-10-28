@@ -3,12 +3,12 @@ import testImg from "../../img/test/nike4.webp";
 import OrderHistoryModal from "./OrderHistoryModal";
 
 interface OrderHistoryProps {
-    id? : number,
+    // id? : number,
     status: string,
     orderTime: string,
 }
 
-function OrderHistory({id, status, orderTime} : OrderHistoryProps) {
+function OrderHistory({ status, orderTime} : OrderHistoryProps) {
 
     status = '구매 완료';
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
