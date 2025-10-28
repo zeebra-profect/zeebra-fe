@@ -42,7 +42,7 @@ export default function Header() {
               <ChatModal
                 isOpen={isChatModalOpen}
                 onClose={() => setIsChatModalOpen(false)}
-                children={undefined}
+                // children={undefined}
               />
             </div>
             <p className="cursor-pointer">마이페이지</p>
@@ -57,7 +57,7 @@ export default function Header() {
               <NotificationModal
                 isOpen={isNotiModalOpen}
                 onClose={() => setIsNotiModalOpen(false)}
-                children={undefined}
+                // children={undefined}
               />
             </div>
             <Link to="/login">

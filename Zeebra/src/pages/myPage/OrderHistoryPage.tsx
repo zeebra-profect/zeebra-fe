@@ -1,5 +1,5 @@
 import { useState } from "react";
-import OrderHistory from "../../components/order/OrderHistory";
+// import OrderHistory from "../../components/order/OrderHistory";
 
 function OrderHistoryPage() {
 
@@ -34,8 +34,8 @@ function OrderHistoryPage() {
             <button className={period === 0 ? "button-smallButton2" : "button-smallButton"} onClick={() => setPeriod(0)}>전체</button>
         </div>
         <div className="flex flex-col gap-y-3 w-full items-center">
-            <OrderHistory/>
-            <OrderHistory/>
+            {/* <OrderHistory/> */}
+            {/* <OrderHistory/> */}
         </div>
       </div>
     </>

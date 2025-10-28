@@ -4,14 +4,15 @@ import OrderHistoryModal from "./OrderHistoryModal";
 import ReviewBtn from "../btn/ReviewBtn";
 
 interface OrderHistoryProps {
-  id: number;
-  status: string;
-  orderTime: string;
+    // id? : number,
+    status: string,
+    orderTime: string,
 }
 
-function OrderHistory({ id, status, orderTime }: OrderHistoryProps) {
-  status = "구매 완료";
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+function OrderHistory({ status, orderTime} : OrderHistoryProps) {
+
+    status = '구매 완료';
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   return (
     <>
@@ -43,12 +44,7 @@ function OrderHistory({ id, status, orderTime }: OrderHistoryProps) {
         </div>
       </div>
 
-      <OrderHistoryModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        children={undefined}
-        status="3"
-      />
+      <OrderHistoryModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} status="3"/>
     </>
   );
 }
