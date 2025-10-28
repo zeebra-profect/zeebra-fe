@@ -4,10 +4,24 @@ import NotificationModal from "../../components/notification/NotificationModal";
 import ChatModal from "../../components/chat/ChatModal";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+  const Navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isNotiModalOpen, setIsNotiModalOpen] = useState(false);
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+
+  const handleLogin = () => {
+    Navigate("/login");
+  };
+
+  const handleLogout = () => {
+    // Perform logout logic here (e.g., clear tokens, update state)
+    setIsLoggedIn(false);
+    alert("로그아웃 되었습니다.");
+    Navigate("/");
+  };
 
   return (
     <>
@@ -19,7 +33,12 @@ export default function Header() {
         <div className="relative justify-end w-full lg:min-w-[1200px] lg:max-w-[1200px] min-h-[30px] md:min-h-10 max-h-10 flex font-pretendard text-[10px] md:text-xs tracking-tight font-light">
           <div className="flex flex-row gap-x-3 md:gap-x-[22px]">
             <div className="relative">
-              <p className="cursor-pointer" onClick={() => setIsChatModalOpen(true)}>채팅방</p>
+              <p
+                className="cursor-pointer"
+                onClick={() => setIsChatModalOpen(true)}
+              >
+                채팅방
+              </p>
               <ChatModal
                 isOpen={isChatModalOpen}
                 onClose={() => setIsChatModalOpen(false)}
@@ -41,7 +60,14 @@ export default function Header() {
                 // children={undefined}
               />
             </div>
-            <p className="cursor-pointer">로그인</p>
+            <Link to="/login">
+              <button
+                onClick={isLoggedIn ? handleLogin : handleLogout}
+                className="cursor-pointer"
+              >
+                {isLoggedIn ? "로그인" : "로그아웃"}
+              </button>
+            </Link>
           </div>
         </div>
 
@@ -53,9 +79,11 @@ export default function Header() {
             </p>
           </Link>
           <div className="font-pretendard text-lg md:text-xl lg:text-2xl flex flex-row gap-x-3 md:gap-x-6 text-main-text items-center">
-            <p className="hover:font-bold active:font-bold w-[50px] md:w-[70px] cursor-pointer">
-              HOME
-            </p>
+            <Link to="/">
+              <p className="hover:font-bold active:font-bold w-[50px] md:w-[70px] cursor-pointer">
+                HOME
+              </p>
+            </Link>
             <Link to="/shopPage">
               <p className="hover:font-bold active:font-bold w-[50px] md:w-[70px] cursor-pointer">
                 SHOP

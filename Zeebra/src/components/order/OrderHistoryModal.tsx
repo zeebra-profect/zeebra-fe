@@ -2,12 +2,18 @@ import OrderHistoryItem from "./OrderHistoryItem";
 import OrderSummary from "./OrderSummary";
 import testImg from "../../img/test/nike4.webp";
 import { useState } from "react";
+import axios from "axios";
 
 interface OrderHistoryProps {
   isOpen: boolean;
   onClose: () => void;
   status: string;
   // children?: React.ReactNode;
+}
+
+function handleReviewSubmit() {
+  const params = new URLSearchParams();
+  params.append("", { id });
 }
 
 function OrderHistoryModal({
@@ -153,7 +159,12 @@ function OrderHistoryModal({
               </div>
 
               <div className="flex flex-row justify-center gap-x-2 mt-2.5">
-                <button className="button-cancelButton">리뷰 등록</button>
+                <button
+                  onClick={handleReviewSubmit}
+                  className="button-cancelButton"
+                >
+                  리뷰 등록
+                </button>
                 <button className="button-cancelButton" onClick={onClose}>
                   돌아가기
                 </button>
