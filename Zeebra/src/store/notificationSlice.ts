@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { getNotifications as getNotificationsAPI } from "../../utils/notification";  // API 함수 import
+import { getNotifications as getNotificationsAPI } from "../utils/notification";  // API 함수 import
 
 
 interface Notification {
