@@ -5,7 +5,7 @@ import ChatModal from "../../components/chat/ChatModal";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NotificationSocket from "../../lib/notificationSocket";
+import NotificationSocket from "../../lib/NotificationSocket";
 
 
 export default function Header() {
