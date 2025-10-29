@@ -5,21 +5,16 @@ import ChatModal from "../../components/chat/ChatModal";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Header() {
   const Navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const { isAuthed, logout } = useAuth();
   const [isNotiModalOpen, setIsNotiModalOpen] = useState(false);
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
 
-  const handleLogin = () => {
-    Navigate("/login");
-  };
-
-  const handleLogout = () => {
-    // Perform logout logic here (e.g., clear tokens, update state)
-    setIsLoggedIn(false);
-    alert("로그아웃 되었습니다.");
+  const handleLogout = async () => {
+    await logout();
     Navigate("/");
   };
 
@@ -60,14 +55,15 @@ export default function Header() {
                 // children={undefined}
               />
             </div>
-            <Link to="/login">
-              <button
-                onClick={isLoggedIn ? handleLogin : handleLogout}
-                className="cursor-pointer"
-              >
-                {isLoggedIn ? "로그인" : "로그아웃"}
+            {isAuthed ? (
+              <button onClick={handleLogout} className="cursor-pointer">
+                로그아웃
               </button>
-            </Link>
+            ) : (
+              <Link to="/login">
+                <button className="cursor-pointer">로그인</button>
+              </Link>
+            )}
           </div>
         </div>
 
