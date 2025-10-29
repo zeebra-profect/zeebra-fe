@@ -1,4 +1,7 @@
 import Notification from "./Notification";
+import { useEffect } from "react";
+import { fetchNotifications } from "../../modules/notification/notificationSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 
 interface ModalProps {
   isOpen: boolean;
@@ -7,6 +10,17 @@ interface ModalProps {
 }
 
 function NotificationModal({ isOpen, onClose }: ModalProps) {
+  const dispatch = useAppDispatch();
+  const notifications = useAppSelector((state) => state.notification);
+
+  useEffect(() => {
+    dispatch(fetchNotifications());
+  }, []);
+
+  useEffect(() => {
+    console.log("selector: ", notifications);
+  },[notifications])
+
   if (!isOpen) return null;
 
   return (
@@ -21,15 +35,12 @@ function NotificationModal({ isOpen, onClose }: ModalProps) {
               <p className="text-center">알림</p>
             </div>
             <div className="h-[calc(450px-73px)] overflow-y-auto scrollbar">
-              <Notification />
-              <Notification />
-              <Notification />
-              <Notification />
-              <Notification />
-              <Notification />
-              <Notification />
-              <Notification />
-              <Notification />
+              {
+                notifications?.map((noti, index) => (
+
+                  <Notification key={index} isRead={noti.isRead} type={noti.notificationType} createdTime={noti.createdTime} text={noti.noticeText} />
+                ))
+              }
             </div>
           </div>
         </div>

@@ -3,8 +3,10 @@ import bagIcon from "../../img/icons/bag.png";
 import NotificationModal from "../../components/notification/NotificationModal";
 import ChatModal from "../../components/chat/ChatModal";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import NotificationSocket from "../../lib/NotificationSocket";
+import {http} from "../../utils/http";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function Header() {
@@ -17,6 +19,23 @@ export default function Header() {
     await logout();
     Navigate("/");
   };
+
+  // 이하는 웹소켓 관련 코드
+  useEffect(() => {
+    http.get('/notification/ws-token')
+    .then(res => {
+      const token = res.data.data;
+      console.log("token: ", token);
+      NotificationSocket.connect();
+      
+      setTimeout(() => {
+        NotificationSocket.send({ token });
+      }, 500);
+    })
+    .catch(err => console.error(err));
+  
+  return () => NotificationSocket.socket?.close();
+  }, []);
 
   return (
     <>
