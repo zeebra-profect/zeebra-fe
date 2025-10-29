@@ -1,14 +1,25 @@
 import { http } from "./http";
 
 export interface NotiRes {
-  notificationType: string;
-  isRead: boolean;
+  status: string;
+  message: string;
+  data: {
+    notificationType: string;
+    text: string;
+    isRead: boolean;
+    createdTime: string;
+  };
+  sendTime: string;
 }
 
 export interface NotisRes {
-  dtos: NotiRes[];
+  status: string;
+  message: string;
+  data: {
+    dtos: NotiRes[];
+  };
+  sendTime: string;
 }
-
 
 export async function getNotifications(): Promise<NotisRes> {
   const { data } = await http.get<NotisRes>("/notification/all");
