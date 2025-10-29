@@ -13,8 +13,9 @@ export default function Header() {
   const [isNotiModalOpen, setIsNotiModalOpen] = useState(false);
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
 
-  const handleLogin = () => {
-    Navigate("/login");
+  const handleLogout = async () => {
+    await logout();
+    Navigate("/");
   };
 
   return (
@@ -54,14 +55,15 @@ export default function Header() {
                 // children={undefined}
               />
             </div>
-            <Link to="/login">
-              <button
-                onClick={isAuthed ? logout : handleLogin}
-                className="cursor-pointer"
-              >
-                {isAuthed ? "로그아웃" : "로그인"}
+            {isAuthed ? (
+              <button onClick={handleLogout} className="cursor-pointer">
+                로그아웃
               </button>
-            </Link>
+            ) : (
+              <Link to="/login">
+                <button className="cursor-pointer">로그인</button>
+              </Link>
+            )}
           </div>
         </div>
 
