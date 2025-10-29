@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://api.zeebra.shop/:path*"
+      "destination": "https://api.zeebra.shop/api/:path*"
     }
   ]
 }

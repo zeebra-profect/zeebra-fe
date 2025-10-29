@@ -7,7 +7,7 @@ export interface LoginReq {
 
 export interface LoginRes {
   accessToken: string;
-  refreshToken: string;
+  refreshToken?: string;
 }
 
 export async function login(req: LoginReq): Promise<LoginRes> {
