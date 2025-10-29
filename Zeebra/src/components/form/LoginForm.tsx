@@ -112,7 +112,7 @@ function LoginForm() {
           disabled={!isValid || loading}
           className="mt-4 w-full py-2 rounded-lg text-white bg-main-text transition cursor-pointer hover:bg-main-text-dark"
         >
-          {loading ? "로그인 중..." : `${form.identifier}님 안녕하세요.`}
+          {loading ? "로그인 중..." : "로그인"}
         </button>
 
         {/* 하단 액션들 */}
