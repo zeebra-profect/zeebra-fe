@@ -6,6 +6,7 @@ class NotificationSocket {
   constructor(url: string) {
     this.url = url;
     this.socket = null;
+    console.log("url: ", url);
   }
 
   // 연결하면 소켓이 채워짐. 이벤트 핸들러 등록
@@ -41,5 +42,6 @@ class NotificationSocket {
     }
   }
 }
+
 
 export default new NotificationSocket("ws://localhost:8080/api/notification");
