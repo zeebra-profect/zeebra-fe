@@ -3,6 +3,7 @@
     {
       "source": "/api/:path*",
       "destination": "https://api.zeebra.shop/api/:path*"
-    }
+    },
+    { "source": "/((?!api).*)", "destination": "/index.html" }
   ]
 }
