@@ -1,5 +1,6 @@
 import { http } from "@/utils/http";
 import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface SignupFormData {
   userLoginId: string;
@@ -27,6 +28,7 @@ function SignupForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setshowConfirmPassword] =
     useState<boolean>(false);
+  const navigate = useNavigate();
 
   // 비밀번호와 비밀번호 확인이 맞는지 판별
   const isMatched =
@@ -80,15 +82,17 @@ function SignupForm() {
     try {
       await http.post("/auth/signup", payload);
       alert("회원가입 성공!");
+      navigate("/login");
     } catch (err) {
       console.error("회원가입 실패:", err);
+      alert(`회원가입 실패 : ${err}`);
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col w-fit h-fit min-w-[40vh] min-h-[60vh] gap-y-[10px] items-center bg-white rounded-[0.875rem] shadow-md "
+      className="flex flex-col w-fit h-fit min-w-[40vh] min-h-[60vh] gap-y-2.5 items-center bg-white rounded-[0.875rem] shadow-md "
     >
       <p className="mt-[3vh] font-bold text-xl">회원가입</p>
       <div className="w-[30vh] mt-[2vh] focus-within:font-bold">
@@ -161,13 +165,13 @@ function SignupForm() {
             name="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleChange}
-            onMouseDown={(e) => e.preventDefault()}
             required
             className="w-full h-5 border-b-2 border-grey outline-none focus:border-b-4 focus:border-b-main-text"
           />
           <button
             type="button"
             onClick={() => setshowConfirmPassword((prev) => !prev)}
+            onMouseDown={(e) => e.preventDefault()}
             className="absolute right-0 top-0 text-sm text-main-text"
           >
             {showConfirmPassword ? "숨기기" : "보기"}
@@ -222,7 +226,7 @@ function SignupForm() {
           className="w-full h-5 border-b-2 border-grey outline-none focus:border-b-4 focus:border-b-main-text font-normal"
         />
       </div>
-      <div className="w-[30vh] mt-[20px] focus-within:font-bold flex flex-row justify-between items-center">
+      <div className="w-[30vh] mt-5 focus-within:font-bold flex flex-row justify-between items-center">
         <label htmlFor="memberBirth">생년월일</label>
         <input
           id="memberBirth"
@@ -233,7 +237,7 @@ function SignupForm() {
           className="font-normal"
         />
       </div>
-      <div className="w-[30vh] mt-[20px] focus-within:font-bold flex flex-row justify-between items-center">
+      <div className="w-[30vh] mt-5 focus-within:font-bold flex flex-row justify-between items-center">
         <div className="flex flex-row items-center justify-between w-full">
           <p className="">성별</p>
           <div className="flex flex-row gap-6">
@@ -273,10 +277,9 @@ function SignupForm() {
           </div>
         </div>
       </div>
-
       <button
         type="submit"
-        className="mt-[20px] bg-main-text text-main-bg px-19 py-2 rounded-lg cursor-pointer text-lg font-bold mb-[3vh]"
+        className="mt-5 bg-main-text text-main-bg px-19 py-2 rounded-lg cursor-pointer text-lg font-bold mb-[3vh]"
         disabled={!ready}
       >
         회원가입
