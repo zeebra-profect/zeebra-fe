@@ -1,6 +1,6 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../utils/auth";
+import { loginApi } from "../../utils/auth";
 import { AxiosError } from "axios";
 
 interface LoginFormData {
@@ -35,12 +35,14 @@ function LoginForm() {
     e.preventDefault();
     setErrMsg("");
 
+    if (!isValid) {
+      setErrMsg("아이디와 비밀번호를 올바르게 입력해주세요.");
+      return;
+    }
+
     try {
       setLoading(true);
-      const res = await login({
-        identifier: form.identifier,
-        password: form.password,
-      });
+      const res = await loginApi(form.identifier, form.password);
 
       localStorage.setItem("accessToken", res.accessToken);
       if (res.refreshToken) {
@@ -49,6 +51,7 @@ function LoginForm() {
 
       // 로그인 성공 후 리다이렉트
       navigate("/");
+      console.log(`로그인 성공: ${res}`);
     } catch (error: unknown) {
       const err = error as AxiosError<{ message?: string }>;
       if (err.response) {
