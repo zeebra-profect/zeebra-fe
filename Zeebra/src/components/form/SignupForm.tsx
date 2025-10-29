@@ -1,35 +1,40 @@
+import { http } from "@/utils/http";
 import { useState, type ChangeEvent, type FormEvent } from "react";
 
 interface SignupFormData {
-  loginId: string;
+  userLoginId: string;
+  memberName: string;
+  memberEmail: string;
   password: string;
-  confirmPassword: string;
-  name: string;
   nickname: string;
-  birth: string;
-  gender: string;
+  confirmPassword: string;
+  memberBirth: string;
+  memberGender: string;
 }
 
 function SignupForm() {
   const [formData, setFormData] = useState<SignupFormData>({
-    loginId: "",
+    userLoginId: "",
+    memberName: "",
+    memberEmail: "",
     password: "",
-    confirmPassword: "",
-    name: "",
     nickname: "",
-    birth: "",
-    gender: "",
+    confirmPassword: "",
+    memberBirth: "",
+    memberGender: "",
   });
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setshowConfirmPassword] =
     useState<boolean>(false);
 
+  // 비밀번호와 비밀번호 확인이 맞는지 판별
   const isMatched =
     formData.password !== "" &&
     formData.confirmPassword !== "" &&
     formData.password === formData.confirmPassword;
 
+  //닉네임 중복 여부 판별
   const isPossibleNickname =
     formData.nickname !== "" &&
     formData.nickname.length >= 2 &&
@@ -42,38 +47,71 @@ function SignupForm() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+  const passwordRegex =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
+  const isValidPwd = passwordRegex.test(formData.password);
+  const ready =
+    formData.userLoginId &&
+    isValidPwd &&
+    isMatched &&
+    formData.memberName &&
+    formData.nickname &&
+    formData.memberGender;
 
-  // 🔹 form 제출 핸들러
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // 폼 새로고침 방지
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-    console.log("회원가입 데이터:", formData);
-
-    if (formData.password !== formData.confirmPassword) {
+    if (!isMatched) {
       alert("비밀번호가 일치하지 않아요!");
       return;
+    }
+
+    // 변환한 날짜를 payload에 넣기 💡
+    const birthIso = formData.memberBirth
+      ? `${formData.memberBirth}T00:00:00`
+      : null;
+
+    const payload = {
+      userLoginId: formData.userLoginId,
+      memberName: formData.memberName,
+      memberEmail: formData.memberEmail,
+      password: formData.password,
+      nickname: formData.nickname,
+      confirmPassword: formData.confirmPassword,
+      memberBirth: birthIso,
+      memberGender: formData.memberGender,
+    };
+
+    try {
+      await http.post("/auth/signup", payload);
+      alert("회원가입 성공!");
+    } catch (err) {
+      console.error("회원가입 실패:", err);
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      action="GET"
       className="flex flex-col w-fit h-fit min-w-[40vh] min-h-[60vh] gap-y-[10px] items-center bg-white rounded-[0.875rem] shadow-md "
     >
       <p className="mt-[3vh] font-bold text-xl">회원가입</p>
       <div className="w-[30vh] mt-[2vh] focus-within:font-bold">
         <div className="flex flex-row justify-between items-center">
-          <label htmlFor="formData.loginId">아이디</label>
-          <button className="bg-main-text text-main-bg px-2 py-1  rounded-[0.875rem] font-normal text-sm">
+          <label htmlFor="userLoginId">아이디</label>
+          <button
+            // onClick={checkNickname}
+            type="button"
+            className="bg-main-text text-main-bg px-2 py-1  rounded-[0.875rem] font-normal text-sm"
+          >
             중복 확인
           </button>
         </div>
         <input
-          id="formData.loginId"
+          id="userLoginId"
           type="text"
-          name="loginId"
-          value={formData.loginId}
+          name="userLoginId"
+          value={formData.userLoginId}
           onChange={handleChange}
           required
           className="w-full border-b-2 h-5 border-grey outline-none focus:border-b-4 focus:border-b-main-text"
@@ -81,14 +119,17 @@ function SignupForm() {
       </div>
       <div className="w-[30vh] focus-within:font-bold">
         <div className="flex flex-row justify-between focus-within:font-bold">
-          <label htmlFor="formData.password">비밀번호</label>
+          <label htmlFor="password">비밀번호</label>
         </div>
         <div className="relative">
           <input
-            id="formData.password"
+            id="password"
             type={showPassword ? "text" : "password"}
             name="password"
             value={formData.password}
+            minLength={8}
+            maxLength={20}
+            placeholder="영문 혹은 숫자 8~20자"
             onChange={handleChange}
             required
             className="w-full h-5 border-b-2 border-grey outline-none focus:border-b-4 focus:border-b-main-text"
@@ -97,6 +138,7 @@ function SignupForm() {
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
             className="absolute right-0 top-0 text-sm text-main-text"
+            onMouseDown={(e) => e.preventDefault()}
           >
             {showPassword ? "숨기기" : "보기"}
           </button>
@@ -104,7 +146,7 @@ function SignupForm() {
       </div>
       <div className="w-[30vh] focus-within:font-bold">
         <div className="flex flex-row justify-between focus-within:font-bold">
-          <label htmlFor="formData.confirmPassword">비밀번호 확인</label>
+          <label htmlFor="confirmPassword">비밀번호 확인</label>
           {/* 조건부 렌더링 부분 💡 */}
           {formData.confirmPassword !== "" &&
             (isMatched ? (
@@ -119,11 +161,12 @@ function SignupForm() {
         </div>
         <div className="relative">
           <input
-            id="formData.confirmPassword"
+            id="confirmPassword"
             type={showConfirmPassword ? "text" : "password"}
             name="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleChange}
+            onMouseDown={(e) => e.preventDefault()}
             required
             className="w-full h-5 border-b-2 border-grey outline-none focus:border-b-4 focus:border-b-main-text"
           />
@@ -137,11 +180,23 @@ function SignupForm() {
         </div>
       </div>
       <div className="w-[30vh] focus-within:font-bold">
+        <label htmlFor="memberEmail">이메일</label>
+        <input
+          id="memberEmail"
+          type="text"
+          name="memberEmail"
+          value={formData.memberEmail}
+          onChange={handleChange}
+          required
+          className="w-full h-5 border-b-2 border-grey outline-none focus:border-b-4 focus:border-b-main-text font-normal"
+        />
+      </div>
+      <div className="w-[30vh] focus-within:font-bold">
         <div className="flex flex-row justify-between items-center">
-          <label htmlFor="formData.nickname">닉네임</label>
+          <label htmlFor="nickname">닉네임</label>
         </div>
         <input
-          id="formData.nickname"
+          id="nickname"
           type="text"
           name="nickname"
           value={formData.nickname}
@@ -161,24 +216,24 @@ function SignupForm() {
           ))}
       </div>
       <div className="w-[30vh] focus-within:font-bold">
-        <label htmlFor="formData.name">이름</label>
+        <label htmlFor="memberName">이름</label>
         <input
-          id="formData.name"
+          id="memberName"
           type="text"
-          name="name"
-          value={formData.name}
+          name="memberName"
+          value={formData.memberName}
           onChange={handleChange}
           required
           className="w-full h-5 border-b-2 border-grey outline-none focus:border-b-4 focus:border-b-main-text font-normal"
         />
       </div>
       <div className="w-[30vh] mt-[20px] focus-within:font-bold flex flex-row justify-between items-center">
-        <label htmlFor="formData.birth">생년월일</label>
+        <label htmlFor="memberBirth">생년월일</label>
         <input
-          id="formData.birth"
+          id="memberBirth"
           type="date"
-          name="birth"
-          value={formData.birth}
+          name="memberBirth"
+          value={formData.memberBirth}
           onChange={handleChange}
           className="font-normal"
         />
@@ -187,24 +242,30 @@ function SignupForm() {
         <div className="flex flex-row items-center justify-between w-full">
           <p className="">성별</p>
           <div className="flex flex-row gap-6">
-            <label className="flex items-center gap-2 font-normal">
+            <label
+              htmlFor="gender-man"
+              className="flex items-center gap-2 font-normal"
+            >
               <input
                 type="radio"
-                name="gender"
+                name="gender-man"
                 value="MAN"
-                checked={formData.gender === "MAN"}
+                checked={formData.memberGender === "MAN"}
                 onChange={handleChange}
                 className="w-4 h-5 transition-all duration-200 cursor-pointer hover:scale-110 focus:outline-none disabled:opacity-50"
               />
               남성
             </label>
 
-            <label className="flex items-center gap-2 font-normal">
+            <label
+              htmlFor="gender-woman"
+              className="flex items-center gap-2 font-normal"
+            >
               <input
                 type="radio"
-                name="gender"
+                name="gender-woman"
                 value="WOMAN"
-                checked={formData.gender === "WOMAN"}
+                checked={formData.memberGender === "WOMAN"}
                 onChange={handleChange}
                 className="w-4 h-5 transition-all duration-200 cursor-pointer hover:scale-110 focus:outline-none disabled:opacity-50"
               />
@@ -213,7 +274,11 @@ function SignupForm() {
           </div>
         </div>
       </div>
-      <button className="mt-[20px] bg-main-text text-main-bg px-19 py-2 rounded-lg cursor-pointer text-lg font-bold mb-[3vh]">
+      <button
+        type="submit"
+        className="mt-[20px] bg-main-text text-main-bg px-19 py-2 rounded-lg cursor-pointer text-lg font-bold mb-[3vh]"
+        disabled={!ready}
+      >
         회원가입
       </button>
     </form>
