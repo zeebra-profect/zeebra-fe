@@ -1,6 +1,7 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../utils/auth";
+import { AxiosError } from "axios";
 
 interface LoginFormData {
   identifier: string;
@@ -48,18 +49,15 @@ function LoginForm() {
 
       // 로그인 성공 후 리다이렉트
       navigate("/");
-    } catch (error: any) {
-      if (error.response) {
-        // 서버 응답이 있는 경우
+    } catch (error: unknown) {
+      const err = error as AxiosError<{ message?: string }>;
+      if (err.response) {
         setErrMsg(
-          error.response.data.message ||
+          err.response.data?.message ||
             "로그인에 실패했습니다. 다시 시도해주세요."
         );
       } else {
-        // 네트워크 오류 등 서버 응답이 없는 경우
-        setErrMsg(
-          "서버와의 연결에 문제가 발생했습니다. 나중에 다시 시도해주세요."
-        );
+        setErrMsg("서버와의 연결에 실패했습니다.");
       }
     } finally {
       setLoading(false);
@@ -81,14 +79,14 @@ function LoginForm() {
 
       {/* 아이디 */}
       <div className="mb-4 focus-within:font-semibold">
-        <label htmlFor="loginId" className="block mb-1">
+        <label htmlFor="identifier" className="block mb-1">
           아이디
         </label>
         <input
-          id="loginId"
-          name="loginId"
+          id="identifier"
+          name="identifier"
           type="text"
-          value={form.loginId}
+          value={form.identifier}
           onChange={handleChange}
           onKeyDown={onEnterSubmit}
           maxLength={16}
