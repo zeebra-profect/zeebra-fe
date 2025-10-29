@@ -5,7 +5,7 @@ import { getNotifications as getNotificationsAPI } from "../../utils/notificatio
 
 interface Notification {
   notificationType: string;
-  text: string;
+  noticeText: string;
   isRead: boolean;
   createdTime: string;
 }
@@ -31,12 +31,8 @@ const notificationSlice = createSlice({
             return action.payload;
         },
     },
-    extraReducers: (builder) => {
-        builder.addCase(fetchNotifications.fulfilled, (state, action) => {
-            return action.payload;  // API 호출 성공 시 state 업데이트
-        });
-    },
-});
+  }
+);
 
 export const {
     addNotification,
