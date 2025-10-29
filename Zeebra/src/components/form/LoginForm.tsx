@@ -46,7 +46,7 @@ function LoginForm() {
       if (res.refreshToken) {
         localStorage.setItem("refreshToken", res.refreshToken);
       }
-
+      
       // 로그인 성공 후 리다이렉트
       navigate("/");
     } catch (error: unknown) {

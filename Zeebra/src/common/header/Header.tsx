@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NotificationSocket from "../../lib/NotificationSocket";
-
+import {http} from "../../utils/http";
 
 export default function Header() {
   const Navigate = useNavigate();
@@ -26,22 +26,22 @@ export default function Header() {
     Navigate("/");
   };
 
-
   // 이하는 웹소켓 관련 코드
   useEffect(() => {
-    NotificationSocket.connect();
-    // 인증 토큰 보내기
-    const token = localStorage.getItem('token');
-    if (token)
-    {
-      NotificationSocket.send({token});
-    }
-
-    // 헤더가 언마운트 될 때 실행됨
-    return () => {
-      NotificationSocket.socket?.close();
-    }
-  },[])
+    http.get('/notification/ws-token')
+    .then(res => {
+      const token = res.data.data;
+      console.log("token: ", token);
+      NotificationSocket.connect();
+      
+      setTimeout(() => {
+        NotificationSocket.send({ token });
+      }, 500);
+    })
+    .catch(err => console.error(err));
+  
+  return () => NotificationSocket.socket?.close();
+  }, []);
 
   return (
     <>
@@ -82,7 +82,7 @@ export default function Header() {
             </div>
             <Link to="/login">
               <button
-                onClick={isLoggedIn ? handleLogin : handleLogout }
+                onClick={isLoggedIn ? handleLogin : handleLogout}
                 className="cursor-pointer"
               >
                 {isLoggedIn ? "로그인" : "로그아웃"}

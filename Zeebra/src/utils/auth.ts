@@ -11,6 +11,6 @@ export interface LoginRes {
 }
 
 export async function login(req: LoginReq): Promise<LoginRes> {
-  const { data } = await http.post<LoginRes>("/api/auth/login", req);
+  const { data } = await http.post<LoginRes>("/auth/login", req);
   return data;
 }
