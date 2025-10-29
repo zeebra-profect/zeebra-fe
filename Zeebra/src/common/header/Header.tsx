@@ -3,8 +3,10 @@ import bagIcon from "../../img/icons/bag.png";
 import NotificationModal from "../../components/notification/NotificationModal";
 import ChatModal from "../../components/chat/ChatModal";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import NotificationSocket from "../../lib/notificationSocket";
+
 
 export default function Header() {
   const Navigate = useNavigate();
@@ -14,6 +16,7 @@ export default function Header() {
 
   const handleLogin = () => {
     Navigate("/login");
+    setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
@@ -22,6 +25,23 @@ export default function Header() {
     alert("로그아웃 되었습니다.");
     Navigate("/");
   };
+
+
+  // 이하는 웹소켓 관련 코드
+  useEffect(() => {
+    NotificationSocket.connect();
+    // 인증 토큰 보내기
+    const token = localStorage.getItem('token');
+    if (token)
+    {
+      NotificationSocket.send({token});
+    }
+
+    // 헤더가 언마운트 될 때 실행됨
+    return () => {
+      NotificationSocket.socket?.close();
+    }
+  },[])
 
   return (
     <>
@@ -62,7 +82,7 @@ export default function Header() {
             </div>
             <Link to="/login">
               <button
-                onClick={isLoggedIn ? handleLogin : handleLogout}
+                onClick={isLoggedIn ? handleLogin : handleLogout }
                 className="cursor-pointer"
               >
                 {isLoggedIn ? "로그인" : "로그아웃"}
