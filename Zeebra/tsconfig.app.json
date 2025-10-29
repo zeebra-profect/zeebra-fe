@@ -18,8 +18,8 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false, // redux에 안쓰는 변수 때문에 false로 고쳐놨어요
+    "noUnusedParameters": false, // redux에 안쓰는 변수 때문에 false로 고쳐놨어요
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true

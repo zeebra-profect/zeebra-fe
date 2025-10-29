@@ -5,7 +5,9 @@ import { getNotifications as getNotificationsAPI } from "../../utils/notificatio
 
 interface Notification {
   notificationType: string;
+  text: string;
   isRead: boolean;
+  createdTime: string;
 }
 
 const initialState: Notification[] = [];
