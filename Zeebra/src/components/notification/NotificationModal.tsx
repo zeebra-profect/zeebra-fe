@@ -1,7 +1,7 @@
 import Notification from "./Notification";
 import { useEffect } from "react";
-import { fetchNotifications } from "../../modules/notification/notificationSlice";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { fetchNotifications } from "../../store/notificationSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 interface ModalProps {
   isOpen: boolean;
@@ -12,6 +12,7 @@ interface ModalProps {
 function NotificationModal({ isOpen, onClose }: ModalProps) {
   const dispatch = useAppDispatch();
   const notifications = useAppSelector((state) => state.notification);
+  // const user = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(fetchNotifications());

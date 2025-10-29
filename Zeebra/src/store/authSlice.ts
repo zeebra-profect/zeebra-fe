@@ -28,7 +28,7 @@ const initialState: AuthState = {
 
 // 원래는 세션 동기화 인데 그냥 시간 지나면 로그아웃으로 처리함
 export const refetchMe = createAsyncThunk("auth/refetchMe", async () => {
-  const res = await http.get("/auth/me");
+  const res = await http.get("members/me");
   return res.data.data as User;
 });
 
