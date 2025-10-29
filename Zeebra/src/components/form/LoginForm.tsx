@@ -1,23 +1,28 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { login } from "../../utils/auth";
 
 interface LoginFormData {
-  loginId: string;
+  identifier: string;
   password: string;
 }
 
-function Loginform() {
+function LoginForm() {
   const navigate = useNavigate();
   const [form, setForm] = useState<LoginFormData>({
-    loginId: "",
+    identifier: "",
     password: "",
   });
   const [showPw, setShowPw] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [errMsg, setErrMsg] = useState<string>("");
 
+  // 비밀번호 및 아이디 유효성 검사
+  const passwordRegex =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,12}$/;
   const isValid =
-    form.loginId.trim().length > 0 && form.password.trim().length >= 6;
+    form.identifier.trim().length > 0 &&
+    passwordRegex.test(form.password.trim());
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,22 +30,40 @@ function Loginform() {
     if (errMsg) setErrMsg("");
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrMsg("");
 
-    if (!isValid) {
-      setErrMsg("아이디와 비밀번호를 올바르게 입력해주세요.");
-      return;
-    }
     try {
       setLoading(true);
-      setErrMsg("");
-      await new Promise((r) => setTimeout(r, 400));
-      alert("로그인 성공!");
-    } catch (err) {
-      setErrMsg("로그인에 실패했습니다. 다시 시도해주세요.");
+      const res = await login({
+        identifier: form.identifier,
+        password: form.password,
+      });
+
+      localStorage.setItem("accessToken", res.accessToken);
+      if (res.refreshToken) {
+        localStorage.setItem("refreshToken", res.refreshToken);
+      }
+
+      // 로그인 성공 후 리다이렉트
+      navigate("/");
+    } catch (error: any) {
+      if (error.response) {
+        // 서버 응답이 있는 경우
+        setErrMsg(
+          error.response.data.message ||
+            "로그인에 실패했습니다. 다시 시도해주세요."
+        );
+      } else {
+        // 네트워크 오류 등 서버 응답이 없는 경우
+        setErrMsg(
+          "서버와의 연결에 문제가 발생했습니다. 나중에 다시 시도해주세요."
+        );
+      }
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const onEnterSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -68,6 +91,7 @@ function Loginform() {
           value={form.loginId}
           onChange={handleChange}
           onKeyDown={onEnterSubmit}
+          maxLength={16}
           required
           className="w-full border-b-2 border-gray-300 outline-none py-2
                      focus:border-b-4 focus:border-main-text transition-all h-5"
@@ -85,12 +109,14 @@ function Loginform() {
             name="password"
             type={showPw ? "text" : "password"}
             value={form.password}
+            maxLength={12}
             onChange={handleChange}
             onKeyDown={onEnterSubmit}
             required
-            minLength={6}
+            minLength={8}
+            placeholder="8~12자"
             className="w-full border-b-2 border-gray-300 outline-none py-2 pr-16
-                       focus:border-b-4  focus:border-main-text transition-all h-5"
+                       focus:border-b-4  focus:border-main-text transition-all h-5 placeholder:text-grey2 font-normal"
             aria-invalid={!isValid && form.password.length > 0}
           />
           <button
@@ -154,5 +180,4 @@ function Loginform() {
     </form>
   );
 }
-
-export default Loginform;
+export default LoginForm;
