@@ -66,11 +66,6 @@ function SignupForm() {
       return;
     }
 
-    // 변환한 날짜를 payload에 넣기 💡
-    const birthIso = formData.memberBirth
-      ? `${formData.memberBirth}T00:00:00`
-      : null;
-
     const payload = {
       userLoginId: formData.userLoginId,
       memberName: formData.memberName,
@@ -78,7 +73,7 @@ function SignupForm() {
       password: formData.password,
       nickname: formData.nickname,
       confirmPassword: formData.confirmPassword,
-      memberBirth: birthIso,
+      memberBirth: formData.memberBirth,
       memberGender: formData.memberGender,
     };
 
@@ -242,13 +237,15 @@ function SignupForm() {
         <div className="flex flex-row items-center justify-between w-full">
           <p className="">성별</p>
           <div className="flex flex-row gap-6">
+            {/* 남성 */}
             <label
               htmlFor="gender-man"
               className="flex items-center gap-2 font-normal"
             >
               <input
+                id="gender-man"
                 type="radio"
-                name="gender-man"
+                name="memberGender" // ✅ 같은 name!
                 value="MAN"
                 checked={formData.memberGender === "MAN"}
                 onChange={handleChange}
@@ -257,13 +254,15 @@ function SignupForm() {
               남성
             </label>
 
+            {/* 여성 */}
             <label
               htmlFor="gender-woman"
               className="flex items-center gap-2 font-normal"
             >
               <input
+                id="gender-woman"
                 type="radio"
-                name="gender-woman"
+                name="memberGender" // ✅ 같은 name!
                 value="WOMAN"
                 checked={formData.memberGender === "WOMAN"}
                 onChange={handleChange}
@@ -274,6 +273,7 @@ function SignupForm() {
           </div>
         </div>
       </div>
+
       <button
         type="submit"
         className="mt-[20px] bg-main-text text-main-bg px-19 py-2 rounded-lg cursor-pointer text-lg font-bold mb-[3vh]"
