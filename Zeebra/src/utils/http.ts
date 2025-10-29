@@ -1,19 +1,41 @@
 import axios from "axios";
 
 export const http = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: "/api",
   withCredentials: true,
 });
 
-http.interceptors.request.use((config) => config);
 
-http.interceptors.response.use(
-  (res) => res,
-  (err) => {
-    if (err.response?.status === 401) {
-      // 필요 시 리프레시 트리거 or 로그인 페이지로 이동
-      // navigate("/login") 등
-    }
-    return Promise.reject(err);
-  }
-);
+
+// 401 오류 시 /api/auth/refresh 엔드포인트로 토큰 재발급 요청 (미구현)
+
+// let isRefreshing = false;
+// let waiters: Array<() => void> = [];
+
+// http.interceptors.response.use(
+//   (res) => res,
+//   async (error) => {
+//     const original = error.config;
+//     if (!error.response) return Promise.reject(error);
+
+//     const isRefreshCall = original?.url?.includes("/auth/refresh");
+//     if (error.response.status === 401 && !original._retry && !isRefreshCall) {
+//       if (isRefreshing) {
+//         await new Promise<void>((resolve) => waiters.push(resolve));
+//         original._retry = true;
+//         return http(original);
+//       }
+//       isRefreshing = true;
+//       try {
+//         await http.post("/auth/refresh");
+//         waiters.forEach((fn) => fn());
+//         waiters = [];
+//         original._retry = true;
+//         return http(original);
+//       } finally {
+//         isRefreshing = false;
+//       }
+//     }
+//     return Promise.reject(error);
+//   }
+// );
