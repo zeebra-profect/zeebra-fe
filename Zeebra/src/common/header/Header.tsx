@@ -40,7 +40,9 @@ export default function Header() {
                 // children={undefined}
               />
             </div>
-            <p className="cursor-pointer">마이페이지</p>
+            <Link to="/mypage/info">
+              <p className="cursor-pointer">마이페이지</p>
+            </Link>
             <p className="cursor-pointer">관심</p>
             <div className="relative">
               <p
