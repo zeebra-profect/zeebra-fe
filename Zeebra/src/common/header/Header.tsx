@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NotificationSocket from "../../lib/NotificationSocket";
-import {http} from "../../utils/http";
+import { http } from "../../utils/http";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function Header() {
@@ -22,19 +22,20 @@ export default function Header() {
 
   // 이하는 웹소켓 관련 코드
   useEffect(() => {
-    http.get('/notification/ws-token')
-    .then(res => {
-      const token = res.data.data;
-      console.log("token: ", token);
-      NotificationSocket.connect();
-      
-      setTimeout(() => {
-        NotificationSocket.send({ token });
-      }, 500);
-    })
-    .catch(err => console.error(err));
-  
-  return () => NotificationSocket.socket?.close();
+    http
+      .get("/notification/ws-token")
+      .then((res) => {
+        const token = res.data.data;
+        console.log("token: ", token);
+        NotificationSocket.connect();
+
+        setTimeout(() => {
+          NotificationSocket.send({ token });
+        }, 500);
+      })
+      .catch((err) => console.error(err));
+
+    return () => NotificationSocket.socket?.close();
   }, []);
 
   return (
@@ -75,9 +76,9 @@ export default function Header() {
               />
             </div>
             {isAuthed ? (
-              <button onClick={handleLogout} className="cursor-pointer">
+              <p onClick={handleLogout} className="cursor-pointer">
                 로그아웃
-              </button>
+              </p>
             ) : (
               <Link to="/login">
                 <button className="cursor-pointer">로그인</button>
