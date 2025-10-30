@@ -8,12 +8,19 @@ class NotificationSocket {
   }
 
   connect() {
-    if (this.socket?.readyState === WebSocket.OPEN) {
-      console.log("⚠️ 이미 연결됨");
+    const token = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("__Host-AT="))
+      ?.split("=")[1];
+
+    console.log("🔑 토큰:", token); // 👈 토큰 있는지 확인
+
+    if (!token) {
+      console.error("❌ 토큰 없음!");
       return;
     }
 
-    this.socket = new WebSocket(this.url);
+    this.socket = new WebSocket('ws://localhost:8080/ws/notification');
 
     this.socket.onopen = () => {
       console.log("✅ 웹소켓 연결됨");
@@ -49,6 +56,8 @@ class NotificationSocket {
   }
 }
 
-const notificationSocket = new NotificationSocket("ws://localhost:8080/api/notification");
+const notificationSocket = new NotificationSocket(
+  "ws://localhost:8080/ws/notification"
+);
 
 export default notificationSocket;
