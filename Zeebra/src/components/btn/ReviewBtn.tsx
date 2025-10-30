@@ -1,16 +1,13 @@
-import { useState } from "react";
-import ReviewModal from "@/common/modal/ReviewModal";
+interface ReviewBtnProps {
+  onClick: () => void;
+}
 
-function ReviewBtn() {
-  const [isOpen, setIsOpen] = useState(false);
-
+function ReviewBtn({ onClick }: ReviewBtnProps) {
   return (
     <>
-      <button className="button-cancelButton" onClick={() => setIsOpen(true)}>
+      <button className="button-cancelButton" onClick={onClick}>
         리뷰 작성
       </button>
-
-      {isOpen && <ReviewModal onClose={() => setIsOpen(false)} />}
     </>
   );
 }
