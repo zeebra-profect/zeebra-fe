@@ -9,11 +9,11 @@ function MyPage() {
 
   useEffect(() => {
     dispatch(refetchMe());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     console.log("memberInfo: ", memberInfo);
-  }, [memberInfo]);
+  }, [memberInfo?.memberId]);
 
   return (
     <div className="flex flex-col w-full items-center mt-6 gap-4 font-bold text-2xl ">
