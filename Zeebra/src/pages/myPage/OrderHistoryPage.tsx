@@ -1,6 +1,5 @@
 import { useState } from "react";
 // import OrderHistory from "../../components/order/OrderHistory";
-import ReviewBtn from "../../components/btn/ReviewBtn";
 
 function OrderHistoryPage() {
   //true면 구매 완료 탭
@@ -72,7 +71,6 @@ function OrderHistoryPage() {
         <div className="flex flex-col gap-y-3 w-full items-center">
           {/* <OrderHistory/> */}
           {/* <OrderHistory/> */}
-          <ReviewBtn />
         </div>
       </div>
     </>
