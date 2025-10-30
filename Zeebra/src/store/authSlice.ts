@@ -54,8 +54,8 @@ const slice = createSlice({
       s.error = null;
     });
     b.addCase(refetchMe.fulfilled, (s, a) => {
-      s.me = a.payload;
       s.loading = false;
+      s.me = a.payload;
       s.error = null;
     });
     b.addCase(refetchMe.rejected, (s) => {

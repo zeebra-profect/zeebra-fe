@@ -38,6 +38,8 @@ import {
 function ProtectedRoute() {
   const loading = useAppSelector(selectAuthLoading);
   const isAuthed = useAppSelector(selectIsAuthed);
+  console.log(loading, isAuthed);
+
   if (loading) return null; // 초기 세션 동기화 중이면 렌더 지연
   return isAuthed ? <Outlet /> : <Navigate to="/login" replace />;
 }
@@ -47,8 +49,12 @@ function App() {
 
   // ✅ 앱 시작 시 쿠키 기반 세션 동기화
   useEffect(() => {
-    dispatch(refetchMe());
-  }, [dispatch]);
+    let ignore = false;
+    if (!ignore) dispatch(refetchMe());
+    return () => {
+      ignore = true;
+    };
+  }, []);
 
   return (
     <BrowserRouter>
@@ -64,6 +70,7 @@ function App() {
           <Route path="shopPage" element={<ShopPage />} />
 
           {/* 🔒 보호 라우트: 마이페이지 */}
+
           <Route element={<ProtectedRoute />}>
             <Route path="mypage" element={<Layout2 />}>
               <Route index element={<MyPage />} />

@@ -1,13 +1,13 @@
 // src/hooks/useAuth.ts
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import {
-  selectMe,
   selectIsAuthed,
   selectAuthLoading,
   selectAuthError,
   loginThunk,
   logoutThunk,
   refetchMe,
+  selectMe,
 } from "@/store/authSlice";
 
 export function useAuth() {
