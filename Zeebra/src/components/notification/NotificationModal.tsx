@@ -1,8 +1,13 @@
 import Notification from "./Notification";
 import { useEffect } from "react";
-import { fetchNotifications, postNotification } from "../../store/notificationSlice";
+import {
+  fetchNotifications,
+  getNotification,
+  postNotification,
+} from "../../store/notificationSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import notificationSocket from "@/lib/NotificationSocket";
+import type { NotiRes } from "@/utils/notification";
 
 interface ModalProps {
   isOpen: boolean;
@@ -16,22 +21,23 @@ function NotificationModal({ isOpen, onClose }: ModalProps) {
 
   useEffect(() => {
     dispatch(fetchNotifications());
-  }, []);
-
-    // 이하는 웹소켓 관련 코드
-  useEffect(() => {
     notificationSocket.connect();
 
-      return () => {
-    notificationSocket.disconnect();
-  };
+    notificationSocket.socket!.onmessage = (event: MessageEvent) => {
+      const newNotification: NotiRes = JSON.parse(event.data);
+      console.log("📨 받은 데이터: ", newNotification);
+      console.log("createdTime:", newNotification.createdTime); // 👈 이거 확인
+      dispatch(getNotification(newNotification));
+    };
 
+    return () => {
+      notificationSocket.disconnect();
+    };
   }, []);
 
-  const createTestNoti = () =>
-  {
+  const createTestNoti = () => {
     dispatch(postNotification());
-  }
+  };
   // useEffect(() => {
   //   console.log("selector: ", notifications);
   // },[notifications])
@@ -47,17 +53,27 @@ function NotificationModal({ isOpen, onClose }: ModalProps) {
         >
           <div className="flex flex-col h-auto max-h-[450px]">
             <div className="flex flex-col font-bold text-lg m-5 items-center justify-center text-center">
-              <p className="text-center cursor-pointer" onClick={createTestNoti}>알림</p>
+              <p
+                className="text-center cursor-pointer"
+                onClick={createTestNoti}
+              >
+                알림
+              </p>
             </div>
             <div className="h-[calc(450px-73px)] overflow-y-auto scrollbar">
-              {
-                notifications && notifications.length > 0 ? (
-                  notifications.map((notification, index) => (
-                    <Notification key={index} isRead={notification.isRead} notificationType={notification.notificationType} createdTime={notification.createdTime} noticeText={notification.noticeText} />
-                  )))
-                :
-                (<div>알림이 없습니다</div>)
-              }
+              {notifications && notifications.length > 0 ? (
+                notifications.map((notification, index) => (
+                  <Notification
+                    key={index}
+                    isRead={notification.isRead}
+                    notificationType={notification.notificationType}
+                    createdTime={notification.createdTime}
+                    noticeText={notification.noticeText}
+                  />
+                ))
+              ) : (
+                <div>알림이 없습니다</div>
+              )}
             </div>
           </div>
         </div>
