@@ -1,12 +1,18 @@
+import { useState } from "react";
 import profileimg from "../../img/test/profile_img.jpeg";
 
-const user = {
-  nickname: "옷좋아할나이",
-  profileImage: profileimg,
-  email: "2onesound@naver.com",
-};
+interface UserData {
+  profileImage: string;
+  userName: string;
+  userEmail: string;
+}
 
 function MyPage() {
+  const [user, setUser] = useState<UserData>({
+    profileImage: "",
+    userName: "",
+    userEmail: "",
+  });
   return (
     <div className="flex flex-col w-full items-center mt-6 gap-4 font-bold text-2xl ">
       내 정보
