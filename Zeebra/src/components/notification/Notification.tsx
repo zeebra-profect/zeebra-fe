@@ -1,11 +1,11 @@
 interface Noti {
-  type: string;
-  text: string;
+  notificationType: string;
+  noticeText: string;
   isRead: boolean;
   createdTime: string;
 }
 
-function Notification({ type, isRead, text, createdTime }: Noti) {
+function Notification({ notificationType, isRead, noticeText, createdTime }: Noti) {
   const formatted = new Date(createdTime).toLocaleString("ko-KR", {
     month: "numeric",
     day: "numeric",
@@ -23,7 +23,7 @@ function Notification({ type, isRead, text, createdTime }: Noti) {
           <img src="" className="w-12 h-12 rounded-full" />
           <div className="flex flex-col text-left">
             <p className="font-normal text-grey2 text-xs">{formatted}</p>
-            <p className="font-medium text-xs">{type}</p>
+            <p className="font-medium text-xs">{notificationType}</p>
             <p
               className={
                 isRead
@@ -31,7 +31,7 @@ function Notification({ type, isRead, text, createdTime }: Noti) {
                   : "text-main-text font-light text-sm"
               }
             >
-              {text}
+              {noticeText}
             </p>
           </div>
         </div>
