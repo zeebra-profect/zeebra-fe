@@ -10,7 +10,8 @@ class NotificationSocket {
 connect() {
   console.log("🔵 WebSocket 연결 시도...");
   
-  this.socket = new WebSocket(this.url);
+  this.socket = new WebSocket('ws://localhost:8080/ws/notification');
+  // this.socket = new WebSocket('ws://localhost:8080/ws/notification');
 
   this.socket.onopen = () => {
     console.log("✅ 웹소켓 연결됨");
@@ -38,7 +39,7 @@ connect() {
 }
 
 const notificationSocket = new NotificationSocket(
-    import.meta.env.VITE_WS_URL + "/notification"
+  "ws://localhost:8080/ws/notification"
 );
 
 export default notificationSocket;
