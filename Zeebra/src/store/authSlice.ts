@@ -11,7 +11,7 @@ export type User = {
   gender: string;
   memberBirth: string; // YYYY-MM-DD 형태로 옴
   createdTime: string; // localDateTime 형태로 옴
-  profileImage: string; // 추후 추가 예정
+  memberImage?: string | null;
 };
 
 type AuthState = {
