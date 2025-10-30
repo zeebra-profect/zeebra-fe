@@ -1,15 +1,10 @@
 import { http } from "./http";
 
 export interface NotiRes {
-  status: string;
-  message: string;
-  data: {
-    notificationType: string;
-    text: string;
-    isRead: boolean;
+    noticeText: string;
     createdTime: string;
-  };
-  sendTime: string;
+    notificationType: string;
+    isRead: boolean;
 }
 
 export interface NotisRes {
@@ -22,6 +17,10 @@ export interface NotisRes {
 }
 
 export async function getNotifications(): Promise<NotisRes> {
-  const { data } = await http.get<NotisRes>("/notification/broadcast");
+  const { data } = await http.get<NotisRes>("/notification/all");
   return data;
+}
+
+export async function addNotification(): Promise<void> {
+  await http.post("/notification");
 }
