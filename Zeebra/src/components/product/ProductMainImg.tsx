@@ -1,14 +1,4 @@
-// import nike1 from "../../img/test/nike1.webp";
-// import nike2 from "../../img/test/nike2.webp";
-// import nike3 from "../../img/test/nike3.webp";
-// import nike4 from "../../img/test/nike4.webp";
-// import nike5 from "../../img/test/nike5.webp";
-// import nike6 from "../../img/test/nike6.webp";
-// import nike7 from "../../img/test/nike7.webp";
-// import nike8 from "../../img/test/nike8.webp";
-// import nike9 from "../../img/test/nike9.webp";
-
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function ProductMainImg({ imgs }: { imgs: string[] }) {
   const [curImgIdx, setCurImgIdx] = useState<number>(0);
