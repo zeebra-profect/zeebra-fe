@@ -9,9 +9,13 @@ function Review() {
           <div className="w-6 h-6 md:w-[30px] md:h-[30px] rounded-full bg-gray-100 shrink-0">
             {/* <img className="w-full h-full object-cover rounded-full" /> */}
           </div>
-          <p className="text-xs md:text-sm font-pretendard font-normal truncate">asdf1234</p>
+          <p className="text-xs md:text-sm font-pretendard font-normal truncate">
+            asdf1234
+          </p>
         </div>
-        <p className="text-xs md:text-sm font-pretendard font-normal line-clamp-2">asdfsdfasdf</p>
+        <p className="text-xs md:text-sm font-pretendard font-normal line-clamp-2">
+          asdfsdfasdf
+        </p>
       </div>
     </>
   );
