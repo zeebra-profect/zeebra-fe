@@ -9,7 +9,7 @@ function MyPage() {
 
   useEffect(() => {
     dispatch(refetchMe());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     console.log("memberInfo: ", memberInfo);
