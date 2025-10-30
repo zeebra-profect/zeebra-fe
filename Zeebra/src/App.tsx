@@ -56,12 +56,12 @@ function App() {
         {/* 레이아웃1: 기본 페이지들 */}
         <Route path="/" element={<Layout1 />}>
           <Route index element={<Main />} />
-          <Route path="/product" element={<ProductDetailPage />} />
+          <Route path="product" element={<ProductDetailPage />} />
           <Route
-            path="/order/result"
+            path="order/result"
             element={<OrderResultPage result={false} />}
           />
-          <Route path="/shopPage" element={<ShopPage />} />
+          <Route path="shopPage" element={<ShopPage />} />
 
           {/* 🔒 보호 라우트: 마이페이지 */}
           <Route element={<ProtectedRoute />}>
@@ -74,15 +74,15 @@ function App() {
 
           {/* 레이아웃3: 로그인/회원가입 (공개) */}
           <Route element={<Layout3 />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
           </Route>
 
           {/* 🔒 보호 라우트: 장바구니/주문 */}
           <Route element={<ProtectedRoute />}>
             <Route element={<Layout4 />}>
-              <Route path="/cart" element={<CartPage />} />
-              <Route path="/order" element={<OrderPage />} />
+              <Route path="cart" element={<CartPage />} />
+              <Route path="order" element={<OrderPage />} />
             </Route>
           </Route>
         </Route>
