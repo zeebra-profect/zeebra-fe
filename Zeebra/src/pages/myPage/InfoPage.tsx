@@ -1,19 +1,18 @@
-import { refetchMe } from "@/store/authSlice";
 import profileimg from "../../img/test/profile_img.jpeg";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { refetchMe } from "@/store/authSlice";
 
 function MyPage() {
   const dispatch = useAppDispatch();
   const memberInfo = useAppSelector((state) => state.auth.me);
 
   useEffect(() => {
+    if (memberInfo != null) {
+      return;
+    }
     dispatch(refetchMe());
   }, []);
-
-  useEffect(() => {
-    console.log("memberInfo: ", memberInfo);
-  }, [memberInfo?.memberId]);
 
   return (
     <div className="flex flex-col w-full items-center mt-6 gap-4 font-bold text-2xl ">
@@ -45,13 +44,13 @@ function MyPage() {
           <p className="text-base">{memberInfo?.memberEmail}</p>
           <div className="flex flex-row gap-6">
             <p
-              className="font-extralight text-sm mt-6 cursor-pointer text-main-text border-b-1 border-grey2"
+              className="font-extralight text-sm mt-6 cursor-pointer text-main-text border-b border-grey2"
               onClick={() => alert("이미지 변경 추가 예정")}
             >
               프로필 이미지 변경
             </p>
             <p
-              className="font-extralight text-sm mt-6 cursor-pointer text-main-text border-b-1 border-grey2"
+              className="font-extralight text-sm mt-6 cursor-pointer text-main-text border-b border-grey2"
               onClick={() => alert("비번 변경 추가 예정")}
             >
               비밀번호 변경

@@ -182,6 +182,7 @@ function SignupForm() {
         <label htmlFor="memberEmail">이메일</label>
         <input
           id="memberEmail"
+          maxLength={30}
           type="text"
           name="memberEmail"
           value={formData.memberEmail}
