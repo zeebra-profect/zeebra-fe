@@ -4,7 +4,7 @@ import SizeButton from "./SizeButton";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  // children?: React.ReactNode;
+  // children: React.ReactNode;
 }
 
 function PurchaseModal({ isOpen, onClose }: ModalProps) {
