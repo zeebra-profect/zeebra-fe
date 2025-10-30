@@ -19,7 +19,7 @@ function LoginForm() {
 
   // 비밀번호 및 아이디 유효성 검사
   const passwordRegex =
-    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,12}$/;
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
   const isValid =
     form.identifier.trim().length > 0 &&
     passwordRegex.test(form.password.trim());
@@ -35,112 +35,114 @@ function LoginForm() {
 
     try {
       await login(form.identifier, form.password);
+      alert(`${form.identifier}님 반갑습니다 !`);
       navigate("/");
     } catch {
       console.error("로그인 실패");
-    }};
+    }
+  };
 
-    const onEnterSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter") {
-        handleSubmit(e as unknown as FormEvent<HTMLFormElement>);
-      }
-    };
+  const onEnterSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSubmit(e as unknown as FormEvent<HTMLFormElement>);
+    }
+  };
 
-    return (
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-sm mx-auto mt-10 p-6 bg-white rounded-2xl shadow"
-      >
-        <h2 className="text-2xl font-bold text-center mb-6">로그인</h2>
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-sm mx-auto mt-10 p-6 bg-white rounded-2xl shadow"
+    >
+      <h2 className="text-2xl font-bold text-center mb-6">로그인</h2>
 
-        {/* 아이디 */}
-        <div className="mb-4 focus-within:font-semibold">
-          <label htmlFor="identifier" className="block mb-1">
-            아이디
-          </label>
+      {/* 아이디 */}
+      <div className="mb-4 focus-within:font-semibold">
+        <label htmlFor="identifier" className="block mb-1">
+          아이디
+        </label>
+        <input
+          id="identifier"
+          name="identifier"
+          type="text"
+          value={form.identifier}
+          onChange={handleChange}
+          onKeyDown={onEnterSubmit}
+          maxLength={16}
+          required
+          className="w-full border-b-2 border-gray-300 outline-none py-2
+                     focus:border-b-4 focus:border-main-text transition-all h-5"
+        />
+      </div>
+
+      {/* 비밀번호 */}
+      <div className="mb-2 focus-within:font-semibold">
+        <label htmlFor="password" className="block mb-1">
+          비밀번호
+        </label>
+        <div className="relative">
           <input
-            id="identifier"
-            name="identifier"
-            type="text"
-            value={form.identifier}
+            id="password"
+            name="password"
+            type={showPw ? "text" : "password"}
+            value={form.password}
+            maxLength={20}
             onChange={handleChange}
             onKeyDown={onEnterSubmit}
-            maxLength={16}
             required
-            className="w-full border-b-2 border-gray-300 outline-none py-2
-                     focus:border-b-4 focus:border-main-text transition-all h-5"
-          />
-        </div>
-
-        {/* 비밀번호 */}
-        <div className="mb-2 focus-within:font-semibold">
-          <label htmlFor="password" className="block mb-1">
-            비밀번호
-          </label>
-          <div className="relative">
-            <input
-              id="password"
-              name="password"
-              type={showPw ? "text" : "password"}
-              value={form.password}
-              maxLength={12}
-              onChange={handleChange}
-              onKeyDown={onEnterSubmit}
-              required
-              minLength={8}
-              placeholder="8~12자"
-              className="w-full border-b-2 border-gray-300 outline-none py-2 pr-16
+            minLength={8}
+            placeholder="8~20자"
+            className="w-full border-b-2 border-gray-300 outline-none py-2 pr-16
                        focus:border-b-4  focus:border-main-text transition-all h-5 placeholder:text-grey2 font-normal"
-              aria-invalid={!isValid && form.password.length > 0}
-            />
-            <button
-              type="button"
-              onClick={() => setShowPw((s) => !s)}
-              className="absolute right-0 top-0 text-sm text-main-text"
-            >
-              {showPw ? "숨기기" : "표시"}
-            </button>
-          </div>
+            aria-invalid={!isValid && form.password.length > 0}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPw((s) => !s)}
+            className="absolute right-0 top-0 text-sm text-main-text"
+          >
+            {showPw ? "숨기기" : "표시"}
+          </button>
         </div>
+      </div>
 
-        {/* 에러 메시지 */}
-        {errMsg && <p className="text-red-500 text-sm mt-1">{errMsg}</p>}
+      {/* 에러 메시지 */}
+      {errMsg && <p className="text-red-500 text-sm mt-1">{errMsg}</p>}
 
-        {/* 로그인 버튼 */}
+      {/* 로그인 버튼 */}
+      <button
+        type="submit"
+        disabled={!isValid || loading}
+        className="mt-4 w-full py-2 rounded-lg text-white bg-main-text transition cursor-pointer hover:bg-main-text-dark"
+      >
+        {loading ? "로그인 중..." : "로그인"}
+      </button>
+
+      {/* 하단 액션들 */}
+      <div className="mt-4 flex items-center justify-between text-sm">
         <button
-          type="submit"
-          disabled={!isValid || loading}
-          className="mt-4 w-full py-2 rounded-lg text-white bg-main-text transition cursor-pointer hover:bg-main-text-dark"
+          type="button"
+          className="text-gray-600 hover:underline cursor-pointer"
+          onClick={() => alert("아이디 찾기 페이지로 이동 (라우팅 연결)")}
         >
-          {loading ? "로그인 중..." : `로그인`}
+          아이디 찾기
         </button>
-
-        {/* 하단 액션들 */}
-        <div className="mt-4 flex items-center justify-between text-sm">
-          <button
-            type="button"
-            className="text-gray-600 hover:underline cursor-pointer"
-            onClick={() => alert("아이디 찾기 페이지로 이동 (라우팅 연결)")}
-          >
-            아이디 찾기
-          </button>
-          <button
-            type="button"
-            className="text-gray-600 hover:underline cursor-pointer"
-            onClick={() => alert("비밀번호 찾기 페이지로 이동 (라우팅 연결)")}
-          >
-            비밀번호 찾기
-          </button>
-          <button
-            type="button"
-            className="ml-2 text-blue-600 font-medium hover:underline cursor-pointer"
-            onClick={() => navigate("/signup")}
-          >
-            회원가입
-          </button>
-        </div>
-      </form>
-    );
-  };
+        <button
+          type="button"
+          className="text-gray-600 hover:underline cursor-pointer"
+          onClick={() => alert("비밀번호 찾기 페이지로 이동 (라우팅 연결)")}
+        >
+          비밀번호 찾기
+        </button>
+        <button
+          type="button"
+          className="ml-2 text-blue-600 font-medium hover:underline cursor-pointer"
+          onClick={() => navigate("/signup")}
+        >
+          회원가입
+        </button>
+      </div>
+    </form>
+  );
+}
 
 export default LoginForm;
