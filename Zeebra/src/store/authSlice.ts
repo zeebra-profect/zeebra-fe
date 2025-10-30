@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { login, logout } from "../utils/auth";
 import { http } from "../utils/http";
 
-type User = {
+export type User = {
   memberId: number;
   userLoginId: string;
   memberName: string;
@@ -11,7 +11,7 @@ type User = {
   gender: string;
   memberBirth: string; // YYYY-MM-DD 형태로 옴
   createdTime: string; // localDateTime 형태로 옴
-  // profileImage: string // 추후 추가 예정
+  memberImage?: string | null;
 };
 
 type AuthState = {
