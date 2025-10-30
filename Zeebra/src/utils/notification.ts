@@ -22,6 +22,6 @@ export interface NotisRes {
 }
 
 export async function getNotifications(): Promise<NotisRes> {
-  const { data } = await http.get<NotisRes>("/notification/all");
+  const { data } = await http.get<NotisRes>("/notification/broadcast");
   return data;
 }
