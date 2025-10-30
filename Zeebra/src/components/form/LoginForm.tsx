@@ -35,6 +35,7 @@ function LoginForm() {
 
     try {
       await login(form.identifier, form.password);
+      alert(`${form.identifier}님 반갑습니다 !`);
       navigate("/");
     } catch {
       console.error("로그인 실패");
