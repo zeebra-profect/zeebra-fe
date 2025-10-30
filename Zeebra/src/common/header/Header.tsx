@@ -67,9 +67,9 @@ export default function Header() {
               />
             </div>
             {isAuthed ? (
-              <button onClick={handleLogout} className="cursor-pointer">
+              <p onClick={handleLogout} className="cursor-pointer">
                 로그아웃
-              </button>
+              </p>
             ) : (
               <Link to="/login">
                 <button className="cursor-pointer">로그인</button>
