@@ -9,15 +9,16 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: ProductDetail["data"] | undefined;
+  selectedColor: string;
 }
 
-function PurchaseModal({ isOpen, onClose, children }: ModalProps) {
+function PurchaseModal({ isOpen, onClose, children, selectedColor }: ModalProps) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const options = useAppSelector((state) => state.product.productOption?.data.sizeOptionResponses);
   const currentColor = children?.colorOptionResponses.find(
     (option: { colorOptionNameId: number; colorValue: string }) =>
-      option.colorValue === children.colorValue
+      option.colorValue === selectedColor
   );
 
   useEffect(() => {
@@ -29,7 +30,8 @@ function PurchaseModal({ isOpen, onClose, children }: ModalProps) {
         })
       );
     }
-  }, [currentColor]);
+    console.log("currentColor: ", currentColor)
+  }, [currentColor, selectedColor]);
 
   useEffect(() => {
     console.log("options: ", options);
@@ -59,7 +61,7 @@ function PurchaseModal({ isOpen, onClose, children }: ModalProps) {
             <p className="font-light text-sm/4">
               {children?.productDescription}
             </p>
-            <p className="font-light text-sm/4">{children?.colorValue}</p>
+            <p className="font-light text-sm/4">{selectedColor}</p>
           </div>
         </div>
 
