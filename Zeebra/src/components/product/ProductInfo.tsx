@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import like from "../../img/icons/like.png";
 import GroupChat from "../chat/GroupChat";
 import PurchaseModal from "./PurchaseModal";
@@ -6,9 +6,10 @@ import type { ProductDetail } from "@/utils/product";
 
 interface ProductInfoProps {
   productInfo: ProductDetail["data"] | undefined;
+  selectedColor: string;
 }
 
-function ProductInfo({ productInfo }: ProductInfoProps) {
+function ProductInfo({ productInfo, selectedColor }: ProductInfoProps) {
   const [isPurModalOpen, setIsPurModalOpen] = useState(false);
 
   return (
@@ -24,7 +25,7 @@ function ProductInfo({ productInfo }: ProductInfoProps) {
                 : null}
             </p>
             <p className="text-base md:text-lg font-normal">
-              {productInfo?.productName} {productInfo?.colorValue}
+              {productInfo?.productName} {selectedColor}
             </p>
             <p className="text-xs md:text-sm font-light text-grey2 mb-2 md:mb-2.5">
               {productInfo?.productDescription}
@@ -85,6 +86,7 @@ function ProductInfo({ productInfo }: ProductInfoProps) {
         isOpen={isPurModalOpen}
         onClose={() => setIsPurModalOpen(false)}
         children={productInfo}
+        selectedColor={selectedColor}
       />
     </>
   );

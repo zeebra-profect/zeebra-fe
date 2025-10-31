@@ -1,6 +1,28 @@
 import { useState } from "react";
 
+import detail1 from "../../img/test/detail1.jpg";
+import detail2 from "../../img/test/detail2.jpg";
+import detail3 from "../../img/test/detail3.jpg";
+import detail4 from "../../img/test/detail4.jpg";
+import detail5 from "../../img/test/detail5.jpg";
+import detail6 from "../../img/test/detail6.jpg";
+import detail7 from "../../img/test/detail7.jpg";
+import detail8 from "../../img/test/detail8.jpg";
+import detail9 from "../../img/test/detail9.jpg";
+
 function ProductMainImg({ imgs }: { imgs: string[] }) {
+    const detail = [
+    detail1,
+    detail2,
+    detail3,
+    detail4,
+    detail5,
+    detail6,
+    detail7,
+    detail8,
+    detail9,
+  ];
+
   const [curImgIdx, setCurImgIdx] = useState<number>(0);
   const changeImgRight = () => {
     setCurImgIdx((prev) => (prev + 1) % imgs.length);
@@ -26,7 +48,11 @@ function ProductMainImg({ imgs }: { imgs: string[] }) {
             className="max-h-[350px] max-w-[350px] md:max-h-[450px] md:max-w-[450px] lg:max-h-[560px] lg:max-w-[560px] object-contain"
             />
             :
-            null
+            <img
+            src={detail[curImgIdx]}
+            className="max-h-[350px] max-w-[350px] md:max-h-[450px] md:max-w-[450px] lg:max-h-[560px] lg:max-w-[560px] object-contain"
+            />
+
           }
           <button onClick={changeImgLeft} className="absolute top-1/2 -translate-y-1/2 z-10">
             <svg
@@ -55,10 +81,10 @@ function ProductMainImg({ imgs }: { imgs: string[] }) {
           </button>
         </div>
         <div className="w-[300px] md:w-[400px] lg:min-w-[500px] flex flex-row relative bottom-10">
-          {imgs.map((img, index) => (
+          {detail.map((img, index) => (
             <div
               key={index}
-              style={{ width: `${100 / imgs.length}%` }}
+              style={{ width: `${100 / detail.length}%` }}
               className={`h-0.5 md:h-[3px] ${
                 index === curImgIdx ? "bg-grey2" : "bg-gray-200"
               }`}

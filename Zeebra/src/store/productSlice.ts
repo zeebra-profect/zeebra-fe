@@ -29,6 +29,7 @@ export const fetchProductOption = createAsyncThunk<ProductOption, ProductOptions
   'product/fetchOption',
   async ({ productId, colorOptionNameId }) => {
     const response = await (getProductOptionAPI(productId, colorOptionNameId));
+    console.log("product/fetchOption", productId, colorOptionNameId, "response : ", response)
     return response;
   }
 )
