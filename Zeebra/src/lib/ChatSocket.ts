@@ -1,4 +1,4 @@
-class NotificationSocket {
+class ChatSocket {
   url: string;
   socket: WebSocket | null;
 
@@ -10,7 +10,7 @@ class NotificationSocket {
 connect() {
   console.log("🔵 WebSocket 연결 시도...");
   
-  this.socket = new WebSocket('ws://localhost:8080/ws/notification');
+  this.socket = new WebSocket('ws://localhost:8080/ws/chat');
   // this.socket = new WebSocket('ws://localhost:8080/ws/notification');
 
   this.socket.onopen = () => {
@@ -38,8 +38,8 @@ connect() {
   }
 }
 
-const notificationSocket = new NotificationSocket(
-  "ws://localhost:8080/ws/notification"
+const chatSocket = new ChatSocket(
+  "ws://localhost:8080/ws/chat"
 );
 
-export default notificationSocket;
+export default chatSocket;
