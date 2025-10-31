@@ -39,7 +39,10 @@ function ProductMainImg({ imgs }: { imgs: string[] }) {
               <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" />
             </svg>
           </button>
-          <button onClick={changeImgRight} className="absolute top-1/2 -translate-y-1/2 z-10 right-0.5">
+          <button
+            onClick={changeImgRight}
+            className="absolute top-1/2 -translate-y-1/2 z-10 right-0.5"
+          >
             <svg
               width="24"
               height="24"
