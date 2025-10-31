@@ -1,14 +1,20 @@
 import { useState } from "react";
-import SizeButton from "./SizeButton";
+import { useNavigate } from "react-router-dom";
+import type { ProductDetail } from "@/utils/product";
+import OptionButton from "./OptionButton";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  // children: React.ReactNode;
+  children: ProductDetail['data'] | undefined;
 }
 
-function PurchaseModal({ isOpen, onClose }: ModalProps) {
+function PurchaseModal({ isOpen, onClose, children }: ModalProps) {
+  
+  const navigate = useNavigate();
+  
   const [checkedButton, setCheckedButton] = useState<number | null>(null);
+
   if (!isOpen) return null;
 
   return (
@@ -38,19 +44,12 @@ function PurchaseModal({ isOpen, onClose }: ModalProps) {
         </div>
 
         <div className="flex flex-row flex-wrap gap-x-3 gap-y-2 overflow-y-auto max-h-[200px] justify-center scrollbar">
-          <SizeButton
+          <OptionButton
             size={230}
             price={110000}
             key={1}
             onClick={() => setCheckedButton(1)}
             isSelected={checkedButton === 1}
-          />
-          <SizeButton
-            size={230}
-            price={110000}
-            key={2}
-            onClick={() => setCheckedButton(2)}
-            isSelected={checkedButton === 2}
           />
         </div>
         <div className="mt-5 flex flex-row flex-2">
@@ -59,7 +58,7 @@ function PurchaseModal({ isOpen, onClose }: ModalProps) {
               <p className="text-base md:text-lg font-bold">장바구니 담기</p>
             </button>
             <button className="button-productDetail2 bg-orange justify-center">
-              <p className="text-base md:text-lg font-bold">즉시 구매하기</p>
+              <p className="text-base md:text-lg font-bold" onClick={() => navigate('/order')}>즉시 구매하기</p>
             </button>
           </div>
         </div>

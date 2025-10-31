@@ -73,6 +73,7 @@ function ProductInfo({productInfo} : ProductInfoProps) {
       <PurchaseModal
         isOpen={isPurModalOpen}
         onClose={() => setIsPurModalOpen(false)}
+        children={productInfo}
       />
     </>
   );
