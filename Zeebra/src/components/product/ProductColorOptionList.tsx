@@ -1,5 +1,5 @@
 import type { ProductDetail } from "@/utils/product";
-import ProductColorOption from "./ProductColorOption";
+import ProductColorOption from "./productColorOption";
 
 interface ProductColorOptionListProps {
   colorOptionResponses: ProductDetail["data"]["colorOptionResponses"]; // 적절한 타입으로 변경
