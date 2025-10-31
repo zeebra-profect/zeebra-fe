@@ -1,18 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { ProductDetail } from "@/utils/product";
 import OptionButton from "./OptionButton";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchProductOption } from "@/store/productSlice";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  children: ProductDetail['data'] | undefined;
+  children: ProductDetail["data"] | undefined;
+  selectedColor: string;
 }
 
-function PurchaseModal({ isOpen, onClose, children }: ModalProps) {
-  
+function PurchaseModal({ isOpen, onClose, children, selectedColor }: ModalProps) {
   const navigate = useNavigate();
-  
+  const dispatch = useAppDispatch();
+  const options = useAppSelector((state) => state.product.productOption?.data.sizeOptionResponses);
+  const currentColor = children?.colorOptionResponses.find(
+    (option: { colorOptionNameId: number; colorValue: string }) =>
+      option.colorValue === selectedColor
+  );
+
+  useEffect(() => {
+    if (children?.productId && currentColor?.colorOptionNameId) {
+      dispatch(
+        fetchProductOption({
+          productId: children?.productId,
+          colorOptionNameId: currentColor.colorOptionNameId,
+        })
+      );
+    }
+    console.log("currentColor: ", currentColor)
+  }, [currentColor, selectedColor]);
+
+  useEffect(() => {
+    console.log("options: ", options);
+  }, [options]);
+
   const [checkedButton, setCheckedButton] = useState<number | null>(null);
 
   if (!isOpen) return null;
@@ -31,26 +55,29 @@ function PurchaseModal({ isOpen, onClose, children }: ModalProps) {
           <p className="font-light text-xs">(가격단위:원)</p>
         </div>
         <div className="flex flex-row gap-x-2.5 items-center">
-          <img className="w-17 h-17" />
+          <img className="w-17 h-17" src={children?.productThumbnail}/>
           <div className="text-left">
-            <p className="font-normal text-lg">
-              Nike Air Force 1 ‘07 Low White
+            <p className="font-normal text-lg">{children?.productName}</p>
+            <p className="font-light text-sm/4">
+              {children?.productDescription}
             </p>
-            <pre className="font-light text-sm/4">
-              {`나이키 에어포스 1 ‘07 로우 화이트
-315122-111/CW2288-111`}
-            </pre>
+            <p className="font-light text-sm/4">{selectedColor}</p>
           </div>
         </div>
 
         <div className="flex flex-row flex-wrap gap-x-3 gap-y-2 overflow-y-auto max-h-[200px] justify-center scrollbar">
-          <OptionButton
-            size={230}
-            price={110000}
-            key={1}
-            onClick={() => setCheckedButton(1)}
-            isSelected={checkedButton === 1}
+          {
+            options?.map(option => (
+            <OptionButton
+            size={String(option.sizeValue)}
+            price={option.lowPriceOfSize}
+            key={option.productOptionId}
+            onClick={() => setCheckedButton(option.productOptionId)}
+            isSelected={checkedButton === option.productOptionId}
           />
+
+          ))
+          }
         </div>
         <div className="mt-5 flex flex-row flex-2">
           <div className="flex flex-col sm:flex-row gap-y-2 gap-x-2 md:gap-x-2.5 w-full">
@@ -58,7 +85,12 @@ function PurchaseModal({ isOpen, onClose, children }: ModalProps) {
               <p className="text-base md:text-lg font-bold">장바구니 담기</p>
             </button>
             <button className="button-productDetail2 bg-orange justify-center">
-              <p className="text-base md:text-lg font-bold" onClick={() => navigate('/order')}>즉시 구매하기</p>
+              <p
+                className="text-base md:text-lg font-bold"
+                onClick={() => navigate("/order")}
+              >
+                즉시 구매하기
+              </p>
             </button>
           </div>
         </div>
