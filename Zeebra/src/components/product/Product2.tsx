@@ -16,7 +16,7 @@ function Product2() {
           {/* <button className="shrink-0 ml-1">
                         <img src={like} className="w-[13px] h-[11px] md:w-[15px] md:h-[13px]" />
                     </button> */}
-          <FavoriteBtn />
+          <FavoriteBtn productId={1} />
           {/* // 위에 고쳐야함 */}
         </div>
         <p className="font-semibold text-[10px] md:text-xs">111,000원</p>
