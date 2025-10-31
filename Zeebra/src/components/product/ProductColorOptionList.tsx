@@ -1,4 +1,5 @@
 import type { ProductDetail } from "@/utils/product";
+import ProductColorOption from './ProductColorOption';
 
 interface ProductColorOptionListProps {
   colorOptionResponses: ProductDetail["data"]["colorOptionResponses"]; // 적절한 타입으로 변경
@@ -14,11 +15,11 @@ function ProductColorOptionList({
   return (
     <div className="pl-0 md:pl-10 flex flex-row gap-x-1">
       {colorOptionResponses?.map((option) => (
-        // <ProductColorOption
-        //   value={option.colorValue}
-        //   isSelected={selectedColor === option.colorValue}
-        //   onClick={() => onColorChange(option.colorValue)}
-        // />
+        <ProductColorOption
+          value={option.colorValue}
+          isSelected={selectedColor === option.colorValue}
+          onClick={() => onColorChange(option.colorValue)}
+        />
       ))}
     </div>
   );
