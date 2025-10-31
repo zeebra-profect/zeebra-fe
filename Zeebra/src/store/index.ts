@@ -4,6 +4,7 @@ import authSlice from "./authSlice";
 
 const rootReducer = combineReducers(
     {
+        
         notification: notificationSlice,
         auth: authSlice,
     }

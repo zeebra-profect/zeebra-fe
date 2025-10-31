@@ -36,7 +36,10 @@ function ProductMainImg() {
             src={imgs[curImgIdx]}
             className="max-h-[350px] max-w-[350px] md:max-h-[450px] md:max-w-[450px] lg:max-h-[560px] lg:max-w-[560px] object-contain"
           />
-          <button onClick={changeImgLeft} className="absolute top-1/2 -translate-y-1/2 z-10">
+          <button
+            onClick={changeImgLeft}
+            className="absolute top-1/2 -translate-y-1/2 z-10"
+          >
             <svg
               width="24"
               height="24"
@@ -47,7 +50,10 @@ function ProductMainImg() {
               <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" />
             </svg>
           </button>
-          <button onClick={changeImgRight} className="absolute top-1/2 -translate-y-1/2 z-10 right-0.5">
+          <button
+            onClick={changeImgRight}
+            className="absolute top-1/2 -translate-y-1/2 z-10 right-0.5"
+          >
             <svg
               width="24"
               height="24"
