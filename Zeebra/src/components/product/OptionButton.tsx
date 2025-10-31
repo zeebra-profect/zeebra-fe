@@ -1,11 +1,11 @@
-interface SizeButtonProps {
+interface OptionButtonProps {
   size: number;
   price: number;
   onClick: () => void;
   isSelected: boolean;
 }
 
-function SizeButton({ size, price, onClick, isSelected }: SizeButtonProps) {
+function OptionButton({ size, price, onClick, isSelected }: OptionButtonProps) {
   const formatted = price.toLocaleString();
 
   return (
@@ -19,4 +19,4 @@ function SizeButton({ size, price, onClick, isSelected }: SizeButtonProps) {
   );
 }
 
-export default SizeButton;
+export default OptionButton;
