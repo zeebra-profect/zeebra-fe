@@ -20,7 +20,7 @@ function ProductDetailPage() {
   }, [params.productId, dispatch]);
 
   useEffect(() => {
-    console.log("product: ", product);
+    // console.log("product: ", product);
   }, [product]);
 
   return (

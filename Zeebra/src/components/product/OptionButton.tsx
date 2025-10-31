@@ -1,5 +1,5 @@
 interface OptionButtonProps {
-  size: number;
+  size: string;
   price: number;
   onClick: () => void;
   isSelected: boolean;
