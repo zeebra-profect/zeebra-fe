@@ -4,6 +4,7 @@ import authSlice from "./authSlice";
 import productSlice from './productSlice';
 import cartSlice from './cartSlice';
 import orderSlice from './orderSlice';
+import chatSlice from './chatSlice';
 
 const rootReducer = combineReducers(
     {
@@ -13,6 +14,8 @@ const rootReducer = combineReducers(
         product: productSlice,
         cart: cartSlice,
         order: orderSlice,
+        chat: chatSlice,
+        
     }
 )
 
