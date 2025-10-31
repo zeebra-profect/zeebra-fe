@@ -1,29 +1,29 @@
-import detail1 from "../../img/test/detail1.jpg";
-import detail2 from "../../img/test/detail2.jpg";
-import detail3 from "../../img/test/detail3.jpg";
-import detail4 from "../../img/test/detail4.jpg";
-import detail5 from "../../img/test/detail5.jpg";
-import detail6 from "../../img/test/detail6.jpg";
-import detail7 from "../../img/test/detail7.jpg";
-import detail8 from "../../img/test/detail8.jpg";
-import detail9 from "../../img/test/detail9.jpg";
+// import detail1 from "../../img/test/detail1.jpg";
+// import detail2 from "../../img/test/detail2.jpg";
+// import detail3 from "../../img/test/detail3.jpg";
+// import detail4 from "../../img/test/detail4.jpg";
+// import detail5 from "../../img/test/detail5.jpg";
+// import detail6 from "../../img/test/detail6.jpg";
+// import detail7 from "../../img/test/detail7.jpg";
+// import detail8 from "../../img/test/detail8.jpg";
+// import detail9 from "../../img/test/detail9.jpg";
 
 import { useState } from "react";
 
-function ProductDetailImg() {
-  const detail = [
-    detail1,
-    detail2,
-    detail3,
-    detail4,
-    detail5,
-    detail6,
-    detail7,
-    detail8,
-    detail9,
-  ];
+function ProductDetailImg({ imgs }: { imgs: string[] }) {
+  // const detail = [
+  //   detail1,
+  //   detail2,
+  //   detail3,
+  //   detail4,
+  //   detail5,
+  //   detail6,
+  //   detail7,
+  //   detail8,
+  //   detail9,
+  // ];
 
-  const [imgs, _setImgs] = useState<string[]>(detail);
+  // const [imgs, _setImgs] = useState<string[]>(detail);
   const [bHeight, setBHeight] = useState<number>(1600);
   
   const more = () => {
