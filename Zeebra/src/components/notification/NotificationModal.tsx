@@ -21,18 +21,18 @@ function NotificationModal({ isOpen, onClose }: ModalProps) {
 
   useEffect(() => {
     dispatch(fetchNotifications());
-    notificationSocket.connect();
+    // notificationSocket.connect();
 
-    notificationSocket.socket!.onmessage = (event: MessageEvent) => {
-      const newNotification: NotiRes = JSON.parse(event.data);
-      console.log("📨 받은 데이터: ", newNotification);
-      console.log("createdTime:", newNotification.createdTime); // 👈 이거 확인
-      dispatch(getNotification(newNotification));
-    };
+    // notificationSocket.socket!.onmessage = (event: MessageEvent) => {
+    //   const newNotification: NotiRes = JSON.parse(event.data);
+    //   console.log("📨 받은 데이터: ", newNotification);
+    //   console.log("createdTime:", newNotification.createdTime); // 👈 이거 확인
+    //   dispatch(getNotification(newNotification));
+    // };
 
-    return () => {
-      notificationSocket.disconnect();
-    };
+    // return () => {
+    //   notificationSocket.disconnect();
+    // };
   }, []);
 
   const createTestNoti = () => {
