@@ -96,20 +96,22 @@ export default function Header() {
 
         {/* 검색 바 */}
         <div className="w-full lg:w-[1200px] flex-row flex items-center justify-end gap-x-[5px] mt-auto relative top-px">
-          <input
-            type="text"
-            id="search-input"
-            name="search-input"
-            className="border-b-3 outline-none w-[120px] md:w-[200px] relative left-5
+          <Link to="/search">
+            <input
+              type="text"
+              id="search-input"
+              name="search-input"
+              className="border-b-3 outline-none w-[120px] md:w-[200px] relative left-5
                     placeholder:text-grey pr-5 text-sm md:text-base"
-          />
-          <button className="z-[3px] cursor-pointer">
-            <img
-              src={searchIcon}
-              alt="searchIcon"
-              className="w-[13px] h-[13px] md:w-[15px] md:h-[15px]"
             />
-          </button>
+            <button className="z-[3px] cursor-pointer">
+              <img
+                src={searchIcon}
+                alt="searchIcon"
+                className="w-[13px] h-[13px] md:w-[15px] md:h-[15px]"
+              />
+            </button>
+          </Link>
         </div>
       </div>
     </>
