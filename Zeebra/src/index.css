@@ -122,6 +122,16 @@
     font-size: 15px;
   }
 
+  .button-color {
+    cursor: pointer;
+    width: 70px;
+    height: 25px;
+    /* background-color: white; */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    font-size: 12px;
+  }
+
   .button-smallButton {
     cursor: pointer;
     width: 70px;
