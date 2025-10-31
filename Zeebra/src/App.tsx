@@ -62,7 +62,7 @@ function App() {
         {/* 레이아웃1: 기본 페이지들 */}
         <Route path="/" element={<Layout1 />}>
           <Route index element={<Main />} />
-          <Route path="product/:productId" element={<ProductDetailPage />} />
+          <Route path="products/:productId" element={<ProductDetailPage />} />
           <Route
             path="order/result"
             element={<OrderResultPage result={false} />}
