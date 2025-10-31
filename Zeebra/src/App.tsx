@@ -23,6 +23,8 @@ import Signup from "./pages/users/Signup";
 import Login from "./pages/users/Login";
 import OrderHistoryPage from "./pages/myPage/OrderHistoryPage";
 import ShopPage from "./pages/shop/ShopPage";
+import ShopContent from "./pages/shop/ShopContent";
+import ShopResultPage from 
 import Search from "./pages/search/Search";
 import InfoPage from "./pages/myPage/InfoPage";
 
@@ -67,7 +69,13 @@ function App() {
             path="order/result"
             element={<OrderResultPage result={false} />}
           />
-          <Route path="shopPage" element={<ShopPage />} />
+          <Route path="shopPage" element={<ShopPage />}>
+            {/* 1. URL: /shopPage (메인 페이지 내용) */}
+            <Route index element={<ShopContent />} />
+
+            {/* 2. URL: /shopPage/results (검색 결과 페이지) */}
+            <Route path="results" element={<SearchResultsPage />} />
+          </Route>
 
           {/* 🔒 보호 라우트: 마이페이지 */}
 
