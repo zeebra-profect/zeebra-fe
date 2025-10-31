@@ -10,8 +10,8 @@ import detail7 from "../../img/test/detail7.jpg";
 import detail8 from "../../img/test/detail8.jpg";
 import detail9 from "../../img/test/detail9.jpg";
 
-function ProductMainImg({ imgs }: { imgs: string[] }) {
-    const detail = [
+function ProductMainImg({ imgs }: { imgs?: string[] }) {
+  const detail = [
     detail1,
     detail2,
     detail3,
@@ -23,37 +23,32 @@ function ProductMainImg({ imgs }: { imgs: string[] }) {
     detail9,
   ];
 
+  // imgs가 없거나 빈 배열이면 detail 사용
+  const images = imgs && imgs.length > 0 ? imgs : detail;
+
   const [curImgIdx, setCurImgIdx] = useState<number>(0);
+  
   const changeImgRight = () => {
-    setCurImgIdx((prev) => (prev + 1) % imgs.length);
+    setCurImgIdx((prev) => (prev + 1) % images.length);
   };
 
   const changeImgLeft = () => {
     setCurImgIdx((prev) => {
-      if (prev === 0) return imgs.length - 1;
-      else return (prev - 1) % imgs.length;
+      if (prev === 0) return images.length - 1;
+      else return (prev - 1) % images.length;
     });
   };
-
 
   return (
     <div className="pl-0 md:pl-10 flex flex-col gap-y-5">
       {/* 이미지 창고 */}
       <div className="max-h-[350px] max-w-[350px] md:max-h-[450px] md:max-w-[450px] lg:max-h-[560px] lg:max-w-[560px] flex flex-col justify-center items-center bg-gray-100">
         <div className="flex flex-row w-full relative">
-          {
-            imgs?
-            <img
-            src={imgs[curImgIdx]}
+          <img
+            src={images[curImgIdx]}
+            alt={`제품 이미지 ${curImgIdx + 1}`}
             className="max-h-[350px] max-w-[350px] md:max-h-[450px] md:max-w-[450px] lg:max-h-[560px] lg:max-w-[560px] object-contain"
-            />
-            :
-            <img
-            src={detail[curImgIdx]}
-            className="max-h-[350px] max-w-[350px] md:max-h-[450px] md:max-w-[450px] lg:max-h-[560px] lg:max-w-[560px] object-contain"
-            />
-
-          }
+          />
           <button onClick={changeImgLeft} className="absolute top-1/2 -translate-y-1/2 z-10">
             <svg
               width="24"
@@ -81,10 +76,10 @@ function ProductMainImg({ imgs }: { imgs: string[] }) {
           </button>
         </div>
         <div className="w-[300px] md:w-[400px] lg:min-w-[500px] flex flex-row relative bottom-10">
-          {detail.map((img, index) => (
+          {images.map((_, index) => (
             <div
               key={index}
-              style={{ width: `${100 / detail.length}%` }}
+              style={{ width: `${100 / images.length}%` }}
               className={`h-0.5 md:h-[3px] ${
                 index === curImgIdx ? "bg-grey2" : "bg-gray-200"
               }`}

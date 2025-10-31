@@ -32,11 +32,7 @@ function ProductDetailPage() {
     <div className="flex flex-col w-full lg:w-[1200px] gap-y-[30px]">
       <div className="flex flex-col lg:flex-row justify-center gap-y-6 lg:gap-x-10">
         <div className="flex flex-col gap-y-5">
-          {product?.images ? (
-            <ProductMainImg imgs={product.images} />
-          ) : (
-            <ProductMainImg imgs={null} />
-          )}
+          <ProductMainImg imgs={product?.images} />
           {product?.colorOptionResponses != null ? (
             <ProductColorOptionList
               colorOptionResponses={product.colorOptionResponses}
@@ -46,7 +42,7 @@ function ProductDetailPage() {
           ) : null}
         </div>
         <div className="hidden lg:block h-[865px] w-px bg-grey"></div>
-        <ProductInfo productInfo={product} selectedColor={selectedColor}/>
+        <ProductInfo productInfo={product} selectedColor={selectedColor} />
       </div>
       <RecommendedProductList />
       {product?.images ? <ProductDetailImg imgs={product.images} /> : null}

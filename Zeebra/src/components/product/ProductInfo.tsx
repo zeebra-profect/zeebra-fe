@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import like from "../../img/icons/like.png";
 import GroupChat from "../chat/GroupChat";
 import PurchaseModal from "./PurchaseModal";
