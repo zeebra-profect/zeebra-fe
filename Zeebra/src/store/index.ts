@@ -7,6 +7,7 @@ import orderSlice from './orderSlice';
 
 const rootReducer = combineReducers(
     {
+        
         notification: notificationSlice,
         auth: authSlice,
         product: productSlice,
