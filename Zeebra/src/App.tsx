@@ -24,7 +24,7 @@ import Login from "./pages/users/Login";
 import OrderHistoryPage from "./pages/myPage/OrderHistoryPage";
 import ShopPage from "./pages/shop/ShopPage";
 import ShopContent from "./pages/shop/ShopContent";
-// import ShopResultPage from "@/pages/shop/ShopResultsPage"
+import ShopResultsPage from "@/pages/shop/ShopResultsPage";
 import Search from "@/pages/search/Search";
 import InfoPage from "./pages/myPage/InfoPage";
 
@@ -74,7 +74,7 @@ function App() {
             <Route index element={<ShopContent />} />
 
             {/* 2. URL: /shopPage/results (검색 결과 페이지) */}
-            {/* <Route path="results" element={<SearchResultsPage />} /> */}
+            <Route path="results" element={<ShopResultsPage />} />
           </Route>
 
           {/* 🔒 보호 라우트: 마이페이지 */}
