@@ -77,3 +77,18 @@ export async function getProducts(
 
   return res.data;
 }
+
+export async function searchProducts(
+  keyword: string,
+  page: number = 0,
+  size: number = 10
+): Promise<SearchRes> {
+  const { data } = await http.get<SearchRes>(`/products`, {
+    params: {
+      keyword,
+      page,
+      size,
+    },
+  });
+  return data;
+}
