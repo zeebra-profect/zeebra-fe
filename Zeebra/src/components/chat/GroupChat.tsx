@@ -37,7 +37,6 @@ function GroupChat({ productId }: { productId: number | undefined }) {
   }, [roomInfo, dispatch]);
 
   // 소켓 관련
-
   useEffect(() => {
     if (!roomInfo?.chatRoomId) return;
 
@@ -77,20 +76,7 @@ function GroupChat({ productId }: { productId: number | undefined }) {
 
   return (
     <div className="w-full lg:max-w-[520px] h-[400px] md:h-[500px] lg:h-[600px] rounded-[20px] bg-gray-100 flex flex-col">
-      {/* 채팅 메시지 영역 - flex-1로 남은 공간 차지 */}
       <div className="flex-1 overflow-y-auto scrollbar p-3">
-        {/* {chatHistory?.content.map((chat) => (
-          <Message
-            key={chat.messageId}
-            productId={Number(productId)}
-            memberId={chat.senderMemberId}
-            myMemberId={Number(myMemberId?.memberId)}
-            content={chat.content}
-            time={chat.createTime}
-            nickName={String(myMemberId?.nickname)}
-            photo={String(myMemberId?.memberImage)}
-          />
-        ))} */}
         {allMessages.map((chat) => (
           <Message
             key={chat.messageId}
