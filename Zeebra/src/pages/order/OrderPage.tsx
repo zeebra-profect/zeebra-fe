@@ -2,6 +2,9 @@ import OrderItem from "../../components/order/OrderItem";
 import OrderSummary from "../../components/order/OrderSummary";
 
 function OrderPage() {
+
+  
+
   return (
     <>
       <div className="flex flex-col w-full max-w-[660px] text-center text-main-text">
