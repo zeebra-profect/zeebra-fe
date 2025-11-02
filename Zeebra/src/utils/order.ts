@@ -1,13 +1,8 @@
 import { http } from './http';
 
 export interface OrderReq {
-  ClientRequestId: string;
-  cartId: number;
-  salesItem: {
-    salesId: number;
-    quantity: number;
-    price: number;
-  };
+	clientRequestId: string;
+  productOptionId: number;
 }
 
 export interface OrderRes {

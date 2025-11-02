@@ -97,7 +97,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route element={<Layout4 />}>
               <Route path="cart" element={<CartPage />} />
-              <Route path="order" element={<OrderPage />} />
+              <Route path="orders/:orderId" element={<OrderPage />} />
             </Route>
           </Route>
         </Route>
