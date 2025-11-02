@@ -16,6 +16,7 @@ function ProductColorOptionList({
     <div className="pl-0 md:pl-10 flex flex-row gap-x-1">
       {colorOptionResponses?.map((option) => (
         <ProductColorOption
+          key={option.colorOptionNameId}
           value={option.colorValue}
           isSelected={selectedColor === option.colorValue}
           onClick={() => onColorChange(option.colorValue)}

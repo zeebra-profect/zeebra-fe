@@ -1,45 +1,87 @@
-class ChatSocket {
-  url: string;
-  socket: WebSocket | null;
+import SockJS from "sockjs-client";
+import { Client, type IMessage } from "@stomp/stompjs";
+import type { ChatMessage } from "@/utils/chat";
 
-  constructor(url: string) {
-    this.url = url;
-    this.socket = null;
+class ChatWebSocket {
+  private client: Client | null = null;
+
+  connect() {
+    // SockJS 연결 - 쿠키 자동 전송
+    const socket = new SockJS("http://localhost:8080/ws/chat");
+
+    this.client = new Client({
+      webSocketFactory: () => socket as unknown,
+      debug: (str) => {
+        console.log("STOMP: " + str);
+      },
+      reconnectDelay: 5000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000,
+    });
+
+    this.client.onConnect = () => {
+      console.log("✅ WebSocket 연결 성공");
+    };
+
+    this.client.onStompError = (frame) => {
+      console.error("❌ STOMP 에러:", frame);
+    };
+
+    this.client.activate();
   }
 
-connect() {
-  console.log("🔵 WebSocket 연결 시도...");
+  // 채팅방 구독
+  subscribe(roomId: number, callback: (message: ChatMessage) => void) {
+    if (!this.client) {
+      console.error("WebSocket not connected");
+      return;
+    }
+
+    this.client.subscribe(`/sub/chat/room/${roomId}`, (message: IMessage) => {
+      const chatMessage = JSON.parse(message.body);
+      callback(chatMessage);
+    });
+  }
+
+  // 메시지 전송
+sendMessage(
+  chatRoomId: number,
+  content: string,
+  messageType: 'TEXT' | 'IMAGE' = 'TEXT',
+  imageUrl?: string
+) {
+  console.log('1. 전송 시도:', { chatRoomId, content, messageType });
   
-  this.socket = new WebSocket('ws://localhost:8080/ws/chat');
-  // this.socket = new WebSocket('ws://localhost:8080/ws/notification');
+  if (!this.client) {
+    console.error('❌ client 없음');
+    return;
+  }
+  
+  if (!this.client.connected) {
+    console.error('❌ 연결 안 됨');
+    return;
+  }
+  
+  console.log('2. 전송 중...');
 
-  this.socket.onopen = () => {
-    console.log("✅ 웹소켓 연결됨");
-  };
-
-  this.socket.onmessage = (event: MessageEvent) => {
-    const data = JSON.parse(event.data);
-    console.log("📨 받은 데이터: ", data);
-  };
-
-  this.socket.onerror = (error: Event) => {
-    console.error("❌ 웹소켓 에러: ", error);
-  };
-
-  this.socket.onclose = () => {
-    console.log("🔴 웹소켓 연결 끊김");
-  };
+  this.client.publish({
+    destination: '/pub/chat/message',
+    body: JSON.stringify({
+      chatRoomId,
+      messageType,
+      content,
+      imageUrl: imageUrl || null
+    }),
+  });
+  
+  console.log('3. 전송 완료!');
 }
-  disconnect(): void {
-    if (this.socket) {
-      this.socket.close();
-      this.socket = null;
+
+  disconnect() {
+    if (this.client) {
+      this.client.deactivate();
     }
   }
 }
 
-const chatSocket = new ChatSocket(
-  "ws://localhost:8080/ws/chat"
-);
-
-export default chatSocket;
+export const chatWebSocket = new ChatWebSocket();
