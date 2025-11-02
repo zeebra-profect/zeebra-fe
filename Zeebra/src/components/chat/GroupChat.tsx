@@ -47,11 +47,13 @@ function GroupChat({ productId }: { productId: number | undefined }) {
         {chatHistory?.content.map((chat) => (
           <Message
             key={chat.messageId}
+            productId={Number(productId)}
             memberId={chat.senderMemberId}
             myMemberId={Number(myMemberId?.memberId)}
             content={chat.content}
             time={chat.createTime}
             nickName={String(myMemberId?.nickname)}
+            photo={String(myMemberId?.memberImage)}
           />
         ))}
       </div>

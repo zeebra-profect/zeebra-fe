@@ -16,21 +16,19 @@ const initialState: ChatState = {
   messages: null,
 };
 
-// ✅ 반환 타입을 PageData로 변경
 export const fetchChatMessages = createAsyncThunk<PageData, ChatMessagesReq>(
     'chat/fetchChatHistory',
     async ({roomId, req}) => {
         const response = await getChatHistoryAPI(roomId, req);
-        return response.data;  // ← PageData 반환
+        return response.data;
     }
 )
 
-// ✅ 이것도 동일하게 수정
 export const fetchChatRoom = createAsyncThunk<ChatRoomResponse, ChatRoomReq>(
     'chat/fetchChatRoom',
     async (req) => {
         const response = await getOrCreateChatRoomAPI(req);
-        return response.data;  // ← ChatRoomResponse 반환
+        return response.data;
     }
 )
 
