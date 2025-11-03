@@ -11,10 +11,10 @@ const ALL_PRODUCTS_KEYWORD = "";
 function ShopContent() {
   const location = useLocation();
   const [searchParams] = useSearchParams();
-
   const [products, setProducts] = useState<ProductDetailResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  let response;
 
   useEffect(() => {
     // 1. location.state로 전달된 데이터가 있으면 먼저 사용 (검색 결과 페이지 이동 시)
@@ -48,7 +48,7 @@ function ShopContent() {
 
       // 🚨 중요: 이 getProducts API가 빈 문자열("") 또는 null 키워드일 때
       //          DB의 전체 상품 목록을 반환하도록 백엔드가 구현되어 있어야 합니다.
-      const response = await getProducts(keyword, 0, 20);
+      response = await getProducts(keyword, 0, 20);
       setProducts(response.data.productDetailResponses);
     } catch (err) {
       setError("상품 목록을 불러오는 중 오류가 발생했습니다.");
@@ -57,6 +57,10 @@ function ShopContent() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    console.log("asfsdf: ", response);
+  }, [response]);
 
   return (
     <div className="w-full flex flex-col items-center mt-6">
