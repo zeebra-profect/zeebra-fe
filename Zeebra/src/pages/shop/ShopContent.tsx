@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import SearchResultsList from "../search/SearchResultsList";
 import { getProducts } from "@/utils/search"; // 'getProducts' 함수 재사용 (모든 상품을 가져오는 API로 가정)
-import type { ProductDetailResponse } from "@/utils/search";
+import type { ProductDetailResponse, SearchReq } from "@/utils/search";
 
 // 🚨 중요: 모든 상품을 가져올 때 사용할 기본 키워드 값.
 // 서버에서 키워드가 'null' 또는 '빈 문자열'일 때 모든 상품을 반환하도록 설계되어 있어야 합니다.
@@ -41,14 +41,24 @@ function ShopContent() {
   }, [location.state, searchParams]); // 의존성 배열 유지
 
   // ✅ fetchProducts 함수는 모든 상품 로드와 키워드 검색 모두를 처리하도록 재활용
-  const fetchProducts = async (keyword: string) => {
+  const fetchProducts = async (keyword2: string) => {
     try {
       setLoading(true);
       setError(null);
-
+      const form: SearchReq = {
+        keyWord: keyword2,
+        categoryIds: null,
+        brandIds: null,
+        productSort: null,
+        pageable: {
+          page: 10,
+          size: 30,
+          sort: "createdAt,desc",
+        },
+      };
       // 🚨 중요: 이 getProducts API가 빈 문자열("") 또는 null 키워드일 때
       //          DB의 전체 상품 목록을 반환하도록 백엔드가 구현되어 있어야 합니다.
-      response = await getProducts(keyword, 0, 20);
+      response = await getProducts(form);
       setProducts(response.data.productDetailResponses);
     } catch (err) {
       setError("상품 목록을 불러오는 중 오류가 발생했습니다.");

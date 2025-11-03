@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import RecCategory from "../../components/category/RecCategory";
-import { getProducts, type SearchRes } from "@/utils/search";
+import { getProducts, type SearchReq, type SearchRes } from "@/utils/search";
 
 // ======================================================================
 // ⚛️ Search 컴포넌트
@@ -42,11 +42,22 @@ function Search() {
     console.log("📢 실제 검색어:", searchTerm);
 
     try {
-      const page = 0;
-      const size = 10;
-      const sortCriteria = ["createdAt,desc"];
+      // const page = 0;
+      // const size = 10;
+      // const sortCriteria = ["createdAt,desc"];
+      const form: SearchReq = {
+        keyWord: q,
+        categoryIds: null,
+        brandIds: null,
+        productSort: null,
+        pageable: {
+          page: 10,
+          size: 30,
+          sort: "createdAt,desc",
+        },
+      };
 
-      const result = await getProducts(q.trim(), page, size, sortCriteria);
+      const result = await getProducts(form);
 
       setSearchResults(result);
 
