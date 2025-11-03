@@ -27,6 +27,7 @@ import ShopContent from "./pages/shop/ShopContent";
 import ShopResultsPage from "@/pages/shop/ShopResultsPage";
 import Search from "@/pages/search/Search";
 import InfoPage from "./pages/myPage/InfoPage";
+import Favorite from "@/pages/favorite/favorite";
 
 // 🔽 Redux hooks/selectors
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -81,6 +82,10 @@ function App() {
 
             {/* 2. URL: /shopPage/results (검색 결과 페이지) */}
             <Route path="results" element={<ShopResultsPage />} />
+          </Route>
+
+          <Route element={<ProtectedRoute />}>
+            <Route path="favorite" element={<Favorite />}></Route>
           </Route>
 
           {/* 🔒 보호 라우트: 마이페이지 */}
