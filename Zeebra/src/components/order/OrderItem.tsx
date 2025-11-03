@@ -18,28 +18,27 @@ interface orderItem {
 }
 
 interface OrderItemProps {
-  children: ProductDetail["data"];
+  productInfo: ProductDetail["data"];
   option: orderItem;
 }
 
-function OrderItem({ children, option }: OrderItemProps) {
+function OrderItem({ productInfo, option}: OrderItemProps) {
   
   const formatted = option.orderItemAmount.toLocaleString();
-
   return (
     <>
       <hr className="text-grey" />
       <div className="w-full max-h-[700px] p-5 flex flex-col text-main-text">
         <Coupon />
         <div className="flex flex-row items-center">
-          <img className="w-23 h-20" src={children.productThumbnail} />
+          <img className="w-23 h-20" src={productInfo.productThumbnail} />
           <div className="flex flex-row w-full justify-between items-center">
             <div className="flex flex-col ml-3 text-left">
               <p className="font-normal text-lg">
-                {children.productName} {option.orderItemOptions[0].value}
+                {productInfo.productName} {option.orderItemOptions[0].value}
               </p>
               <pre className="font-light text-sm/4">
-                {children.productDescription}
+                {productInfo.productDescription}
               </pre>
               <p className="font-bold text-sm">{option.orderItemOptions[1].value}</p>
             </div>

@@ -79,7 +79,6 @@ export interface ChatHistoryReq {
   sort?: string;
 }
 
-// ✅ 이렇게 수정!
 export type ChatHistoryResponse = ApiResponse<PageData>;
 
 // API 함수들
@@ -96,11 +95,11 @@ export async function getChatHistory(
 }
 
 export async function getOrCreateChatRoom(
-  chatRoomReq: ChatRoomReq
+  req: ChatRoomReq
 ): Promise<ApiResponse<ChatRoomResponse>> {
   const { data } = await http.post<ApiResponse<ChatRoomResponse>>(
     `/chat/rooms`, 
-    chatRoomReq
+    req
   );
   console.log("roomdata: ", data);
   return data;

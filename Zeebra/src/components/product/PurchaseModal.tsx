@@ -18,14 +18,14 @@ function createUUID() {
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  children: ProductDetail["data"] | undefined;
+  productInfo: ProductDetail["data"] | undefined;
   selectedColor: string;
 }
 
 function PurchaseModal({
   isOpen,
   onClose,
-  children,
+  productInfo,
   selectedColor,
 }: ModalProps) {
   const navigate = useNavigate();
@@ -35,16 +35,16 @@ function PurchaseModal({
   const options = useAppSelector(
     (state) => state.product.productOption?.data.sizeOptionResponses
   );
-  const currentColor = children?.colorOptionResponses.find(
+  const currentColor = productInfo?.colorOptionResponses.find(
     (option: { colorOptionNameId: number; colorValue: string }) =>
       option.colorValue === selectedColor
   );
 
   useEffect(() => {
-    if (children?.productId && currentColor?.colorOptionNameId) {
+    if (productInfo?.productId && currentColor?.colorOptionNameId) {
       dispatch(
         fetchProductOption({
-          productId: children?.productId,
+          productId: productInfo?.productId,
           colorOptionNameId: currentColor.colorOptionNameId,
         })
       );
@@ -67,10 +67,14 @@ function PurchaseModal({
       const orderId = result.data.order.orderId;
 
       if (orderId) {
-        navigate(`/orders/${orderId}`, { state: {
-          productInfo: children,
-          order: result
-         }});
+        navigate(`/orders/${orderId}`, {
+          state: {
+            productInfo: Array.isArray(productInfo)
+              ? productInfo
+              : [productInfo],
+            order: result,
+          },
+        });
       } else {
         console.error("orderId를 찾을 수 없습니다");
       }
@@ -95,11 +99,11 @@ function PurchaseModal({
           <p className="font-light text-xs">(가격단위:원)</p>
         </div>
         <div className="flex flex-row gap-x-2.5 items-center">
-          <img className="w-17 h-17" src={children?.productThumbnail} />
+          <img className="w-17 h-17" src={productInfo?.productThumbnail} />
           <div className="text-left">
-            <p className="font-normal text-lg">{children?.productName}</p>
+            <p className="font-normal text-lg">{productInfo?.productName}</p>
             <p className="font-light text-sm/4">
-              {children?.productDescription}
+              {productInfo?.productDescription}
             </p>
             <p className="font-light text-sm/4">{selectedColor}</p>
           </div>

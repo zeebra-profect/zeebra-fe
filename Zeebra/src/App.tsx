@@ -72,10 +72,7 @@ function App() {
         <Route path="/" element={<Layout1 />}>
           <Route index element={<Main />} />
           <Route path="products/:productId" element={<ProductDetailPage />} />
-          <Route
-            path="order/result"
-            element={<OrderResultPage result={false} />}
-          />
+          <Route path="/orders/result/:orderId" element={<OrderResultPage />} />
           <Route path="shopPage" element={<ShopPage />}>
             {/* 1. URL: /shopPage (메인 페이지 내용) */}
             <Route index element={<ShopContent />} />

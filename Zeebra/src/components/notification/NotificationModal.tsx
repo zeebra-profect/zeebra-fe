@@ -6,8 +6,8 @@ import {
   postNotification,
 } from "../../store/notificationSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import notificationSocket from "@/lib/NotificationSocket";
-import type { NotiRes } from "@/utils/notification";
+// import notificationSocket from "@/lib/NotificationSocket";
+// import type { NotiRes } from "@/utils/notification";
 
 interface ModalProps {
   isOpen: boolean;

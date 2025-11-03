@@ -1,14 +1,12 @@
 import OrderItem from "../../components/order/OrderItem";
 import OrderSummary from "../../components/order/OrderSummary";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { fetchOrder } from "@/store/orderSlice";
+import { useLocation } from "react-router-dom";
 import type { ProductDetail } from "@/utils/product";
 import type { OrderRes } from "@/utils/order";
 
 interface LocationState {
-  productInfo: ProductDetail["data"];
+  productInfo: ProductDetail["data"][];
   order: OrderRes;
 }
 
@@ -21,6 +19,11 @@ function OrderPage() {
     console.log("info: ", productInfo);
   }, [order]);
 
+  const normalizedProductInfo = Array.isArray(productInfo)
+  ? productInfo
+  : [productInfo];
+
+
   return (
     <>
       <div className="flex flex-col w-full max-w-[660px] text-center text-main-text">
@@ -29,10 +32,10 @@ function OrderPage() {
           <p>주문 상품 및 쿠폰</p>
           <p>총 {order?.data.order.totalQuantity}건</p>
         </div>
-        {order?.data.order?.orderItems?.map((item) => (
+        {order?.data.order?.orderItems?.map((item, index) => (
           <OrderItem
             key={item.orderItemId}
-            children={productInfo}
+            productInfo={normalizedProductInfo[index]}
             option={item}
           />)
         )}
