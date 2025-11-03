@@ -1,23 +1,47 @@
 import Coupon from "./Coupon";
+import { type ProductDetail } from "@/utils/product";
 
-function OrderItem() {
+interface orderItem {
+  orderItemId: number;
+  saleId: number;
+  productOptionId: number;
+  orderItemName: string;
+  orderItemThumbnail: string;
+  orderItemPrice: 0;
+  orderItemQuantity: 0;
+  orderItemAmount: 0;
+  orderItemStatus: string;
+  orderItemOptions: Array<{
+    name: string;
+    value: string;
+  }>;
+}
+
+interface OrderItemProps {
+  children: ProductDetail["data"];
+  option: orderItem;
+}
+
+function OrderItem({ children, option }: OrderItemProps) {
+  
+  const formatted = option.orderItemAmount.toLocaleString();
+
   return (
     <>
       <hr className="text-grey" />
       <div className="w-full max-h-[700px] p-5 flex flex-col text-main-text">
         <Coupon />
         <div className="flex flex-row items-center">
-          <img className="w-23 h-20" />
-          <div className="flex flex-row w-full justify-between">
+          <img className="w-23 h-20" src={children.productThumbnail} />
+          <div className="flex flex-row w-full justify-between items-center">
             <div className="flex flex-col ml-3 text-left">
               <p className="font-normal text-lg">
-                Nike Air Force 1 ‘07 Low White
+                {children.productName} {option.orderItemOptions[0].value}
               </p>
               <pre className="font-light text-sm/4">
-                {`나이키 에어포스 1 ‘07 로우 화이트
-315122-111/CW2288-111`}
+                {children.productDescription}
               </pre>
-              <p className="font-bold text-sm">255</p>
+              <p className="font-bold text-sm">{option.orderItemOptions[1].value}</p>
             </div>
             <div className="flex flex-row">
               <div className="flex flex-col ml-3 text-right">
@@ -28,11 +52,11 @@ function OrderItem() {
                 <p className="font-bold text-sm">결제 금액</p>
               </div>
               <div className="flex flex-col ml-3 text-right">
-                <p className="font-normal text-sm">141,000원</p>
-                <p className="font-light text-grey2 text-xs/4">5,000원</p>
-                <p className="font-light text-grey2 text-xs">3.000원</p>
+                <p className="font-normal text-sm">{formatted}</p>
+                <p className="font-light text-grey2 text-xs/4">-</p>
                 <p className="font-light text-grey2 text-xs">-</p>
-                <p className="font-bold text-sm">111,111원</p>
+                <p className="font-light text-grey2 text-xs">-</p>
+                <p className="font-bold text-sm">{formatted}</p>
               </div>
             </div>
           </div>

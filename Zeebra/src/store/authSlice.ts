@@ -42,6 +42,7 @@ export const loginThunk = createAsyncThunk(
 
 export const logoutThunk = createAsyncThunk("auth/logout", async () => {
   await logout();
+  return "로그아웃 완료";
 });
 
 const slice = createSlice({
