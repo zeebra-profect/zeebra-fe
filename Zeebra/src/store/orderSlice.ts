@@ -1,4 +1,4 @@
-import type { OrderRes } from "@/utils/order";
+import type { OrderByIdRes, OrderRes } from "@/utils/order";
 import {
   createAsyncThunk,
   createSlice,
@@ -10,10 +10,12 @@ import { getOrderById as getOrderByIdAPI } from "../utils/order"; // API 함수 
 
 interface OrderState {
   order: OrderRes | null;
+  orderById: OrderByIdRes | null;
 }
 
 const initialState: OrderState = {
   order: null,
+  orderById: null,
 };
 
 export const createOrder = createAsyncThunk<OrderRes, OrderReq>(
@@ -34,7 +36,7 @@ export const fetchOrders = createAsyncThunk<OrderRes, OrderGetReq>(
   }
 );
 
-export const fetchOrder = createAsyncThunk<OrderRes, number>(
+export const fetchOrder = createAsyncThunk<OrderByIdRes, number>(
   "order/getOrder",
   async (orderId: number) => {
     const response = await getOrderByIdAPI(orderId);
@@ -52,8 +54,8 @@ const orderSlice = createSlice({
     getOrders: (state, action: PayloadAction<OrderRes>) => {
       state.order = action.payload;
     },
-    getOrderByID: (state, action: PayloadAction<OrderRes>) => {
-      state.order = action.payload;
+    getOrderByID: (state, action: PayloadAction<OrderByIdRes>) => {
+      state.orderById = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -65,7 +67,7 @@ const orderSlice = createSlice({
         state.order = action.payload;
       })
       .addCase(fetchOrder.fulfilled, (state, action) => {
-        state.order = action.payload;
+        state.orderById = action.payload;
       });
   },
 });

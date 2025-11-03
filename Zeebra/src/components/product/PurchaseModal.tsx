@@ -19,14 +19,14 @@ function createUUID() {
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  children: ProductDetail["data"] | undefined;
+  productInfo: ProductDetail["data"] | undefined;
   selectedColor: string;
 }
 
 function PurchaseModal({
   isOpen,
   onClose,
-  children,
+  productInfo,
   selectedColor,
 }: ModalProps) {
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ function PurchaseModal({
   const options = useAppSelector(
     (state) => state.product.productOption?.data.sizeOptionResponses
   );
-  const currentColor = children?.colorOptionResponses.find(
+  const currentColor = productInfo?.colorOptionResponses.find(
     (option: { colorOptionNameId: number; colorValue: string }) =>
       option.colorValue === selectedColor
   );
@@ -47,16 +47,17 @@ function PurchaseModal({
 
   // 색상 변경/초기 로드 시 사이즈 옵션 가져오기
   useEffect(() => {
-    if (children?.productId && currentColor?.colorOptionNameId) {
+    if (productInfo?.productId && currentColor?.colorOptionNameId) {
       dispatch(
         fetchProductOption({
-          productId: children?.productId,
+          productId: productInfo?.productId,
           colorOptionNameId: currentColor.colorOptionNameId,
         })
       );
     }
     console.log("currentColor: ", currentColor);
   }, [currentColor, selectedColor]);
+
 
   // Options 상태 변경 로깅 (디버깅용)
   useEffect(() => {
@@ -91,7 +92,6 @@ function PurchaseModal({
       setIsAddingToCart(false);
     }
   };
-
   // 주문 관련
   const onClickCreateOrder = async () => {
     const form: OrderReq = {
@@ -107,7 +107,9 @@ function PurchaseModal({
       if (orderId) {
         navigate(`/orders/${orderId}`, {
           state: {
-            productInfo: children,
+            productInfo: Array.isArray(productInfo)
+              ? productInfo
+              : [productInfo],
             order: result,
           },
         });
@@ -137,20 +139,17 @@ function PurchaseModal({
           <p className="font-bold text-lg">구매하기</p>
           <p className="font-light text-xs">(가격단위:원)</p>
         </div>
-
-        {/* 상품 정보 영역 */}
         <div className="flex flex-row gap-x-2.5 items-center">
-          <img className="w-17 h-17" src={children?.productThumbnail} />
+          <img className="w-17 h-17" src={productInfo?.productThumbnail} />
           <div className="text-left">
-            <p className="font-normal text-lg">{children?.productName}</p>
+            <p className="font-normal text-lg">{productInfo?.productName}</p>
             <p className="font-light text-sm/4">
-              {children?.productDescription}
+              {productInfo?.productDescription}
             </p>
             <p className="font-light text-sm/4">{selectedColor}</p>
           </div>
         </div>
 
-        {/* 옵션 선택 영역 */}
         <div className="flex flex-row flex-wrap gap-x-3 gap-y-2 overflow-y-auto max-h-[200px] justify-center scrollbar">
           {options?.map((option) => (
             <OptionButton
@@ -162,8 +161,6 @@ function PurchaseModal({
             />
           ))}
         </div>
-
-        {/* 버튼 영역 */}
         <div className="mt-5 flex flex-row flex-2">
           <div className="flex flex-col sm:flex-row gap-y-2 gap-x-2 md:gap-x-2.5 w-full">
             {/* 1. 장바구니 담기 버튼 (수정 없음, 단지 재확인) */}
