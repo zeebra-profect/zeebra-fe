@@ -63,9 +63,15 @@ export interface CartUpdateReq {
 // ======================================================================
 
 // 장바구니에 상품 추가 (기존 함수 재정의)
-export async function addCart(productOptionId: number): Promise<CartRes> {
-  // 백엔드가 quantity 없이 productOptionId만으로 추가를 처리한다고 가정
-  const { data } = await http.post<CartRes>(`/carts/${productOptionId}`);
+export async function addCart(
+  productOptionId: number,
+  quantity: number
+): Promise<CartRes> {
+  const reqBody: CartUpdateReq = { quantity };
+  const { data } = await http.post<CartRes>(
+    `/carts/${productOptionId}`,
+    reqBody
+  );
   return data;
 }
 
@@ -102,8 +108,8 @@ export async function updateCartQuantity(
 }
 
 // 장바구니 특정 상품 삭제
-export async function deleteCartItem(productOptionId: number): Promise<void> {
-  await http.delete<ApiResponse>(`/carts/${productOptionId}`);
+export async function deleteCartItem(cartItemId: number): Promise<void> {
+  await http.delete<ApiResponse>(`/carts/${cartItemId}`);
 }
 
 // 장바구니 전체 비우기 (선택 사항)

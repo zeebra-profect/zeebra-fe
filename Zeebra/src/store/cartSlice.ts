@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// ✅ 필요한 API 함수와 상세 데이터 타입을 import
 import { addCart, getCartList, type CartDataRes } from "@/utils/cart";
 import { AxiosError } from "axios";
 
@@ -8,10 +7,9 @@ import { AxiosError } from "axios";
 // ======================================================================
 
 interface CartState {
-  // 장바구니 목록의 상세 정보를 담습니다. 초기값은 null로 처리
   cartData: CartDataRes | null;
   isLoading: boolean;
-  error: string | null;
+  error: string | null; // ✅ 오류 메시지를 저장하는 필드
 }
 
 const initialState: CartState = {
@@ -20,11 +18,15 @@ const initialState: CartState = {
   error: null,
 };
 
+interface AddToCartPayload {
+  productOptionId: number;
+  quantity: number;
+}
+
 // ======================================================================
-// 2. 비동기 Thunk 정의
+// 2. 비동기 Thunk 정의 (기존 로직 유지)
 // ======================================================================
 
-// 🛒 장바구니 목록 조회 Thunk
 export const fetchCartList = createAsyncThunk<CartDataRes, void>(
   "cart/fetchList",
   async (_, { rejectWithValue }) => {
@@ -33,14 +35,11 @@ export const fetchCartList = createAsyncThunk<CartDataRes, void>(
       return data;
     } catch (error) {
       console.error("❌ 장바구니 목록 조회 실패:", error);
-      // 404 등 오류 발생 시 빈 장바구니 구조를 반환할 수 있도록 처리
       if (error instanceof AxiosError && error.response?.status === 404) {
-        // 💡 장바구니가 없거나 비어있는 경우를 대비한 구조
         return {
           cartItems: [],
           totalQuantity: 0,
           totalPrice: 0,
-          // 기타 필수 필드는 0이나 기본값으로 채워야 합니다.
           cartId: 0,
           discount: 0,
           totalElements: 0,
@@ -54,14 +53,11 @@ export const fetchCartList = createAsyncThunk<CartDataRes, void>(
   }
 );
 
-// ➕ 장바구니에 상품 추가 Thunk (기존 createCart 대체)
-export const addToCart = createAsyncThunk<void, number>(
+export const addToCart = createAsyncThunk<void, AddToCartPayload>(
   "cart/addItem",
-  async (productOptionId: number, { dispatch }) => {
-    await addCart(productOptionId);
-
-    // 상품 추가 후, 목록을 새로고침하여 최신 상태 반영
-    await dispatch(fetchCartList());
+  async ({ productOptionId, quantity }, { dispatch }) => {
+    await addCart(productOptionId, quantity);
+    await dispatch(fetchCartList()).unwrap();
   }
 );
 
@@ -73,10 +69,9 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    // 장바구니 비우기 등 동기적 액션을 여기에 추가
     clearCartData: (state) => {
       state.cartData = initialState.cartData;
-      state.error = null;
+      state.error = null; // ✅ 초기화 시 error도 null로 재설정
     },
   },
   extraReducers: (builder) => {
@@ -84,11 +79,12 @@ const cartSlice = createSlice({
       // --- 목록 조회 (fetchCartList) ---
       .addCase(fetchCartList.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
+        state.error = null; // ✅ 요청 시작 시 기존 에러 제거
       })
       .addCase(fetchCartList.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.cartData = action.payload; // ✅ 상세 목록 저장
+        state.error = null; // ✅ 성공 시 에러 제거
+        state.cartData = action.payload;
       })
       .addCase(fetchCartList.rejected, (state, action) => {
         state.isLoading = false;
@@ -96,15 +92,16 @@ const cartSlice = createSlice({
           (action.payload as string) ||
           action.error.message ||
           "장바구니 조회 실패";
-        state.cartData = initialState.cartData; // 실패 시 데이터 초기화
+        state.cartData = initialState.cartData;
       })
       // --- 상품 추가 (addToCart) ---
       .addCase(addToCart.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(addToCart.fulfilled, (state) => {
         state.isLoading = false;
-        // ✅ fetchCartList가 알아서 상태를 업데이트 해주므로 여기서는 로딩만 해제
+        state.error = null;
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.isLoading = false;
@@ -115,7 +112,10 @@ const cartSlice = createSlice({
 
 export const { clearCartData } = cartSlice.actions;
 
-// ✅ Selector 정의
+// ✅ [추가] Selector 정의: 에러 상태
+export const selectCartError = (state: { cart: CartState }) => state.cart.error;
+
+// ✅ Selector 정의 (기존 유지)
 export const selectCartData = (state: { cart: CartState }) =>
   state.cart.cartData;
 export const selectCartLoading = (state: { cart: CartState }) =>

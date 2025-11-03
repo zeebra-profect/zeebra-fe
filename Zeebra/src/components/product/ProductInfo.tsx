@@ -56,7 +56,6 @@ function ProductInfo({ productInfo, selectedColor }: ProductInfoProps) {
               <div className="h-[50px] w-px bg-grey"></div>
               <div className="flex flex-col m-0 text-left">
                 <p className="text-sm md:text-base font-bold">
-                  {" "}
                   {productInfo?.lowPrice
                     ? productInfo.lowPrice.toLocaleString() + "원"
                     : null}
@@ -69,7 +68,6 @@ function ProductInfo({ productInfo, selectedColor }: ProductInfoProps) {
               <div className="h-[50px] w-px bg-grey"></div>
               <div className="flex flex-col m-0 text-left">
                 <p className="text-sm md:text-base font-bold">
-                  {" "}
                   {productInfo?.lowPrice
                     ? productInfo.lowPrice.toLocaleString() + "원"
                     : null}
