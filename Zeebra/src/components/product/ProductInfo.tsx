@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import like from "../../img/icons/like.png";
 import GroupChat from "../chat/GroupChat";
 import PurchaseModal from "./PurchaseModal";
@@ -80,7 +80,7 @@ function ProductInfo({ productInfo, selectedColor }: ProductInfoProps) {
           </div>
         </div>
         <hr className="w-full text-grey" />
-        <GroupChat />
+        <GroupChat productId={productInfo?.productId} />
       </div>
       <PurchaseModal
         isOpen={isPurModalOpen}
