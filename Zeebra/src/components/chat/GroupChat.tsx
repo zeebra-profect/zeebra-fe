@@ -20,6 +20,7 @@ function GroupChat({ productId }: { productId: number | undefined }) {
       fetchChatRoom({
         productId: Number(productId),
         saleId: null,
+        chatRoomType: "GROUP"
       })
     );
     dispatch(refetchMe());

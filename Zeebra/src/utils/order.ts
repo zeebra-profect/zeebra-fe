@@ -1,7 +1,7 @@
 import { http } from "./http";
 
 export interface OrderReq {
-  ClientRequestId: string;
+  clientRequestId: string;
   productOptionId: number;
 }
 

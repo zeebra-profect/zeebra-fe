@@ -1,6 +1,7 @@
 import { http } from "./http";
 
 type MessageType = "TEXT" | "IMAGE";
+type RoomType = "GROUP" | "DM";
 
 // 정렬 정보
 interface Sort {
@@ -59,6 +60,7 @@ export interface ApiResponse<T> {
 export interface ChatRoomReq {
   productId: number | null;
   saleId: number | null;
+  chatRoomType: RoomType;
 }
 
 // 채팅방 응답
