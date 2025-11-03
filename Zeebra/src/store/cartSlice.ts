@@ -1,15 +1,6 @@
-import {
-  createAsyncThunk,
-  createSlice,
-  type PayloadAction,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 // ✅ 필요한 API 함수와 상세 데이터 타입을 import
-import {
-  addCart,
-  getCartList,
-  type ApiResponse,
-  type CartDataRes,
-} from "@/utils/cart";
+import { addCart, getCartList, type CartDataRes } from "@/utils/cart";
 import { AxiosError } from "axios";
 
 // ======================================================================
