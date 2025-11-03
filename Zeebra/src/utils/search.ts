@@ -53,37 +53,31 @@ export interface SearchRes {
 }
 
 export interface SearchReq {
-  keyWord: string;
-  categoryIds: number[];
-  brandIds: number[];
-  productSort: string;
+  keyWord: string | null;
+  categoryIds: number[] | null;
+  brandIds: number[] | null;
+  productSort: string | null;
   pageable: {
     page: number;
     size: number;
-    // sort:
+    sort: string;
   };
 }
 
 export async function getProducts(
-  keyword: string,
-  page: number = 0, // 기본값: 0 (첫 페이지)
-  size: number = 10, // 기본값: 10 (페이지 크기)
-  sort: string[] = [] // 기본값: 빈 배열 (정렬 기준)
+  form: SearchReq
+  // keyword: string,
+  // page: number = 0, // 기본값: 0 (첫 페이지)
+  // size: number = 10, // 기본값: 10 (페이지 크기)
+  // sort: string[] = [] // 기본값: 빈 배열 (정렬 기준)
 ): Promise<SearchRes> {
   // ✅ 1. sort 배열을 Spring API가 흔히 요구하는 형태(예: 쉼표 구분 문자열)로 처리합니다.
   //    Spring Data JPA는 보통 배열 형태로 여러 번의 'sort=...' 파라미터를 원하거나,
   //    배열 인자를 그대로 넘겨도 자동으로 처리해줍니다. 여기서는 Axios의 배열 처리 방식을 따릅니다.
 
   const { data } = await http.get<SearchRes>(`/products`, {
-    params: {
-      // ✅ 2. keyword를 params로 직접 전달하여 쿼리 파라미터로 명확히 사용
-      keyWord: keyword,
-      page: page,
-      size: size,
-      // ✅ 3. sort 배열을 Axios params에 그대로 전달
-      //    Axios는 이를 /products?sort=a,desc&sort=b,asc 형태로 자동 변환합니다.
-      sort: sort.length > 0 ? sort : undefined, // 빈 배열일 경우 아예 파라미터에서 제외
-    },
+    params: form,
+    // ✅ 2. keyword를 params로 직접 전달하여 쿼리 파라미터로 명확히 사용,
   });
   console.log("dataaaa: ", data);
   return data;
