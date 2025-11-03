@@ -85,7 +85,7 @@ function ProductInfo({ productInfo, selectedColor }: ProductInfoProps) {
       <PurchaseModal
         isOpen={isPurModalOpen}
         onClose={() => setIsPurModalOpen(false)}
-        children={productInfo}
+        productInfo={productInfo}
         selectedColor={selectedColor}
       />
     </>
