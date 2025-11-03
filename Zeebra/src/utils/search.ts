@@ -52,6 +52,18 @@ export interface SearchRes {
   sendTime: string; // ISO 8601 형식의 날짜 문자열
 }
 
+export interface SearchReq {
+  keyWord: string;
+  categoryIds: number[];
+  brandIds: number[];
+  productSort: string;
+  pageable: {
+    page: number;
+    size: number;
+    // sort:
+  };
+}
+
 export async function getProducts(
   keyword: string,
   page: number = 0, // 기본값: 0 (첫 페이지)
@@ -73,7 +85,7 @@ export async function getProducts(
       sort: sort.length > 0 ? sort : undefined, // 빈 배열일 경우 아예 파라미터에서 제외
     },
   });
-
+  console.log("dataaaa: ", data);
   return data;
 }
 
