@@ -57,14 +57,13 @@ function PurchaseModal({
   // 주문 관련
   const onClickCreateOrder = async () => {
     const form: OrderReq = {
-      ClientRequestId: createUUID(),
+      clientRequestId: createUUID(),
       productOptionId: Number(checkedButton),
     };
 
     try {
       const result = await dispatch(createOrder(form)).unwrap();
-
-      // ✅ data.order.orderId 경로가 맞음
+      console.log("result", result);
       const orderId = result.data.order.orderId;
 
       if (orderId) {
