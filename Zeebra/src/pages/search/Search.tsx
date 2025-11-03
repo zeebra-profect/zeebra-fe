@@ -38,6 +38,8 @@ function Search() {
 
     setOpen(false);
     setLoading(true);
+    const searchTerm = q.trim();
+    console.log("📢 실제 검색어:", searchTerm);
 
     try {
       const page = 0;
