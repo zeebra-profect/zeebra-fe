@@ -43,7 +43,9 @@ export default function Header() {
             <Link to="/mypage/info">
               <p className="cursor-pointer">마이페이지</p>
             </Link>
-            <p className="cursor-pointer">관심</p>
+            <Link to="/favorite">
+              <p className="cursor-pointer">관심</p>
+            </Link>
             <div className="relative">
               <p
                 className="cursor-pointer"
