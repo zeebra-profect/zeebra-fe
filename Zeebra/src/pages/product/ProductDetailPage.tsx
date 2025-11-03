@@ -25,6 +25,7 @@ function ProductDetailPage() {
     if (product?.colorValue) {
       setSelectedColor(product.colorValue);
     }
+    console.log("product ", product);
   }, [product]);
 
   return (
