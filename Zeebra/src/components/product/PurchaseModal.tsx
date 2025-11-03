@@ -16,6 +16,7 @@ function createUUID() {
 
   return id;
 }
+
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -56,12 +57,12 @@ function PurchaseModal({
       );
     }
     console.log("currentColor: ", currentColor);
+    console.log("selectedColor: ", selectedColor);
   }, [currentColor, selectedColor]);
-
 
   // Options 상태 변경 로깅 (디버깅용)
   useEffect(() => {
-    // console.log("options: ", options);
+    console.log("options: ", options);
   }, [options]);
 
   // -----------------------------------------------------------
@@ -75,13 +76,14 @@ function PurchaseModal({
       return;
     }
 
-    // 🚨 수량은 기본 1개로 가정합니다. (필요하다면 수량 선택 로직 추가)
+    // 🚨 수량은 기본 1개로 가정합니다. (수량 선택 UI가 없다면 상수로 지정)
     const productOptionId = checkedButton;
+    const quantity = 1; // 👈 수량 변수 정의
 
     setIsAddingToCart(true);
     try {
-      // ✅ addToCart Thunk 디스패치 (내부적으로 getCartList 갱신까지 처리)
-      await dispatch(addToCart(productOptionId)).unwrap();
+      // ✅ [수정] addToCart Thunk에 단일 객체 페이로드를 전달합니다.
+      await dispatch(addToCart({ productOptionId, quantity })).unwrap();
 
       alert("상품이 장바구니에 담겼습니다!");
       onClose(); // 성공 후 모달 닫기
@@ -121,10 +123,10 @@ function PurchaseModal({
     }
   };
 
-  if (!isOpen) return null;
-
   const isOptionSelected = checkedButton !== null;
   const isButtonDisabled = !isOptionSelected || isAddingToCart;
+
+  if (!isOpen) return null;
 
   return (
     <div
@@ -175,7 +177,7 @@ function PurchaseModal({
             {/* 2. 즉시 구매하기 버튼 (onClick을 p 태그에서 button 태그로 이동 권장) */}
             <button
               className="button-productDetail2 bg-orange justify-center text-base md:text-lg font-bold"
-              onClick={() => navigate("/order")} // ✅ navigate 핸들러를 button에 직접 연결 (권장)
+              onClick={onClickCreateOrder} // ✅ navigate 핸들러를 button에 직접 연결 (권장)
             >
               즉시 구매하기 {/* ❌ p 태그 제거 */}
             </button>
