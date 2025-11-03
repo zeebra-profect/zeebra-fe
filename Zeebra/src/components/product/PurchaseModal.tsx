@@ -4,7 +4,17 @@ import type { ProductDetail } from "@/utils/product";
 import OptionButton from "./OptionButton";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchProductOption } from "@/store/productSlice";
+import { v4 as uuidv4 } from "uuid";
+import { createOrder } from "@/store/orderSlice";
+import type { OrderReq } from "@/utils/order";
 
+function createUUID() {
+  const now = new Date();
+  const dateStr = now.toISOString().replace(/[:.]/g, "-");
+  const id = `${dateStr}_${uuidv4()}`;
+
+  return id;
+}
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -12,10 +22,19 @@ interface ModalProps {
   selectedColor: string;
 }
 
-function PurchaseModal({ isOpen, onClose, children, selectedColor }: ModalProps) {
+function PurchaseModal({
+  isOpen,
+  onClose,
+  children,
+  selectedColor,
+}: ModalProps) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const options = useAppSelector((state) => state.product.productOption?.data.sizeOptionResponses);
+
+  // 옵션 관련
+  const options = useAppSelector(
+    (state) => state.product.productOption?.data.sizeOptionResponses
+  );
   const currentColor = children?.colorOptionResponses.find(
     (option: { colorOptionNameId: number; colorValue: string }) =>
       option.colorValue === selectedColor
@@ -30,14 +49,35 @@ function PurchaseModal({ isOpen, onClose, children, selectedColor }: ModalProps)
         })
       );
     }
-    console.log("currentColor: ", currentColor)
+    console.log("currentColor: ", currentColor);
   }, [currentColor, selectedColor]);
 
-  useEffect(() => {
-    console.log("options: ", options);
-  }, [options]);
-
   const [checkedButton, setCheckedButton] = useState<number | null>(null);
+
+  // 주문 관련
+  const onClickCreateOrder = async () => {
+    const form: OrderReq = {
+      clientRequestId: createUUID(),
+      productOptionId: Number(checkedButton),
+    };
+
+    try {
+      const result = await dispatch(createOrder(form)).unwrap();
+      console.log("result", result);
+      const orderId = result.data.order.orderId;
+
+      if (orderId) {
+        navigate(`/orders/${orderId}`, { state: {
+          productInfo: children,
+          order: result
+         }});
+      } else {
+        console.error("orderId를 찾을 수 없습니다");
+      }
+    } catch (error) {
+      console.error("주문 생성 실패:", error);
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -55,7 +95,7 @@ function PurchaseModal({ isOpen, onClose, children, selectedColor }: ModalProps)
           <p className="font-light text-xs">(가격단위:원)</p>
         </div>
         <div className="flex flex-row gap-x-2.5 items-center">
-          <img className="w-17 h-17" src={children?.productThumbnail}/>
+          <img className="w-17 h-17" src={children?.productThumbnail} />
           <div className="text-left">
             <p className="font-normal text-lg">{children?.productName}</p>
             <p className="font-light text-sm/4">
@@ -66,18 +106,15 @@ function PurchaseModal({ isOpen, onClose, children, selectedColor }: ModalProps)
         </div>
 
         <div className="flex flex-row flex-wrap gap-x-3 gap-y-2 overflow-y-auto max-h-[200px] justify-center scrollbar">
-          {
-            options?.map(option => (
+          {options?.map((option) => (
             <OptionButton
-            size={String(option.sizeValue)}
-            price={option.lowPriceOfSize}
-            key={option.productOptionId}
-            onClick={() => setCheckedButton(option.productOptionId)}
-            isSelected={checkedButton === option.productOptionId}
-          />
-
-          ))
-          }
+              size={String(option.sizeValue)}
+              price={option.lowPriceOfSize}
+              key={option.productOptionId}
+              onClick={() => setCheckedButton(option.productOptionId)}
+              isSelected={checkedButton === option.productOptionId}
+            />
+          ))}
         </div>
         <div className="mt-5 flex flex-row flex-2">
           <div className="flex flex-col sm:flex-row gap-y-2 gap-x-2 md:gap-x-2.5 w-full">
@@ -87,7 +124,7 @@ function PurchaseModal({ isOpen, onClose, children, selectedColor }: ModalProps)
             <button className="button-productDetail2 bg-orange justify-center">
               <p
                 className="text-base md:text-lg font-bold"
-                onClick={() => navigate("/order")}
+                onClick={onClickCreateOrder}
               >
                 즉시 구매하기
               </p>
