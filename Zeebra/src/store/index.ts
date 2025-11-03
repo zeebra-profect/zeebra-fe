@@ -6,6 +6,7 @@ import cartSlice from "./cartSlice";
 import orderSlice from "./orderSlice";
 import favoritesSlice from "./favoriteSlice";
 import chatSlice from "./chatSlice";
+import paymentSlice from './paymentSlice';
 
 const rootReducer = combineReducers({
   notification: notificationSlice,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   order: orderSlice,
   favorites: favoritesSlice,
   chat: chatSlice,
+  payment: paymentSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
