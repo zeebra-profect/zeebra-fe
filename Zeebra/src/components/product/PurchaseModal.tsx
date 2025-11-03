@@ -105,10 +105,12 @@ function PurchaseModal({
       const orderId = result.data.order.orderId;
 
       if (orderId) {
-        navigate(`/orders/${orderId}`, { state: {
-          productInfo: children,
-          order: result
-         }});
+        navigate(`/orders/${orderId}`, {
+          state: {
+            productInfo: children,
+            order: result,
+          },
+        });
       } else {
         console.error("orderId를 찾을 수 없습니다");
       }

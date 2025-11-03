@@ -68,9 +68,6 @@ function ShopContent() {
     }
   };
 
-  useEffect(() => {
-    console.log("asfsdf: ", response);
-  }, [response]);
 
   return (
     <div className="w-full flex flex-col items-center mt-6">

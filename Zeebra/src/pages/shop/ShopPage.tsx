@@ -4,7 +4,6 @@ import ShopCategory from "../../components/category/ShopCategory";
 import SubCategory from "../../components/category/SubCategory";
 import SortBtn from "../../components/btn/SortBtn";
 import SortFilter from "../../components/filter/SortFilter";
-import ShopContent from "./ShopContent";
 // ShopContent는 이제 /shopPage 경로 자체의 메인 콘텐츠가 되거나,
 // 혹은 모든 하위 페이지의 공통 부분이 아니라면 제거되어야 합니다.
 
