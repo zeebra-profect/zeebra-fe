@@ -35,6 +35,7 @@ import {
   selectAuthLoading,
   selectIsAuthed,
 } from "@/store/authSlice";
+import { fetchFavorites } from "@/store/favoriteSlice";
 
 // 🔒 라우트 가드
 function ProtectedRoute() {
@@ -48,15 +49,20 @@ function ProtectedRoute() {
 
 function App() {
   const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector(selectIsAuthed);
+  const authLoading = useAppSelector(selectAuthLoading); // ✅ 추가
 
   // ✅ 앱 시작 시 쿠키 기반 세션 동기화
   useEffect(() => {
-    let ignore = false;
-    if (!ignore) dispatch(refetchMe());
-    return () => {
-      ignore = true;
-    };
-  }, []);
+    dispatch(refetchMe());
+  }, [dispatch]);
+
+  // ✅ 세션 동기화 완료 후 로그인 상태일 때 관심상품 로드
+  useEffect(() => {
+    if (!authLoading && isLoggedIn) {
+      dispatch(fetchFavorites());
+    }
+  }, [authLoading, isLoggedIn, dispatch]); // ✅ authLoading 의존성 추가
 
   return (
     <BrowserRouter>
