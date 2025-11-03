@@ -27,7 +27,7 @@ import ShopContent from "./pages/shop/ShopContent";
 import ShopResultsPage from "@/pages/shop/ShopResultsPage";
 import Search from "@/pages/search/Search";
 import InfoPage from "./pages/myPage/InfoPage";
-import Favorite from "@/pages/favorite/favorite";
+import FavoritePage from "@/pages/favorite/FavoritePage";
 
 // 🔽 Redux hooks/selectors
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -44,7 +44,16 @@ function ProtectedRoute() {
   const isAuthed = useAppSelector(selectIsAuthed);
   console.log(loading, isAuthed);
 
-  if (loading) return null; // 초기 세션 동기화 중이면 렌더 지연
+  if (loading) {
+    // 💡 임시 로딩 UI를 반환하여, 'loading' 중인지 '오류'인지 확인
+    return (
+      <div style={{ textAlign: "center", padding: "100px" }}>
+        인증 정보를 확인 중입니다...
+      </div>
+    );
+  }
+
+  // loading이 false이고 인증되지 않았다면 로그인 페이지로 리다이렉트
   return isAuthed ? <Outlet /> : <Navigate to="/login" replace />;
 }
 
@@ -85,7 +94,7 @@ function App() {
           </Route>
 
           <Route element={<ProtectedRoute />}>
-            <Route path="favorite" element={<Favorite />}></Route>
+            <Route path="favorite" element={<FavoritePage />}></Route>
           </Route>
 
           {/* 🔒 보호 라우트: 마이페이지 */}
