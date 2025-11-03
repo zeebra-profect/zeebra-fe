@@ -94,6 +94,10 @@ function App() {
             <Route path="favorite" element={<FavoritePage />}></Route>
           </Route>
 
+          <Route element={<ProtectedRoute />}>
+            <Route path="cart" element={<CartPage />} />
+          </Route>
+
           {/* 🔒 보호 라우트: 마이페이지 */}
 
           <Route element={<ProtectedRoute />}>
@@ -113,14 +117,13 @@ function App() {
           {/* 🔒 보호 라우트: 장바구니/주문 */}
           <Route element={<ProtectedRoute />}>
             <Route element={<Layout4 />}>
-              <Route path="cart" element={<CartPage />} />
               <Route path="orders/:orderId" element={<OrderPage />} />
             </Route>
           </Route>
-        </Route>
 
-        {/* 별도 라우트 */}
-        <Route path="/search" element={<Search />} />
+          {/* 별도 라우트 */}
+          <Route path="/search" element={<Search />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
