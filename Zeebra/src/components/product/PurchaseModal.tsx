@@ -4,7 +4,7 @@ import type { ProductDetail } from "@/utils/product";
 import OptionButton from "./OptionButton";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchProductOption } from "@/store/productSlice";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { createOrder } from "@/store/orderSlice";
 import type { OrderReq } from "@/utils/order";
 
@@ -52,21 +52,32 @@ function PurchaseModal({
     console.log("currentColor: ", currentColor);
   }, [currentColor, selectedColor]);
 
-  useEffect(() => {
-    console.log("options: ", options);
-  }, [options]);
-
   const [checkedButton, setCheckedButton] = useState<number | null>(null);
 
   // 주문 관련
-  const order = useAppSelector(state => state.order);
-  const onClickCreateOrder = () => {
+  const onClickCreateOrder = async () => {
     const form: OrderReq = {
-      clientRequestId: createUUID(),
+      ClientRequestId: createUUID(),
       productOptionId: Number(checkedButton),
     };
-    dispatch(createOrder(form));
-    navigate(`/orders/${order?.order?.data.order.orderId}`);
+
+    try {
+      const result = await dispatch(createOrder(form)).unwrap();
+
+      // ✅ data.order.orderId 경로가 맞음
+      const orderId = result.data.order.orderId;
+
+      if (orderId) {
+        navigate(`/orders/${orderId}`, { state: {
+          productInfo: children,
+          order: result
+         }});
+      } else {
+        console.error("orderId를 찾을 수 없습니다");
+      }
+    } catch (error) {
+      console.error("주문 생성 실패:", error);
+    }
   };
 
   if (!isOpen) return null;

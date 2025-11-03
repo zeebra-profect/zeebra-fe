@@ -22,7 +22,6 @@ function ProductDetailPage() {
   }, [params.productId, dispatch]);
 
   useEffect(() => {
-    // console.log("product: ", product);
     if (product?.colorValue) {
       setSelectedColor(product.colorValue);
     }
