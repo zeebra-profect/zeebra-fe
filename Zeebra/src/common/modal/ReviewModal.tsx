@@ -1,5 +1,5 @@
 import { useState } from "react";
-import OrderProduct from "@/components/order/OrderProduct";
+// import OrderProduct from "@/components/order/OrderProduct";
 
 interface ReviewModalProps {
   onClose: () => void;
@@ -69,7 +69,7 @@ function ReviewModal({ onClose }: ReviewModalProps) {
           </div>
 
           <div className="flex flex-col items-center gap-y-3">
-            <OrderProduct />
+            {/* <OrderProduct orderItem={}/> */}
 
             <textarea
               name="content"
