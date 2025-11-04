@@ -89,10 +89,12 @@ export default function Header() {
                 SHOP
               </p>
             </Link>
-            <img
-              src={bagIcon}
-              className="w-[18px] h-4 md:w-[22px] md:h-[19px] cursor-pointer"
-            />
+            <Link to="/cart">
+              <img
+                src={bagIcon}
+                className="w-[18px] h-4 md:w-[22px] md:h-[19px] cursor-pointer"
+              />
+            </Link>
           </div>
         </div>
 

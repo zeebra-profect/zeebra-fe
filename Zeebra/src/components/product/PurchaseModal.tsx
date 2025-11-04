@@ -4,6 +4,7 @@ import type { ProductDetail } from "@/utils/product";
 import OptionButton from "./OptionButton";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchProductOption } from "@/store/productSlice";
+import { addToCart } from "@/store/cartSlice"; // ✅ 장바구니 추가 Thunk 임포트
 import { v4 as uuidv4 } from "uuid";
 import { createOrder } from "@/store/orderSlice";
 import type { OrderReq } from "@/utils/order";
@@ -15,6 +16,7 @@ function createUUID() {
 
   return id;
 }
+
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -40,6 +42,11 @@ function PurchaseModal({
       option.colorValue === selectedColor
   );
 
+  // 로컬 상태
+  const [checkedButton, setCheckedButton] = useState<number | null>(null); // 선택된 productOptionId
+  const [isAddingToCart, setIsAddingToCart] = useState(false); // 장바구니 로딩 상태
+
+  // 색상 변경/초기 로드 시 사이즈 옵션 가져오기
   useEffect(() => {
     if (productInfo?.productId && currentColor?.colorOptionNameId) {
       dispatch(
@@ -50,10 +57,43 @@ function PurchaseModal({
       );
     }
     console.log("currentColor: ", currentColor);
+    console.log("selectedColor: ", selectedColor);
   }, [currentColor, selectedColor]);
 
-  const [checkedButton, setCheckedButton] = useState<number | null>(null);
+  // Options 상태 변경 로깅 (디버깅용)
+  useEffect(() => {
+    console.log("options: ", options);
+  }, [options]);
 
+  // -----------------------------------------------------------
+  // 🛒 장바구니 담기 핸들러
+  // -----------------------------------------------------------
+  const handleAddToCart = async () => {
+    if (isAddingToCart) return;
+
+    if (!checkedButton) {
+      alert("사이즈를 선택해주세요.");
+      return;
+    }
+
+    // 🚨 수량은 기본 1개로 가정합니다. (수량 선택 UI가 없다면 상수로 지정)
+    const productOptionId = checkedButton;
+    const quantity = 1; // 👈 수량 변수 정의
+
+    setIsAddingToCart(true);
+    try {
+      // ✅ [수정] addToCart Thunk에 단일 객체 페이로드를 전달합니다.
+      await dispatch(addToCart({ productOptionId, quantity })).unwrap();
+
+      alert("상품이 장바구니에 담겼습니다!");
+      onClose(); // 성공 후 모달 닫기
+    } catch (error) {
+      console.error("❌ 장바구니 담기 실패:", error);
+      alert("장바구니 담기에 실패했습니다. 다시 시도해 주세요.");
+    } finally {
+      setIsAddingToCart(false);
+    }
+  };
   // 주문 관련
   const onClickCreateOrder = async () => {
     const form: OrderReq = {
@@ -81,6 +121,9 @@ function PurchaseModal({
       console.error("주문 생성 실패:", error);
     }
   };
+
+  const isOptionSelected = checkedButton !== null;
+  const isButtonDisabled = !isOptionSelected || isAddingToCart;
 
   if (!isOpen) return null;
 
@@ -121,16 +164,21 @@ function PurchaseModal({
         </div>
         <div className="mt-5 flex flex-row flex-2">
           <div className="flex flex-col sm:flex-row gap-y-2 gap-x-2 md:gap-x-2.5 w-full">
-            <button className="button-productDetail2 bg-main-text justify-center">
-              <p className="text-base md:text-lg font-bold">장바구니 담기</p>
+            {/* 1. 장바구니 담기 버튼 (수정 없음, 단지 재확인) */}
+            <button
+              className="button-productDetail2 bg-main-text justify-center text-base md:text-lg font-bold" // ✅ 텍스트 스타일을 버튼 자체에 적용
+              onClick={handleAddToCart} // ✅ 핸들러 연결
+              disabled={isButtonDisabled}
+            >
+              {isAddingToCart ? "담는 중..." : "장바구니 담기"}{" "}
+              {/* ❌ p 태그 제거 */}
             </button>
-            <button className="button-productDetail2 bg-orange justify-center">
-              <p
-                className="text-base md:text-lg font-bold"
-                onClick={onClickCreateOrder}
-              >
-                즉시 구매하기
-              </p>
+            {/* 2. 즉시 구매하기 버튼 (onClick을 p 태그에서 button 태그로 이동 권장) */}
+            <button
+              className="button-productDetail2 bg-orange justify-center text-base md:text-lg font-bold"
+              onClick={onClickCreateOrder} // ✅ navigate 핸들러를 button에 직접 연결 (권장)
+            >
+              즉시 구매하기 {/* ❌ p 태그 제거 */}
             </button>
           </div>
         </div>

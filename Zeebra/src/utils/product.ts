@@ -16,8 +16,7 @@ export interface ProductDetail {
     reviewCount: number;
     favoriteProductCount: number;
     createdAt: string;
-      colorOptionResponses: Array<
-    {
+    colorOptionResponses: Array<{
       colorOptionNameId: number;
       colorValue: string;
     }>;
@@ -30,13 +29,12 @@ export interface ProductOption {
   status: string;
   message: string;
   data: {
-    sizeOptionResponses: Array<
-      {
-        optionCombinationId: number;
-        sizeValue: string;
-        productOptionId: number;
-        lowPriceOfSize: number;
-      }>;
+    sizeOptionResponses: Array<{
+      optionCombinationId: number;
+      sizeValue: string;
+      productOptionId: number;
+      lowPriceOfSize: number;
+    }>;
   };
   sendTime: string;
 }
@@ -46,7 +44,13 @@ export async function getProduct(productId: number): Promise<ProductDetail> {
   return data;
 }
 
-export async function getProductOption(productId: number, colorOptionNameId: number): Promise<ProductOption> {
-  const { data } = await http.get<ProductOption>(`/product-options/${productId}/${colorOptionNameId}`);
+export async function getProductOption(
+  productId: number,
+  colorOptionNameId: number
+): Promise<ProductOption> {
+  const { data } = await http.get<ProductOption>(
+    `/product-options/${productId}/${colorOptionNameId}`
+  );
+  console.log("dhodkseho???: ", data);
   return data;
 }
