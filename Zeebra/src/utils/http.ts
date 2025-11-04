@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const http = axios.create({
-  baseURL: "http://zeebra.shop/api",
+  baseURL: "https://api.zeebra.shop/api",
   withCredentials: true,
 });
 
