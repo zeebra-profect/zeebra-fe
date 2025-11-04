@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom"; // ✨ Outlet 임포트 필수 ✨
 
 import ShopCategory from "../../components/category/ShopCategory";
-import SubCategory from "../../components/category/SubCategory";
+// import SubCategory from "../../components/category/SubCategory"; 나중에 다시 부활시키기
 import SortBtn from "../../components/btn/SortBtn";
 import SortFilter from "../../components/filter/SortFilter";
 // ShopContent는 이제 /shopPage 경로 자체의 메인 콘텐츠가 되거나,
@@ -14,7 +14,7 @@ function ShopPage() {
       <div className="flex flex-col items-center gap-y-6">
         <h1 className="text-2xl font-semibold">SHOP</h1>
         <ShopCategory />
-        <SubCategory />
+         {/* <SubCategory /> 나중에 열기 */} 
         <SortBtn />
       </div>
       <SortFilter />
