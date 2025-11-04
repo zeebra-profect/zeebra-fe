@@ -30,6 +30,10 @@ class ChatWebSocket {
     this.client.activate();
   }
 
+  isConnected(): boolean {
+    return this.client?.connected === true;
+  }
+
   // 채팅방 구독
   subscribe(roomId: number, callback: (message: ChatMessage) => void) {
     if (!this.client) {
@@ -44,38 +48,38 @@ class ChatWebSocket {
   }
 
   // 메시지 전송
-sendMessage(
-  chatRoomId: number,
-  content: string,
-  messageType: 'TEXT' | 'IMAGE' = 'TEXT',
-  imageUrl?: string
-) {
-  console.log('1. 전송 시도:', { chatRoomId, content, messageType });
-  
-  if (!this.client) {
-    console.error('❌ client 없음');
-    return;
-  }
-  
-  if (!this.client.connected) {
-    console.error('❌ 연결 안 됨');
-    return;
-  }
-  
-  console.log('2. 전송 중...');
+  sendMessage(
+    chatRoomId: number,
+    content: string,
+    messageType: "TEXT" | "IMAGE" = "TEXT",
+    imageUrl?: string
+  ) {
+    console.log("1. 전송 시도:", { chatRoomId, content, messageType });
 
-  this.client.publish({
-    destination: '/pub/chat/message',
-    body: JSON.stringify({
-      chatRoomId,
-      messageType,
-      content,
-      imageUrl: imageUrl || null
-    }),
-  });
-  
-  console.log('3. 전송 완료!');
-}
+    if (!this.client) {
+      console.error("❌ client 없음");
+      return;
+    }
+
+    if (!this.client.connected) {
+      console.error("❌ 연결 안 됨");
+      return;
+    }
+
+    console.log("2. 전송 중...");
+
+    this.client.publish({
+      destination: "/pub/chat/message",
+      body: JSON.stringify({
+        chatRoomId,
+        messageType,
+        content,
+        imageUrl: imageUrl || null,
+      }),
+    });
+
+    console.log("3. 전송 완료!");
+  }
 
   disconnect() {
     if (this.client) {

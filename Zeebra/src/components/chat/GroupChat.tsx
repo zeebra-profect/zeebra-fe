@@ -1,6 +1,6 @@
 import { fetchChatMessages, fetchChatRoom } from "@/store/chatSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import chatIcon from "../../img/icons/chat.png";
 import Message from "./Message";
 import { refetchMe } from "@/store/authSlice";
@@ -27,8 +27,6 @@ function GroupChat({ productId }: { productId: number | undefined }) {
   }, [productId, dispatch]);
 
   useEffect(() => {
-
-    console.log("roomInfo:" , roomInfo);
     if (roomInfo?.chatRoomId) {
       dispatch(
         fetchChatMessages({
@@ -39,26 +37,41 @@ function GroupChat({ productId }: { productId: number | undefined }) {
     }
   }, [roomInfo, dispatch]);
 
-  // 소켓 관련
-  useEffect(() => {
-    if (!roomInfo?.chatRoomId) return;
+const hasSubscribed = useRef(false); // ⭐ 추가
 
-    // 로그인했으면 연결
-    if (myMemberId) {
-      chatWebSocket.connect();
-    }
+useEffect(() => {
+  if (!roomInfo?.chatRoomId) return;
+  if (hasSubscribed.current) return; // ⭐ 이미 구독했으면 스킵
+  
+  hasSubscribed.current = true; // ⭐ 구독 완료 표시
 
-    // 구독 (실시간 메시지 받기)
-    setTimeout(() => {
-      chatWebSocket.subscribe(roomInfo.chatRoomId, (newMessage) => {
-        setRealtimeMessages((prev) => [...prev, newMessage]);
+  if (myMemberId) {
+    chatWebSocket.connect();
+  }
+
+  const subscribeWhenReady = () => {
+    if (chatWebSocket.isConnected()) {
+      chatWebSocket.subscribe(roomInfo.chatRoomId!, (newMessage) => {
+        console.log("📨 새 메시지 받음:", newMessage);
+        setRealtimeMessages((prev) => {
+          console.log("🔵 이전:", prev);
+          const updated = [...prev, newMessage];
+          console.log("🟢 업데이트:", updated);
+          return updated;
+        });
       });
-    }, 500);
+    } else {
+      setTimeout(subscribeWhenReady, 100); // 연결될 때까지 재시도
+    }
+  };
 
-    return () => {
-      chatWebSocket.disconnect();
-    };
-  }, [roomInfo?.chatRoomId, myMemberId]);
+  subscribeWhenReady();
+
+  return () => {
+    hasSubscribed.current = false;
+    chatWebSocket.disconnect();
+  };
+}, [roomInfo?.chatRoomId, myMemberId]);
 
   const handleSend = () => {
     if (!inputMessage.trim()) return;
@@ -74,8 +87,18 @@ function GroupChat({ productId }: { productId: number | undefined }) {
     setInputMessage("");
   };
 
+const allMessages = useMemo(() => {
+  console.log("🔄 allMessages 재계산");
+  console.log("chatHistory:", chatHistory?.content);
+  console.log("realtimeMessages:", realtimeMessages);
+  return [...(chatHistory?.content || []), ...realtimeMessages];
+}, [chatHistory?.content, realtimeMessages]);
+
+useEffect(() => {
+  console.log("allMe: ", allMessages);
+}, [allMessages]);
+
   // 5. 기존 메시지 + 실시간 메시지 합치기
-  const allMessages = [...(chatHistory?.content || []), ...realtimeMessages];
 
   return (
     <div className="w-full lg:max-w-[520px] h-[400px] md:h-[500px] lg:h-[600px] rounded-[20px] bg-gray-100 flex flex-col">
@@ -85,7 +108,11 @@ function GroupChat({ productId }: { productId: number | undefined }) {
             key={chat.messageId}
             productId={Number(productId)}
             memberId={chat.senderMemberId}
-            message={chat}
+            myMemberId={Number(myMemberId?.memberId)}
+            content={chat.content}
+            time={chat.createdAt}
+            nickName={String(myMemberId?.nickname)}
+            photo={String(myMemberId?.memberImage)}
           />
         ))}
       </div>
