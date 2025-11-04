@@ -4,7 +4,6 @@ import { type PaymentReq } from "@/utils/payment";
 import { v4 as uuidv4 } from "uuid";
 import { loadTossPayments } from "@tosspayments/tosspayments-sdk";
 import { useAuth } from "@/hooks/useAuth";
-// import { useEffect } from "react";
 
 function createUUID() {
   const now = new Date();

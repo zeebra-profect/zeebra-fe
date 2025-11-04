@@ -30,7 +30,7 @@ export interface ChatMessage {
   messageType: MessageType;
   content: string;
   imageUrl: string | null;
-  createTime: string;
+  createdAt: string;
 }
 
 // 페이지네이션 데이터
@@ -63,6 +63,18 @@ export interface ChatRoomReq {
   chatRoomType: RoomType;
 }
 
+export interface DMChatRoomReq {
+  memberId: number | null;
+  chatRoomType: string;
+}
+
+export interface DMChatRoomRes {
+  chatRoomId: number;
+  lastMessageId: number;
+  chatRoomType: RoomType;
+  memberId: number;
+}
+
 // 채팅방 응답
 export interface ChatRoomResponse {
   chatRoomId: number;
@@ -79,7 +91,19 @@ export interface ChatHistoryReq {
   sort?: string;
 }
 
+export interface AllDmRoom {
+  chatRoomId: number;
+  roomName: string;
+  roomProfileImageUrl: string;
+  lastMessageContent: string;
+  lastMessageTime: string;
+  unreadCount: number;
+  memberId: number;
+}
+
 export type ChatHistoryResponse = ApiResponse<PageData>;
+export type DMChatRoomResponse = ApiResponse<DMChatRoomRes>;
+export type DMChatRoomsResponse = ApiResponse<AllDmRoom[]>;
 
 // API 함수들
 export async function getChatHistory(
@@ -98,9 +122,27 @@ export async function getOrCreateChatRoom(
   req: ChatRoomReq
 ): Promise<ApiResponse<ChatRoomResponse>> {
   const { data } = await http.post<ApiResponse<ChatRoomResponse>>(
-    `/chat/rooms`, 
+    `/chat/rooms`,
     req
   );
   console.log("roomdata: ", data);
+  return data;
+}
+
+export async function getOrCreateDMChatRoom(
+  req: DMChatRoomReq
+): Promise<DMChatRoomResponse> {
+  const { data } = await http.post<DMChatRoomResponse>(
+    `/chat/rooms/dm/test`,
+    req
+  );
+  console.log("dmroomdata: ", data);
+  return data;
+}
+
+export async function getAllDMChatRoom(): Promise<DMChatRoomsResponse> {
+  const { data } = await http.get<DMChatRoomsResponse>(
+    `/chat/rooms/dm`);
+  console.log("dmroomsssss: ", data);
   return data;
 }

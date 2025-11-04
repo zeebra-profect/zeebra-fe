@@ -1,25 +1,27 @@
+import type { OrderRes } from "@/utils/order";
 import Coupon from "./Coupon";
 import { type ProductDetail } from "@/utils/product";
 
-interface orderItem {
-  orderItemId: number;
-  saleId: number;
-  productOptionId: number;
-  orderItemName: string;
-  orderItemThumbnail: string;
-  orderItemPrice: 0;
-  orderItemQuantity: 0;
-  orderItemAmount: 0;
-  orderItemStatus: string;
-  orderItemOptions: Array<{
-    name: string;
-    value: string;
-  }>;
-}
+// interface orderItem {
+//   orderItemId: number;
+//   saleId: number;
+//   productOptionId: number;
+//   orderItemName: string;
+//   orderItemThumbnail: string;
+//   orderItemPrice: 0;
+//   orderItemQuantity: 0;
+//   orderItemAmount: 0;
+//   orderItemStatus: string;
+//   orderItemOptions: Array<{
+//     name: string;
+//     value: string;
+//   }>;
+// }
+type OrderItemType = OrderRes["data"]["order"]["orderItems"][number];
 
 interface OrderItemProps {
   productInfo: ProductDetail["data"];
-  option: orderItem;
+  option: OrderItemType;
 }
 
 function OrderItem({ productInfo, option}: OrderItemProps) {

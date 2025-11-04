@@ -1,5 +1,5 @@
 import OrderHistoryItem from "./OrderHistoryItem";
-import OrderSummary from "./OrderSummary";
+// import OrderSummary from "./OrderSummary";
 import testImg from "../../img/test/nike4.webp";
 import { useState } from "react";
 // import axios from "axios";
@@ -91,7 +91,7 @@ function OrderHistoryModal({
             <OrderHistoryItem />
             <OrderHistoryItem />
             <hr className="text-grey" />
-            <OrderSummary />
+            {/* <OrderSummary /> */}
           </div>
         </div>
       </>

@@ -103,7 +103,6 @@ function PurchaseModal({
 
     try {
       const result = await dispatch(createOrder(form)).unwrap();
-      console.log("result", result);
       const orderId = result.data.order.orderId;
 
       if (orderId) {
