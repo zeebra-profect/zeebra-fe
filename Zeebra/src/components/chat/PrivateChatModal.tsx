@@ -1,23 +1,24 @@
 // import Message from "./Message";
-import { useEffect, useState } from "react";
+// import { useState } from "react";
 import chatIcon from "../../img/icons/chat.png";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import type { AllDmRoom, ChatMessage } from "@/utils/chat";
-import { fetchChatRoom, fetchDMChatRoom } from "@/store/chatSlice";
+// import { useAppDispatch, useAppSelector } from "@/store/hooks";
+// import type { AllDmRoom, ChatMessage } from "@/utils/chat";
+// import { fetchChatRoom, fetchDMChatRoom } from "@/store/chatSlice";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  children: AllDmRoom;
+  // children: AllDmRoom;
 }
 
-function PrivateChatModal({ isOpen, onClose, children }: ModalProps) {
-    const dispatch = useAppDispatch();
-    const roomInfo = useAppSelector((state) => state.chat.dmRoom);
-    const chatHistory = useAppSelector((state) => state.chat.messages);
-    const myMemberId = useAppSelector((state) => state.auth.me);
-    const [inputMessage, setInputMessage] = useState("");
-    const [realtimeMessages, setRealtimeMessages] = useState<ChatMessage[]>([]);
+// function PrivateChatModal({ isOpen, onClose, children }: ModalProps) {
+function PrivateChatModal({ isOpen, onClose }: ModalProps) {
+    // const dispatch = useAppDispatch();
+    // const roomInfo = useAppSelector((state) => state.chat.dmRoom);
+    // const chatHistory = useAppSelector((state) => state.chat.messages);
+    // const myMemberId = useAppSelector((state) => state.auth.me);
+    // const [inputMessage, setInputMessage] = useState("");
+    // const [realtimeMessages, setRealtimeMessages] = useState<ChatMessage[]>([]);
   
     // useEffect(() => {
     //   dispatch(
@@ -112,7 +113,7 @@ function PrivateChatModal({ isOpen, onClose, children }: ModalProps) {
           </div>
 
           {/* 입력창 */}
-                <div className="p-3 bg-transparent border-t border-gray-200">
+                {/* <div className="p-3 bg-transparent border-t border-gray-200">
         <div className="flex flex-row items-center gap-x-2 bg-white rounded-lg px-3 py-2">
           <input
             type="text"
@@ -126,7 +127,7 @@ function PrivateChatModal({ isOpen, onClose, children }: ModalProps) {
             <img src={chatIcon} className="w-5 h-5 cursor-pointer" alt="send" />
           </button>
         </div>
-      </div>
+      </div> */}
 
           <div className="p-3 bg-white">
             <div className="flex flex-row items-center gap-x-2 bg-gray-100 rounded-lg px-3 py-2">

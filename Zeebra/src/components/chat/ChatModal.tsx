@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Chat from "./Chat";
 import { useEffect } from "react";
-import { fetchAllDMChatRoom, fetchDMChatRoom } from "@/store/chatSlice";
+import { fetchAllDMChatRoom } from "@/store/chatSlice";
 
 interface ModalProps {
   isOpen: boolean;

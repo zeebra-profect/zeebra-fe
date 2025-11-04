@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PrivateChatModal from "./PrivateChatModal";
 import type { AllDmRoom } from "@/utils/chat";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+// import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 interface ChatProps {
   children : AllDmRoom;
@@ -10,11 +10,11 @@ interface ChatProps {
 function Chat({children} : ChatProps) {
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const dispatch = useAppDispatch();
-    const chat = useAppSelector(state => state.chat.dmRoom);
+    // const dispatch = useAppDispatch();
+    // const chat = useAppSelector(state => state.chat.dmRoom);
 
     useEffect(() => {
-      dispatch(fetch)
+      // dispatch(fetch)
     },[])
 
   return (
@@ -40,7 +40,8 @@ function Chat({children} : ChatProps) {
           <p>{children.lastMessageTime}</p>
         </div>
       </div>
-      <PrivateChatModal isOpen={isOpen} onClose={() => setIsOpen(false)} children={children}/>
+      {/* <PrivateChatModal isOpen={isOpen} onClose={() => setIsOpen(false)} children={children}/> */}
+      <PrivateChatModal isOpen={isOpen} onClose={() => setIsOpen(false)}/>
     </>
   );
 }

@@ -35,7 +35,7 @@ function Message({
         <div className="flex flex-row gap-x-1 m-1.5 font-pretendard items-center max-w-[400px]">
           {/* <div className="min-w-[30px] min-h-[30px] rounded-3xl bg-amber-300"></div> */}
           <img
-            src={message.profileImageUrl}
+            src={message.profileImageUrl? message.profileImageUrl : undefined}
             className="w-[30px] h-[30px] rounded-3xl cursor-pointer"
             onClick={() => setIsModalOpen(true)}
           />

@@ -43,7 +43,7 @@ export function MemberInfoModal({ isOpen, onClose, children }: ModalProps) {
           onClick={(e) => e.stopPropagation()}
         >
           <img
-            src={children.message.profileImageUrl}
+            src={children.message.profileImageUrl || undefined}
             className="w-20 h-20 rounded-3xl cursor-pointer"
           />
           <p className="font-semibold text-base">
