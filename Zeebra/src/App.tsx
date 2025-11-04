@@ -122,8 +122,8 @@ function App() {
           </Route>
 
           {/* 별도 라우트 */}
-          <Route path="/search" element={<Search />} />
         </Route>
+        <Route path="/search" element={<Search />} />
       </Routes>
     </BrowserRouter>
   );
