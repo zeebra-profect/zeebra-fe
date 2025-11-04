@@ -1,12 +1,27 @@
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Chat from "./Chat";
+import { useEffect } from "react";
+import { fetchAllDMChatRoom, fetchDMChatRoom } from "@/store/chatSlice";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  // children?: React.ReactNode;
 }
 
 function ChatModal({ isOpen, onClose }: ModalProps) {
+
+  const dispatch = useAppDispatch();
+  const myRooms = useAppSelector(state => state.chat.rooms);
+  
+  useEffect(() => {
+    dispatch(fetchAllDMChatRoom());
+  }, [])
+
+  useEffect(() => {
+    console.log("myrooms: ", myRooms);
+  }, [myRooms]);
+
+
   if (!isOpen) return null;
 
   return (
@@ -21,6 +36,12 @@ function ChatModal({ isOpen, onClose }: ModalProps) {
               <p className="font-bold text-lg text-center">내 채팅방 목록</p>
             </div>
             <div className="h-[calc(450px-73px)] overflow-y-auto scrollbar">
+              {
+                myRooms?.data.map(room => 
+                  <Chat key={room.chatRoomId} children={room}/>
+                )
+              }
+              {/* <Chat />
               <Chat />
               <Chat />
               <Chat />
@@ -28,8 +49,7 @@ function ChatModal({ isOpen, onClose }: ModalProps) {
               <Chat />
               <Chat />
               <Chat />
-              <Chat />
-              <Chat />
+              <Chat /> */}
             </div>
           </div>
         </div>
