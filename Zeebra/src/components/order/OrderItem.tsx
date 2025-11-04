@@ -7,9 +7,9 @@ interface orderItem {
   productOptionId: number;
   orderItemName: string;
   orderItemThumbnail: string;
-  orderItemPrice: 0;
-  orderItemQuantity: 0;
-  orderItemAmount: 0;
+  orderItemPrice: number;
+  orderItemQuantity: number;
+  orderItemAmount: number;
   orderItemStatus: string;
   orderItemOptions: Array<{
     name: string;
