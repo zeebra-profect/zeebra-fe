@@ -27,6 +27,8 @@ function GroupChat({ productId }: { productId: number | undefined }) {
   }, [productId, dispatch]);
 
   useEffect(() => {
+
+    console.log("roomInfo:" , roomInfo);
     if (roomInfo?.chatRoomId) {
       dispatch(
         fetchChatMessages({
@@ -83,11 +85,7 @@ function GroupChat({ productId }: { productId: number | undefined }) {
             key={chat.messageId}
             productId={Number(productId)}
             memberId={chat.senderMemberId}
-            myMemberId={Number(myMemberId?.memberId)}
-            content={chat.content}
-            time={chat.createTime}
-            nickName={String(myMemberId?.nickname)}
-            photo={String(myMemberId?.memberImage)}
+            message={chat}
           />
         ))}
       </div>
