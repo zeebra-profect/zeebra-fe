@@ -16,6 +16,7 @@
     "@tosspayments/payment-sdk": "^1.9.1",
     "@tosspayments/tosspayments-sdk": "^2.4.0",
     "axios": "^1.13.0",
+    "date-fns": "^4.1.0",
     "dayjs": "^1.11.19",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

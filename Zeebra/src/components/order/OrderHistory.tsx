@@ -4,7 +4,7 @@ import OrderHistoryModal from "./OrderHistoryModal";
 import ReviewBtn from "../btn/ReviewBtn";
 
 interface OrderHistoryProps {
-  // id? : number,
+  id? : number,
   status: string;
   orderTime: string;
 }

@@ -7,9 +7,9 @@ interface orderItem {
   productOptionId: number;
   orderItemName: string;
   orderItemThumbnail: string;
-  orderItemPrice: 0;
-  orderItemQuantity: 0;
-  orderItemAmount: 0;
+  orderItemPrice: number;
+  orderItemQuantity: number;
+  orderItemAmount: number;
   orderItemStatus: string;
   orderItemOptions: Array<{
     name: string;
@@ -22,8 +22,7 @@ interface OrderItemProps {
   option: orderItem;
 }
 
-function OrderItem({ productInfo, option}: OrderItemProps) {
-  
+function OrderItem({ productInfo, option }: OrderItemProps) {
   const formatted = option.orderItemAmount.toLocaleString();
   return (
     <>
@@ -40,7 +39,9 @@ function OrderItem({ productInfo, option}: OrderItemProps) {
               <pre className="font-light text-sm/4">
                 {productInfo.productDescription}
               </pre>
-              <p className="font-bold text-sm">{option.orderItemOptions[1].value}</p>
+              <p className="font-bold text-sm">
+                {option.orderItemOptions[1].value}
+              </p>
             </div>
             <div className="flex flex-row">
               <div className="flex flex-col ml-3 text-right">
