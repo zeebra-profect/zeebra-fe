@@ -1,5 +1,11 @@
 import { http } from "./http";
 
+export interface SearchRes {
+  status: string;
+  message: string;
+  data: SearchData;
+  sendTime: string; // ISO 8601 형식의 날짜 문자열
+}
 export interface ProductDetailResponse {
   productId: number;
   brandId: number;
@@ -14,42 +20,25 @@ export interface ProductDetailResponse {
   favoriteProductCount: number;
   createdAt: string; // ISO 8601 형식의 날짜 문자열
 }
-
+export interface CategoryResponse {
+  categoryId: number;
+  categoryName: string;
+}
+export interface BrandResponse {
+  brandId: number;
+  brandName: string;
+}
 export interface Pagination {
   currentPage: number;
   pageSize: number;
   totalCount: number;
   totalPages: number;
 }
-
-/** 카테고리 정보 (공통적으로 사용된다면 common.ts 등으로 분리 가능) */
-export interface CategoryResponse {
-  categoryId: number;
-  categoryName: string;
-}
-
-/** 브랜드 정보 (공통적으로 사용된다면 common.ts 등으로 분리 가능) */
-export interface BrandResponse {
-  brandId: number;
-  brandName: string;
-}
-
-/** 응답 데이터의 본문 (body) */
 export interface SearchData {
   productDetailResponses: ProductDetailResponse[];
   categoryResponses: CategoryResponse[];
   brandResponses: BrandResponse[];
   pagination: Pagination;
-}
-
-// --- 2. 최상위 응답 인터페이스 ---
-
-/** 최종 검색 응답 객체 */
-export interface SearchRes {
-  status: string;
-  message: string;
-  data: SearchData;
-  sendTime: string; // ISO 8601 형식의 날짜 문자열
 }
 
 export interface SearchReq {
