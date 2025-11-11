@@ -9,7 +9,11 @@ function ShopCategory() {
   const navigate = useNavigate();
 
   const categoryHandle = (category: string) => {
-    navigate(`/shopPage/results?keyword=${category}`);
+    if (category !== "전체") {
+      navigate(`/shopPage/results?keyword=${category}`);
+    } else {
+      navigate(`/shopPage`);
+    }
   };
 
   return (
