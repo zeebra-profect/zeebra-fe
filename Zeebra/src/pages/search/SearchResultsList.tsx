@@ -16,7 +16,7 @@ function SearchResultsList({
   if (loading) {
     return (
       <div className="w-full max-w-[1200px] text-center py-10">
-        <p className="text-gray-500">검색 중...</p>
+        <p className="text-grey2">검색 중...</p>
       </div>
     );
   }
@@ -34,7 +34,7 @@ function SearchResultsList({
   if (products.length === 0) {
     return (
       <div className="w-full max-w-[1200px] text-center py-10">
-        <p className="text-gray-500">검색 결과가 없습니다.</p>
+        <p className="text-grey2">검색 결과가 없습니다.</p>
       </div>
     );
   }

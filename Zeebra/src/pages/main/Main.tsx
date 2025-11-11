@@ -1,23 +1,23 @@
 import Banner from "../../components/banner/Banner";
+import Banner2 from "../../components/banner/Banner2";
 import LargeBanner from "../../components/banner/LargeBanner";
 import MainCategoryList from "../../components/category/MainCategoryList";
 import Product1List from "../../components/product/Product1List";
 import Product2List from "../../components/product/Product2List";
 
-function Main()
-{
-    return (
-        <>
-        <div className="flex flex-col gap-y-[30px] w-full max-w-[1200px]">
-        <LargeBanner/>
-        <MainCategoryList/>
-        <Banner/>
-        <Product1List/>
-        <Banner/>
-        <Product2List/>
-        </div>
-        </>
-    )
+function Main() {
+  return (
+    <>
+      <div className="flex flex-col gap-y-[30px] w-full max-w-[1200px]">
+        <LargeBanner />
+        <MainCategoryList />
+        <Banner />
+        <Product1List />
+        <Banner2 />
+        <Product2List />
+      </div>
+    </>
+  );
 }
 
 export default Main;
