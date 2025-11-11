@@ -1,10 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // 나중에 props로 받을 예정
-const categories = ["전체", "상의", "하의", "아우터", "신발", "가방", "시계"];
+const categories = ["전체", "상의", "하의", "아우터", "신발"];
 
 function ShopCategory() {
   const [selected, setSelected] = useState<string>("전체");
+  const navigate = useNavigate();
+
+  const categoryHandle = (category: string) => {
+    navigate(`/shopPage/results?keyword=${category}`);
+  };
 
   return (
     <div className="relative flex flex-col w-full mt-6">
@@ -13,12 +19,15 @@ function ShopCategory() {
 
       {/* 카테고리 버튼들 */}
       <div className="relative flex flex-row items-start w-full gap-6 max-w-[1200px] mx-auto z-10">
-        {categories.map((cat, idx) => {
+        {categories.map((cat) => {
           const active = selected === cat;
           return (
             <button
-              key={idx}
-              onClick={() => setSelected(cat)}
+              key={cat}
+              onClick={() => {
+                setSelected(cat); // 1. 상태 업데이트 함수 호출
+                categoryHandle(cat); // 2. 카테고리 이동/처리 함수 호출
+              }}
               className={[
                 // 배치/여백
                 "pb-2 -mb-px",
