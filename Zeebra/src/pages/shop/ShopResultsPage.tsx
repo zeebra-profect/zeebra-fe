@@ -1,4 +1,3 @@
-// ShopResultsPage.tsx
 import ShopContent from "./ShopContent";
 
 function ShopResultsPage() {
