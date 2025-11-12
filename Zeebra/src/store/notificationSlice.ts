@@ -1,41 +1,72 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { getNotifications as getNotificationsAPI, type NotiRes } from "../utils/notification"; // API 함수 import
-import { addNotification as addNotificationsAPI } from "../utils/notification"; // API 함수 import
+import {
+  getNotifications as getNotificationsAPI,
+  type NotificationRequest,
+  type NotificationResponses,
+} from "../utils/notification"; // API 함수 import
+import { postNotification as postNotificationAPI } from "../utils/notification"; // API 함수 import
 
-const initialState: NotiRes[] = [];
+interface NotificationState {
+  notification: NotificationResponses | null;
+}
 
-export const fetchNotifications = createAsyncThunk<NotiRes[]>(
-  'notification/fetch',
+const initialState: NotificationState = {
+  notification: null,
+};
+
+// 유저가 가지고 있는 모든 알림 가져오기
+export const fetchNotifications = createAsyncThunk<NotificationResponses>(
+  "notification/getAll",
   async () => {
     const response = await getNotificationsAPI();
-    return response.data.dtos;
+    return response;
   }
 );
 
-export const postNotification = createAsyncThunk<void>(
-  'notification/post',
-  async () => { await addNotificationsAPI();}
-)
+// 테스트용 알림 생성하기
+export const createNotification = createAsyncThunk<
+  NotificationResponses,
+  NotificationRequest
+>("notification/post", async (form: NotificationRequest) => {
+  const response = await postNotificationAPI(form);
+  return response;
+});
 
 const notificationSlice = createSlice({
   name: "notification",
   initialState,
   reducers: {
-    getNotification: (state, action: PayloadAction<NotiRes>) => {
-      state.unshift(action.payload); // 새 알림 앞에 추가
+    getNotifications: (state, action: PayloadAction<NotificationResponses>) => {
+      state.notification = action.payload;
     },
-    getNotifications: (state, action: PayloadAction<NotiRes[]>) => {
-      return action.payload;
+    postNotification: (state, action: PayloadAction<NotificationResponses>) => {
+      state.notification = action.payload;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchNotifications.fulfilled, (state, action) => {
-      return action.payload; // API 응답으로 상태 업데이트
-    });
+    builder
+      .addCase(fetchNotifications.pending, (state) => {
+        state.notification = null;
+      })
+      .addCase(fetchNotifications.fulfilled, (state, action) => {
+        state.notification = action.payload;
+      })
+      .addCase(fetchNotifications.rejected, (state) => {
+        state.notification = null;
+      })
+      .addCase(createNotification.pending, (state) => {
+        state.notification = null;
+      })
+      .addCase(createNotification.fulfilled, (state, action) => {
+        state.notification = action.payload;
+      })
+      .addCase(createNotification.rejected, (state) => {
+        state.notification = null;
+      });
   },
 });
 
-export const { getNotification, getNotifications } = notificationSlice.actions;
+export const { postNotification, getNotifications } = notificationSlice.actions;
 
 export default notificationSlice.reducer;

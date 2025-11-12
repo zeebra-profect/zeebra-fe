@@ -1,26 +1,35 @@
+import type { ApiResponse } from "./cart";
 import { http } from "./http";
 
-export interface NotiRes {
-    noticeText: string;
-    createdTime: string;
-    notificationType: string;
-    isRead: boolean;
+type NotificationType = "SIGN_UP" | "LOGIN" | "PAYMENT_FAILED" | "ORDER_CONFIRMED" | "ORDER_SHIPPED" | "ORDER_DELIVERED" | "WISHLIST_RESTOCK" | "WISHLIST_LOW_STOCK"
+| "REVIEW_REQUEST" | "NEW_CHAT" | "NEW_MESSAGE" | "TEST" | "TEST_OBJECT";
+
+export interface NotificationRequest {
+  memberId: number;
+  notificationType: NotificationType;
+  object?: unknown 
 }
 
-export interface NotisRes {
-  status: string;
-  message: string;
-  data: {
-    dtos: NotiRes[];
-  };
-  sendTime: string;
+export interface NotificationResponse {
+  notificationId: number;
+  memberId: number;
+  notificationType: NotificationType;
+  isRead: boolean;
+  noticeText: string;
+  createdTime: string;
+  url: string;
 }
 
-export async function getNotifications(): Promise<NotisRes> {
-  const { data } = await http.get<NotisRes>("/notification/all");
+
+
+export type NotificationResponses = ApiResponse<NotificationResponse[]>;
+
+export async function getNotifications(): Promise<NotificationResponses> {
+  const { data } = await http.get<NotificationResponses>("/notification");
   return data;
 }
 
-export async function addNotification(): Promise<void> {
-  await http.post("/notification");
+export async function postNotification(req: NotificationRequest): Promise<NotificationResponses> {
+  const { data } = await http.post(`/notification`, req);
+  return data;
 }

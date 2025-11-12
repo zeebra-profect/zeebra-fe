@@ -1,46 +1,37 @@
 import Notification from "./Notification";
 import { useEffect } from "react";
-import {
-  fetchNotifications,
-  getNotification,
-  postNotification,
-} from "../../store/notificationSlice";
+import { createNotification } from "../../store/notificationSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-// import notificationSocket from "@/lib/NotificationSocket";
-// import type { NotiRes } from "@/utils/notification";
+import type {
+  NotificationRequest,
+  NotificationResponses,
+} from "@/utils/notification";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  // children?: React.ReactNode;
+  notifications?: NotificationResponses["data"];
 }
 
-function NotificationModal({ isOpen, onClose }: ModalProps) {
+function NotificationModal({ isOpen, onClose, notifications }: ModalProps) {
   const dispatch = useAppDispatch();
-  const notifications = useAppSelector((state) => state.notification);
-
-  useEffect(() => {
-    dispatch(fetchNotifications());
-    // notificationSocket.connect();
-
-    // notificationSocket.socket!.onmessage = (event: MessageEvent) => {
-    //   const newNotification: NotiRes = JSON.parse(event.data);
-    //   console.log("📨 받은 데이터: ", newNotification);
-    //   console.log("createdTime:", newNotification.createdTime); // 👈 이거 확인
-    //   dispatch(getNotification(newNotification));
-    // };
-
-    // return () => {
-    //   notificationSocket.disconnect();
-    // };
-  }, []);
-
+  const selector = useAppSelector(
+    (state) => state.notification.notification?.data
+  );
+  const selector2 = useAppSelector(state => state.auth.me)
+  // const me = useAuth();
   const createTestNoti = () => {
-    dispatch(postNotification());
+    const form: NotificationRequest = {
+      memberId: Number(selector2?.memberId),
+      notificationType: "TEST",
+      object: null,
+    };
+
+    dispatch(createNotification(form));
+    console.log("보내지니?: ", form);
   };
-  // useEffect(() => {
-  //   console.log("selector: ", notifications);
-  // },[notifications])
+
+  useEffect(() => {}, [selector]);
 
   if (!isOpen) return null;
 
@@ -72,7 +63,11 @@ function NotificationModal({ isOpen, onClose }: ModalProps) {
                   />
                 ))
               ) : (
-                <div>알림이 없습니다</div>
+                <div>
+                  <p className="text-center text-base">
+                  알림이 없습니다.
+                  </p>
+                </div>
               )}
             </div>
           </div>
