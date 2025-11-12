@@ -103,6 +103,7 @@ export default function Header() {
           <Link to="/search">
             <input
               type="text"
+              readOnly
               id="search-input"
               name="search-input"
               className="border-b-3 outline-none w-[120px] md:w-[200px] relative left-5

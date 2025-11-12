@@ -1,4 +1,4 @@
-import Gender from "./Gender";
+// import Gender from "./Gender";
 import Category from "./Category";
 import Color from "./Color";
 
@@ -7,7 +7,7 @@ const num = 123456;
 function SideModal() {
   return (
     <div>
-      <Gender />
+      {/* <Gender /> */}
       <Category />
       <Color />
       <div className="flex flex-row justify-center gap-6">

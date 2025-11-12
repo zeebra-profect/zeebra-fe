@@ -43,8 +43,8 @@ function Search() {
         brandIds: null,
         productSort: null,
         pageable: {
-          page: 10,
-          size: 30,
+          page: 0,
+          size: 50,
           sort: "createdAt,desc",
         },
       };
@@ -77,6 +77,7 @@ function Search() {
       <div className="relative w-[90%] mt-10" ref={wrapRef}>
         <input
           ref={inputRef}
+          maxLength={50}
           onChange={(e) => {
             setQ(e.target.value);
             setOpen(true);
