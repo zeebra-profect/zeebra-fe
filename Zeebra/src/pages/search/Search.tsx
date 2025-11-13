@@ -1,15 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getProducts, type SearchReq, type SearchRes } from "@/utils/search";
+import { type SearchReq } from "@/utils/search";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  searchProducts,
+  selectSearchLoading,
+  selectSearchTerm,
+  setSearchTerm,
+} from "@/store/searchSlice";
 // import RecCategory from "../../components/category/RecCategory";
 
 function Search() {
   const navigate = useNavigate();
-  const [q, setQ] = useState<string>("");
+  const dispatch = useAppDispatch();
+  const q = useAppSelector(selectSearchTerm);
+  const loading = useAppSelector(selectSearchLoading);
   const [open, setOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [searchResults, setSearchResults] = useState<SearchRes | null>(null);
-
   const inputRef = useRef<HTMLInputElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -23,8 +29,7 @@ function Search() {
 
   const clear = () => {
     setOpen(false);
-    setQ("");
-    setSearchResults(null);
+    dispatch(setSearchTerm(""));
     inputRef.current?.focus();
   };
 
@@ -32,36 +37,28 @@ function Search() {
     if (q.trim() === "" || loading) return;
 
     setOpen(false);
-    setLoading(true);
     const searchTerm = q.trim();
     console.log("📢 실제 검색어:", searchTerm);
 
     try {
       const form: SearchReq = {
-        keyWord: q,
+        keyWord: searchTerm,
         categoryIds: null,
         brandIds: null,
         productSort: null,
-        pageable: {
-          page: 0,
-          size: 50,
-          sort: "createdAt,desc",
-        },
+        page: 0,
+        size: 20,
+        sort: ["createdAt, desc"],
       };
 
-      const result = await getProducts(form);
+      const result = await dispatch(searchProducts(form)).unwrap();
 
-      setSearchResults(result);
-
-      navigate(`/shopPage/results?keyword=${encodeURIComponent(q.trim())}`, {
+      navigate(`/shopPage/results?keyword=${encodeURIComponent(searchTerm)}`, {
         state: { searchData: result },
       });
     } catch (error) {
       console.error("검색 중 오류 발생:", error);
-      setSearchResults(null);
-    } finally {
-      setLoading(false);
-      console.log("검색 결과 : ", searchResults);
+      alert("검색 중 오류가 발생했습니다.");
     }
   };
 
@@ -79,7 +76,7 @@ function Search() {
           ref={inputRef}
           maxLength={50}
           onChange={(e) => {
-            setQ(e.target.value);
+            dispatch(setSearchTerm(e.target.value));
             setOpen(true);
           }}
           value={q}
