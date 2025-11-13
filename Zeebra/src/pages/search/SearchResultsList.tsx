@@ -12,8 +12,9 @@ function SearchResultsList({
   loading,
   error,
 }: SearchResultsListProps) {
+  const isInitialLoading = loading && products.length === 0;
   // 로딩 상태
-  if (loading) {
+  if (isInitialLoading) {
     return (
       <div className="w-full max-w-[1200px] text-center py-10">
         <p className="text-grey2">검색 중...</p>
@@ -31,7 +32,7 @@ function SearchResultsList({
   }
 
   // 검색 결과 없음
-  if (products.length === 0) {
+  if (!loading && products.length === 0) {
     return (
       <div className="w-full max-w-[1200px] text-center py-10">
         <p className="text-grey2">검색 결과가 없습니다.</p>
