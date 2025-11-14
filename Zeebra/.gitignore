@@ -7,6 +7,14 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 .env
+
+# IDE settings
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+
 # 추가
 
 node_modules

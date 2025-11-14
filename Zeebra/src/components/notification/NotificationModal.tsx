@@ -1,37 +1,57 @@
 import Notification from "./Notification";
 import { useEffect } from "react";
-import { createNotification } from "../../store/notificationSlice";
+import {
+  createNotification,
+  deleteNotification,
+  fetchNotifications,
+  readNotification,
+} from "../../store/notificationSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import type {
-  NotificationRequest,
-  NotificationResponses,
+import {
+  NotificationType,
+  type NotificationRequest,
 } from "@/utils/notification";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  notifications?: NotificationResponses["data"];
 }
 
-function NotificationModal({ isOpen, onClose, notifications }: ModalProps) {
+function NotificationModal({ isOpen, onClose }: ModalProps) {
   const dispatch = useAppDispatch();
-  const selector = useAppSelector(
-    (state) => state.notification.notification?.data
+  const notificationSelector = useAppSelector(
+    (state) => state.notification.notification?.data.dtos
   );
-  const selector2 = useAppSelector(state => state.auth.me)
-  // const me = useAuth();
+
+  useEffect(() => {
+    // 처음 들어올 때 가지고 있는 알림 모두 불러옴
+    dispatch(fetchNotifications());
+  }, []);
+
+  const me = useAppSelector((state) => state.auth.me);
+
   const createTestNoti = () => {
     const form: NotificationRequest = {
-      memberId: Number(selector2?.memberId),
-      notificationType: "TEST",
+      memberId: Number(me?.memberId),
+      notificationType: NotificationType.TEST,
       object: null,
     };
 
     dispatch(createNotification(form));
-    console.log("보내지니?: ", form);
   };
 
-  useEffect(() => {}, [selector]);
+  const readNoti = (notificationId: number) => {
+    dispatch(readNotification(notificationId));
+    dispatch(fetchNotifications());
+  };
+
+  const deleteNoti = (notificationId: number) => {
+    dispatch(deleteNotification(notificationId));
+  };
+
+  useEffect(() => {
+    console.log("selector: ", notificationSelector);
+  }, [notificationSelector]);
 
   if (!isOpen) return null;
 
@@ -52,21 +72,25 @@ function NotificationModal({ isOpen, onClose, notifications }: ModalProps) {
               </p>
             </div>
             <div className="h-[calc(450px-73px)] overflow-y-auto scrollbar">
-              {notifications && notifications.length > 0 ? (
-                notifications.map((notification, index) => (
+              {notificationSelector && notificationSelector.length > 0 ? (
+                notificationSelector.map((notification) => (
                   <Notification
-                    key={index}
+                    key={notification.notificationId}
                     isRead={notification.isRead}
                     notificationType={notification.notificationType}
                     createdTime={notification.createdTime}
                     noticeText={notification.noticeText}
+                    readNotification={() =>
+                      readNoti(notification.notificationId)
+                    }
+                    deleteNotification={() =>
+                      deleteNoti(notification.notificationId)
+                    }
                   />
                 ))
               ) : (
                 <div>
-                  <p className="text-center text-base">
-                  알림이 없습니다.
-                  </p>
+                  <p className="text-center text-base">알림이 없습니다.</p>
                 </div>
               )}
             </div>
