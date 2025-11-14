@@ -15,9 +15,10 @@ import {
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  hasUnreadNoti: (value: boolean) => void;
 }
 
-function NotificationModal({ isOpen, onClose }: ModalProps) {
+function NotificationModal({ isOpen, onClose, hasUnreadNoti }: ModalProps) {
   const dispatch = useAppDispatch();
   const notificationSelector = useAppSelector(
     (state) => state.notification.notification?.data.dtos
@@ -42,7 +43,6 @@ function NotificationModal({ isOpen, onClose }: ModalProps) {
 
   const readNoti = (notificationId: number) => {
     dispatch(readNotification(notificationId));
-    dispatch(fetchNotifications());
   };
 
   const deleteNoti = (notificationId: number) => {
@@ -50,7 +50,8 @@ function NotificationModal({ isOpen, onClose }: ModalProps) {
   };
 
   useEffect(() => {
-    console.log("selector: ", notificationSelector);
+    const hasUnread = notificationSelector?.some((n) => !n.isRead) ?? false;
+    hasUnreadNoti(hasUnread);
   }, [notificationSelector]);
 
   if (!isOpen) return null;
