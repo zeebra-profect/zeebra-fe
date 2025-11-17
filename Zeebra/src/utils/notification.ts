@@ -23,6 +23,7 @@ export interface NotificationRequest {
   memberId: number;
   notificationType: NotificationType;
   object?: unknown 
+  imgUrl?: string | null;
 }
 
 export interface NotificationResponse {
@@ -33,6 +34,7 @@ export interface NotificationResponse {
   noticeText: string;
   createdTime: string;
   url: string;
+  imgUrl: string;
 }
 
 export interface NotificationResponses {

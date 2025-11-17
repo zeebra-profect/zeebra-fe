@@ -35,7 +35,6 @@ export const createNotification = createAsyncThunk<
   NotificationRequest
 >("notification/post", async (form: NotificationRequest) => {
   const response = await postNotificationAPI(form);
-  console.log("response.data?: ", response.data);
   return response.data;
 });
 
@@ -44,7 +43,6 @@ export const readNotification = createAsyncThunk<ApiResponse, number>(
   "notification/read",
   async (notificationId: number) => {
     const response = await putNotificationAPI(notificationId);
-    console.log("read? ", response);
     return response;
   }
 );

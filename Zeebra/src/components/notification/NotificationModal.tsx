@@ -21,11 +21,10 @@ interface ModalProps {
 function NotificationModal({ isOpen, onClose, hasUnreadNoti }: ModalProps) {
   const dispatch = useAppDispatch();
   const notificationSelector = useAppSelector(
-    (state) => state.notification.notification?.data.dtos
+    state => state.notification.notification?.data?.dtos
   );
 
   useEffect(() => {
-    // 처음 들어올 때 가지고 있는 알림 모두 불러옴
     dispatch(fetchNotifications());
   }, []);
 
@@ -36,6 +35,7 @@ function NotificationModal({ isOpen, onClose, hasUnreadNoti }: ModalProps) {
       memberId: Number(me?.memberId),
       notificationType: NotificationType.TEST,
       object: null,
+      imgUrl: null,
     };
 
     dispatch(createNotification(form));
@@ -52,6 +52,7 @@ function NotificationModal({ isOpen, onClose, hasUnreadNoti }: ModalProps) {
   useEffect(() => {
     const hasUnread = notificationSelector?.some((n) => !n.isRead) ?? false;
     hasUnreadNoti(hasUnread);
+    console.log("notificationSle: ", notificationSelector);
   }, [notificationSelector]);
 
   if (!isOpen) return null;
