@@ -7,7 +7,7 @@ interface Noti {
   deleteNotification: () => void;
 }
 
-function Notification({ notificationType, isRead, noticeText, createdTime, readNotification, deleteNotification }: Noti) {
+function NotificationItem({ notificationType, isRead, noticeText, createdTime, readNotification, deleteNotification }: Noti) {
   const formatted = new Date(createdTime).toLocaleString("ko-KR", {
     month: "numeric",
     day: "numeric",
@@ -55,4 +55,4 @@ function Notification({ notificationType, isRead, noticeText, createdTime, readN
     </>
   );
 }
-export default Notification;
+export default NotificationItem;
