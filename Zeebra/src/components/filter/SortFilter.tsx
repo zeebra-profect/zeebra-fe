@@ -32,7 +32,7 @@ function SortFilter() {
   }, [isOpen]);
 
   return (
-    <div className="w-full flex justify-end items-center mb-4 gap-2 px-4">
+    <div className="w-full flex justify-end items-center mb-4 gap-2 px-4 mt-4">
       <div className="relative inline-block">
         {/* 정렬 버튼 */}
         <button

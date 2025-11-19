@@ -1,17 +1,28 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getProducts, type SearchReq, type SearchRes } from "@/utils/search";
+import { type SearchReq } from "@/utils/search";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  fetchProducts,
+  selectSearchLoading,
+  selectSearchTerm,
+  setSearchTerm,
+} from "@/store/searchSlice";
 // import RecCategory from "../../components/category/RecCategory";
 
 function Search() {
   const navigate = useNavigate();
-  const [q, setQ] = useState<string>("");
+  const dispatch = useAppDispatch();
+  const q = useAppSelector(selectSearchTerm);
+  const loading = useAppSelector(selectSearchLoading);
   const [open, setOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [searchResults, setSearchResults] = useState<SearchRes | null>(null);
-
   const inputRef = useRef<HTMLInputElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // 이전에 검색했던 기록('아디다스')이 Redux에 남아있다면 지워줍니다.
+    dispatch(setSearchTerm(""));
+  }, [dispatch]);
 
   useEffect(() => {
     const onDown = (e: MouseEvent) => {
@@ -23,8 +34,7 @@ function Search() {
 
   const clear = () => {
     setOpen(false);
-    setQ("");
-    setSearchResults(null);
+    dispatch(setSearchTerm(""));
     inputRef.current?.focus();
   };
 
@@ -32,36 +42,28 @@ function Search() {
     if (q.trim() === "" || loading) return;
 
     setOpen(false);
-    setLoading(true);
     const searchTerm = q.trim();
     console.log("📢 실제 검색어:", searchTerm);
 
     try {
       const form: SearchReq = {
-        keyWord: q,
+        keyWord: searchTerm,
         categoryIds: null,
         brandIds: null,
         productSort: null,
-        pageable: {
-          page: 10,
-          size: 30,
-          sort: "createdAt,desc",
-        },
+        page: 0,
+        size: 20,
+        sort: ["createdAt, desc"],
       };
 
-      const result = await getProducts(form);
+      const result = await dispatch(fetchProducts(form)).unwrap();
 
-      setSearchResults(result);
-
-      navigate(`/shopPage/results?keyword=${encodeURIComponent(q.trim())}`, {
+      navigate(`/shopPage/results?keyword=${encodeURIComponent(searchTerm)}`, {
         state: { searchData: result },
       });
     } catch (error) {
       console.error("검색 중 오류 발생:", error);
-      setSearchResults(null);
-    } finally {
-      setLoading(false);
-      console.log("검색 결과 : ", searchResults);
+      alert("검색 중 오류가 발생했습니다.");
     }
   };
 
@@ -70,6 +72,7 @@ function Search() {
       <button
         onClick={() => navigate(-1)}
         className="w-fit h-fit mt-5 ml-auto mr-[10vh] cursor-pointer"
+        aria-label="취소"
       >
         취소
       </button>
@@ -77,8 +80,9 @@ function Search() {
       <div className="relative w-[90%] mt-10" ref={wrapRef}>
         <input
           ref={inputRef}
+          maxLength={50}
           onChange={(e) => {
-            setQ(e.target.value);
+            dispatch(setSearchTerm(e.target.value));
             setOpen(true);
           }}
           value={q}

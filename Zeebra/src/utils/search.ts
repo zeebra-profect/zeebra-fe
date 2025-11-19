@@ -43,20 +43,33 @@ export interface SearchData {
 
 export interface SearchReq {
   keyWord?: string | null;
-  categoryIds: number[] | null;
-  brandIds: number[] | null;
-  productSort: string | null;
-  pageable: {
-    page: number;
-    size: number;
-    sort: string;
-  };
+  categoryIds?: number[] | null;
+  brandIds?: number[] | null;
+  productSort?: string | null;
+  page?: number;
+  size?: number;
+  sort?: string[];
 }
 
 export async function getProducts(form: SearchReq): Promise<SearchRes> {
-  const { data } = await http.get<SearchRes>(`/products`, {
-    params: form,
+  // null/undefined 값 제거
+  const params = { ...form };
+  Object.keys(params).forEach((key) => {
+    if (
+      params[key as keyof SearchReq] === null ||
+      params[key as keyof SearchReq] === undefined
+    ) {
+      delete params[key as keyof SearchReq];
+    }
   });
+
+  const { data } = await http.get<SearchRes>(`/products`, {
+    params,
+    paramsSerializer: {
+      indexes: null,
+    },
+  });
+
   console.log("data: ", data);
   return data;
 }
