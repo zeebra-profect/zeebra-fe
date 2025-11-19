@@ -7,7 +7,6 @@ import { store } from "@/store";
 import { vi, describe, test, expect, beforeEach } from "vitest";
 import {
   addFavorite,
-  deleteFavorite,
   getFavorites,
   type FavoriteRes,
 } from "@/utils/favorite";
