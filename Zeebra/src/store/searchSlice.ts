@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from "@reduxjs/toolkit";
 import {
   getProducts,
   type SearchReq,
@@ -9,7 +13,7 @@ import type { RootState } from "./index";
 
 interface SearchState {
   q: string;
-  searchResults: SearchRes | null;
+  // searchResults: SearchRes | null;
   isLoading: boolean;
   error: string | null;
   products: ProductDetailResponse[];
@@ -19,7 +23,7 @@ interface SearchState {
 
 const initialState: SearchState = {
   q: "",
-  searchResults: null,
+  // searchResults: null,
   isLoading: false,
   error: null,
   currentPage: 0,
@@ -28,26 +32,39 @@ const initialState: SearchState = {
 };
 
 // 일반 검색용 thunk
-export const searchProducts = createAsyncThunk(
-  "search/searchProducts",
-  async (form: SearchReq, { rejectWithValue }) => {
-    try {
-      const result = await getProducts(form);
-      return result;
-    } catch (error) {
-      console.error("검색 api 호출 실패 : ", error);
-      return rejectWithValue("검색 api 호출 실패");
-    }
-  }
-);
+// export const searchProducts = createAsyncThunk(
+//   "search/searchProducts",
+//   async (form: SearchReq, { rejectWithValue }) => {
+//     try {
+//       const result = await getProducts(form);
+//       return result;
+//     } catch (error) {
+//       console.error("검색 api 호출 실패 : ", error);
+//       return rejectWithValue("검색 api 호출 실패");
+//     }
+//   }
+// );
 
 // 무한 스크롤용 thunk
-export const fetchInfiniteProducts = createAsyncThunk(
-  "search/fetchInfiniteProducts",
+// export const fetchInfiniteProducts = createAsyncThunk(
+//   "search/fetchInfiniteProducts",
+//   async (form: SearchReq, { rejectWithValue }) => {
+//     try {
+//       const result = await getProducts(form);
+//       return result.data;
+//     } catch (error) {
+//       console.error("검색 api 호출 실패 : ", error);
+//       return rejectWithValue("검색 API 호출 실패");
+//     }
+//   }
+// );
+
+export const fetchProducts = createAsyncThunk<SearchRes, SearchReq>(
+  "search/fetchProducts", // Thunk 이름 변경
   async (form: SearchReq, { rejectWithValue }) => {
     try {
       const result = await getProducts(form);
-      return result.data;
+      return result; // 💡 응답 전체(SearchRes)를 반환 (Search.tsx가 navigate.state에 사용해야 함)
     } catch (error) {
       console.error("검색 api 호출 실패 : ", error);
       return rejectWithValue("검색 API 호출 실패");
@@ -68,22 +85,23 @@ const searchSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // 무한 스크롤 thunk 처리
-      .addCase(fetchInfiniteProducts.pending, (state) => {
+      // ✅ 5. fetchProducts Thunk만 처리
+      .addCase(fetchProducts.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(fetchInfiniteProducts.fulfilled, (state, action) => {
-        const payloadData = action.payload;
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        // 💡 Thunk가 SearchRes 전체를 반환하므로 .data에 접근
+        const payloadData = action.payload.data;
 
         state.isLoading = false;
         state.q = action.meta.arg.keyWord || "";
 
-        // 0페이지 요청(새 검색)일 경우 목록을 덮어쓰기
+        // ✅ 6. 데이터 누적 로직 (기존 로직 유지, 완벽함)
         if (payloadData.pagination.currentPage === 0) {
           state.products = payloadData.productDetailResponses;
         } else {
-          // 기존 목록에 중복 제거하면서 새 상품 추가
+          // 중복 제거 및 누적
           const existingIds = new Set(state.products.map((p) => p.productId));
           const newProducts = payloadData.productDetailResponses.filter(
             (p) => !existingIds.has(p.productId)
@@ -94,23 +112,8 @@ const searchSlice = createSlice({
         // 페이지 정보 업데이트
         state.currentPage = payloadData.pagination.currentPage;
         state.totalPages = payloadData.pagination.totalPages;
-        state.searchResults = null;
       })
-      .addCase(fetchInfiniteProducts.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error =
-          (action.payload as string) || action.error.message || "검색 실패";
-      })
-      // 일반 검색 thunk 처리 (기존에 있던 것)
-      .addCase(searchProducts.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(searchProducts.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.searchResults = action.payload;
-      })
-      .addCase(searchProducts.rejected, (state, action) => {
+      .addCase(fetchProducts.rejected, (state, action) => {
         state.isLoading = false;
         state.error =
           (action.payload as string) || action.error.message || "검색 실패";
@@ -120,14 +123,24 @@ const searchSlice = createSlice({
 
 export const { setSearchTerm, resetSearchState } = searchSlice.actions;
 
+// ✅ 7. Selector 수정
 export const selectSearchTerm = (state: RootState) => state.search.q;
 export const selectSearchLoading = (state: RootState) => state.search.isLoading;
 export const selectSearchError = (state: RootState) => state.search.error;
 export const selectProducts = (state: RootState) => state.search.products;
-export const selectSearchPagination = (state: RootState) => ({
-  currentPage: state.search.currentPage,
-  totalPages: state.search.totalPages,
-  isLoading: state.search.isLoading,
-});
+
+// ✅ 8. [중요] createSelector로 셀렉터 메모이제이션 (성능 경고 해결)
+export const selectSearchPagination = createSelector(
+  [
+    (state: RootState) => state.search.currentPage,
+    (state: RootState) => state.search.totalPages,
+    (state: RootState) => state.search.isLoading,
+  ],
+  (currentPage, totalPages, isLoading) => ({
+    currentPage,
+    totalPages,
+    isLoading,
+  })
+);
 
 export default searchSlice.reducer;

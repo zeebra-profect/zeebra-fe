@@ -100,10 +100,12 @@ export default function Header() {
 
         {/* 검색 바 */}
         <div className="w-full lg:w-[1200px] flex-row flex items-center justify-end gap-x-[5px] mt-auto relative top-px">
-          <Link to="/search">
+          <Link to="/search" aria-label="검색 페이지로 이동">
             <input
               type="text"
               readOnly
+              aria-hidden="true"
+              tabIndex={-1}
               id="search-input"
               name="search-input"
               className="border-b-3 outline-none w-[120px] md:w-[200px] relative left-5
@@ -112,7 +114,7 @@ export default function Header() {
             <button className="z-[3px] cursor-pointer">
               <img
                 src={searchIcon}
-                alt="searchIcon"
+                alt=""
                 className="w-[13px] h-[13px] md:w-[15px] md:h-[15px]"
               />
             </button>
