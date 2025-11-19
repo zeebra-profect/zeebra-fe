@@ -11,7 +11,7 @@ function ShopPage() {
         <h1 className="text-2xl font-semibold">SHOP</h1>
         <ShopCategory />
         {/* <SubCategory /> 나중에 열기 */}
-        <SortBtn />
+        {/* <SortBtn /> 나중에 열기 */}
       </div>
       <SortFilter />
       <Outlet />

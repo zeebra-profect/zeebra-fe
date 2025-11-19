@@ -1,10 +1,9 @@
-
 import { useCallback, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import SearchResultsList from "@/pages/search/SearchResultsList";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
-  fetchInfiniteProducts,
+  fetchProducts,
   selectProducts,
   selectSearchPagination,
   selectSearchTerm,
@@ -40,7 +39,7 @@ function ShopContent() {
   useEffect(() => {
     if (urlKeyword !== currentKeyword) {
       console.log(`[Keyword Change] "${currentKeyword}" → "${urlKeyword}"`);
-      
+
       // 상태 완전 초기화
       dispatch(resetSearchState());
       isInitializedRef.current = false;
@@ -56,7 +55,7 @@ function ShopContent() {
     // 초기화가 안 됐고, 상품이 없고, 로딩 중이 아닐 때만
     if (!isInitializedRef.current && products.length === 0 && !isLoading) {
       console.log(`[Initial Load] 첫 페이지 요청 (keyword: "${urlKeyword}")`);
-      
+
       isInitializedRef.current = true;
       requestedPagesRef.current.add(0);
 
@@ -67,7 +66,7 @@ function ShopContent() {
         sort: ["createdAt,desc"],
       };
 
-      dispatch(fetchInfiniteProducts(form));
+      dispatch(fetchProducts(form));
     }
   }, [products.length, isLoading, urlKeyword, dispatch]);
 
@@ -102,7 +101,7 @@ function ShopContent() {
       sort: ["createdAt,desc"],
     };
 
-    dispatch(fetchInfiniteProducts(form));
+    dispatch(fetchProducts(form));
   }, [isLoading, currentPage, totalPages, urlKeyword, dispatch]);
 
   const observerTargetRef = useInfiniteScroll(loadNextPage);

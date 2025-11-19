@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { type SearchReq } from "@/utils/search";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
-  searchProducts,
+  fetchProducts,
   selectSearchLoading,
   selectSearchTerm,
   setSearchTerm,
@@ -18,6 +18,11 @@ function Search() {
   const [open, setOpen] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // 이전에 검색했던 기록('아디다스')이 Redux에 남아있다면 지워줍니다.
+    dispatch(setSearchTerm(""));
+  }, [dispatch]);
 
   useEffect(() => {
     const onDown = (e: MouseEvent) => {
@@ -51,7 +56,7 @@ function Search() {
         sort: ["createdAt, desc"],
       };
 
-      const result = await dispatch(searchProducts(form)).unwrap();
+      const result = await dispatch(fetchProducts(form)).unwrap();
 
       navigate(`/shopPage/results?keyword=${encodeURIComponent(searchTerm)}`, {
         state: { searchData: result },
@@ -67,6 +72,7 @@ function Search() {
       <button
         onClick={() => navigate(-1)}
         className="w-fit h-fit mt-5 ml-auto mr-[10vh] cursor-pointer"
+        aria-label="취소"
       >
         취소
       </button>
