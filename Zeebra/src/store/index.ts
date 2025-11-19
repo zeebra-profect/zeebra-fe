@@ -10,6 +10,7 @@ import favoritesSlice from "./favoriteSlice";
 import chatSlice from "./chatSlice";
 import paymentSlice from "./paymentSlice";
 import searchSlice from "./searchSlice";
+import pushSlice from './webPushSlice';
 
 // 2. 🔽 [중간] rootReducer를 정의합니다.
 const rootReducer = combineReducers({
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   chat: chatSlice,
   payment: paymentSlice,
   search: searchSlice,
+  push: pushSlice,
 });
 
 // 3. 🔽 [마지막] 정의된 rootReducer를 사용하여 store를 생성하고 export합니다.

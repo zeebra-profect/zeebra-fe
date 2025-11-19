@@ -1,26 +1,64 @@
+import type { ApiResponse } from "./cart";
 import { http } from "./http";
 
-export interface NotiRes {
-    noticeText: string;
-    createdTime: string;
-    notificationType: string;
-    isRead: boolean;
+export const NotificationType = {
+  SIGN_UP: "SIGN_UP",
+  LOGIN: "LOGIN",
+  PAYMENT_FAILED: "PAYMENT_FAILED",
+  ORDER_CONFIRMED: "ORDER_CONFIRMED",
+  ORDER_SHIPPED: "ORDER_SHIPPED",
+  ORDER_DELIVERED: "ORDER_DELIVERED",
+  WISHLIST_RESTOCK: "WISHLIST_RESTOCK",
+  WISHLIST_LOW_STOCK: "WISHLIST_LOW_STOCK",
+  REVIEW_REQUEST: "REVIEW_REQUEST",
+  NEW_CHAT: "NEW_CHAT",
+  NEW_MESSAGE: "NEW_MESSAGE",
+  TEST: "TEST",
+  TEST_OBJECT: "TEST_OBJECT",
+} as const;
+
+export type NotificationType = typeof NotificationType[keyof typeof NotificationType];
+
+export interface NotificationRequest {
+  memberId: number;
+  notificationType: NotificationType;
+  object?: unknown 
+  imgUrl?: string | null;
 }
 
-export interface NotisRes {
-  status: string;
-  message: string;
-  data: {
-    dtos: NotiRes[];
-  };
-  sendTime: string;
+export interface NotificationResponse {
+  notificationId: number;
+  memberId: number;
+  notificationType: NotificationType;
+  isRead: boolean;
+  noticeText: string;
+  createdTime: string;
+  url: string;
+  imgUrl: string;
 }
 
-export async function getNotifications(): Promise<NotisRes> {
-  const { data } = await http.get<NotisRes>("/notification/all");
+export interface NotificationResponses {
+  dtos: Array<NotificationResponse>
+}
+
+export type NotificationApiResponse = ApiResponse<NotificationResponses>;
+
+export async function getNotifications(): Promise<NotificationApiResponse> {
+  const { data } = await http.get<NotificationApiResponse>("/notification");
   return data;
 }
 
-export async function addNotification(): Promise<void> {
-  await http.post("/notification");
+export async function postNotification(req: NotificationRequest): Promise<ApiResponse<NotificationResponse>> {
+  const { data } = await http.post(`/notification`, req);
+  return data;
+}
+
+export async function putNotification(notificationId: number): Promise<ApiResponse> {
+  const { data } = await http.put(`/notification/${notificationId}`);
+  return data;
+}
+
+export async function deleteNotification(notificationId: number): Promise<NotificationApiResponse> {
+  const { data } = await http.delete(`/notification/${notificationId}`);
+  return data;
 }
