@@ -40,6 +40,7 @@ jobs:
           # 빌드 타임 환경변수 (GitHub Secrets에서 가져오기)
           TOSS_PAYMENT_CLIENT_KEY: ${{ secrets.REACT_TOSS_PAYMENT_CLIENT_KEY }}
           VITE_VAPID_PUBLIC_KEY: ${{ secrets.VITE_VAPID_PUBLIC_KEY }}
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
           REACT_APP_ENV: "dev"
         run: |
           cd Zeebra
@@ -67,6 +68,7 @@ jobs:
         env:
           TOSS_PAYMENT_CLIENT_KEY: ${{ secrets.REACT_TOSS_PAYMENT_CLIENT_KEY }}
           VITE_VAPID_PUBLIC_KEY: ${{ secrets.VITE_VAPID_PUBLIC_KEY }}
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
           REACT_APP_ENV: "dev"
         run: |
           cd Zeebra
