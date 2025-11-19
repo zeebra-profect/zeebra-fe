@@ -32,6 +32,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd Zeebra
           npm ci
   
       - name: Build
@@ -41,6 +42,7 @@ jobs:
           VITE_VAPID_PUBLIC_KEY: ${{ secrets.VITE_VAPID_PUBLIC_KEY }}
           REACT_APP_ENV: "dev"
         run: |
+          cd Zeebra
           npm run build
   cd:
     name: CD (Deploy to EC2 via SSM)
