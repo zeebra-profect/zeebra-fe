@@ -17,15 +17,9 @@ self.addEventListener("push", function (event) {
     //   url: data.url || "/",
     },
   };
-  event.waitUntil(
-    self.registration.showNotification("테스트 알림", {
-      body: "푸시 시스템 테스트 중",
-      requireInteraction: true
-    })
-  );
 
   // 알림 표시
-//   event.waitUntil(self.registration.showNotification(data.title, options));
+  event.waitUntil(self.registration.showNotification(data.title, options));
 });
 
 // 2. 알림 클릭 시 실행
