@@ -29,7 +29,7 @@ function SearchResultsCard({ product }: SearchResultsCardProps) {
   };
 
   const formatPrice = (price: number | null) => {
-    if (!price) return "가격 미정";
+    if (!price) return "재고 없음";
     return `${price.toLocaleString()}원`;
   };
 

@@ -3,10 +3,11 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import AppRouter from "@/Router";
 import { Provider } from "react-redux";
-import { store } from "@/store"; // Adjust this path to your store file
+import { store } from "@/store";
 import { getProducts } from "@/utils/search";
 import { vi, describe, test, expect, beforeEach } from "vitest";
 
+// getProducts 라는 함수를 목킹함.
 vi.mock("@/utils/search", async (_importOriginal) => {
   return {
     getProducts: vi.fn(),
@@ -15,8 +16,7 @@ vi.mock("@/utils/search", async (_importOriginal) => {
 
 describe("UTTC-UT-PROD-FE-001: 검색화면으로 이동", () => {
   test("메인 페이지에서 검색 아이콘을 클릭하면 /search 페이지로 이동해야한다", async () => {
-    //given: 사용자가 메인 페이지에 접속해있다.
-
+    // 테스트 환경에서는 실제 브라우저 주소창이 없어서, 메모리에 가짜 주소만들기
     render(
       <Provider store={store}>
         <MemoryRouter initialEntries={["/"]}>
@@ -24,6 +24,7 @@ describe("UTTC-UT-PROD-FE-001: 검색화면으로 이동", () => {
         </MemoryRouter>
       </Provider>
     );
+    // user 자주나온다고 beforeAll하면안됨, 매 테스트마다 새로 태어난 사용자여야함.
     const user = userEvent.setup();
     const searchLink = screen.getByRole("link", {
       name: /검색 페이지로 이동/i,
