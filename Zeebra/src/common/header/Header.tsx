@@ -12,6 +12,7 @@ export default function Header() {
   const { isAuthed, logout } = useAuth();
   const [isNotiModalOpen, setIsNotiModalOpen] = useState(false);
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+  const [hasUnreadNoti, setHasUnreadNoti] = useState(false);
 
   const handleLogout = async () => {
     await logout();
@@ -47,16 +48,21 @@ export default function Header() {
               <p className="cursor-pointer">관심</p>
             </Link>
             <div className="relative">
-              <p
+              <div
                 className="cursor-pointer"
                 onClick={() => setIsNotiModalOpen(true)}
               >
+                {
+                  hasUnreadNoti
+                  ? <div className="w-1 h-1 rounded-2xl bg-red-600 absolute left-5"></div>
+                  : null
+                }
                 알림
-              </p>
+              </div>
               <NotificationModal
                 isOpen={isNotiModalOpen}
                 onClose={() => setIsNotiModalOpen(false)}
-                // children={undefined}
+                hasUnreadNoti={setHasUnreadNoti}
               />
             </div>
             {isAuthed ? (

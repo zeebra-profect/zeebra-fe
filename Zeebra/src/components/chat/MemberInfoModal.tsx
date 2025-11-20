@@ -14,9 +14,9 @@ export function MemberInfoModal({ isOpen, onClose, children }: ModalProps) {
 
     if (!isOpen) return null;
 
-    const onClickCreateDMRoom = () => {
+    // const onClickCreateDMRoom = () => {
     
-    }
+    // }
   
     return (
     <>

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import ShopCategory from "@/components/category/ShopCategory";
 // import SubCategory from "../../components/category/SubCategory"; 나중에 다시 부활시키기
-import SortBtn from "@/components/btn/SortBtn";
+// import SortBtn from "@/components/btn/SortBtn";
 import SortFilter from "@/components/filter/SortFilter";
 
 function ShopPage() {
