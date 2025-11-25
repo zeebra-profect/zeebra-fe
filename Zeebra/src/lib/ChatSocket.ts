@@ -16,7 +16,7 @@ class ChatWebSocket {
     const socket = new SockJS(wsUrl, null, {
         // SockJS가 HTTP 핸드셰이크 시 쿠키를 전송하도록 보장합니다.
         withCredentials: false
-    });
+    }as any);
 
     this.client = new Client({
       webSocketFactory: () => socket as unknown,
