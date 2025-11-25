@@ -4,10 +4,19 @@ import type { ChatMessage } from "@/utils/chat";
 
 class ChatWebSocket {
   private client: Client | null = null;
+  private apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
   connect() {
     // SockJS 연결 - 쿠키 자동 전송
-    const socket = new SockJS("http://localhost:8080/ws/chat");
+    const wsUrl = this.apiBaseUrl
+    .replace(/^http/, 'ws') // http를 ws로 변경
+    .replace(/^https/, 'wss') // https를 wss로 변경
+    + '/ws/chat'; // 웹소켓 엔드포인트 경로 추가
+    
+    const socket = new SockJS(wsUrl, null, {
+        // SockJS가 HTTP 핸드셰이크 시 쿠키를 전송하도록 보장합니다.
+        withCredentials: false
+    });
 
     this.client = new Client({
       webSocketFactory: () => socket as unknown,
