@@ -4,8 +4,6 @@ import type { ChatMessage } from "@/utils/chat";
 class ChatWebSocket {
   private client: Client | null = null;
   private apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-
-  private apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
  
   connect() {
     // SockJS 연결 - 쿠키 자동 전송
