@@ -1,3 +1,4 @@
+import React from "react";
 import SearchResultsCard from "./SearchResultsCard";
 import type { ProductDetailResponse } from "@/utils/search";
 
@@ -50,4 +51,4 @@ function SearchResultsList({
   );
 }
 
-export default SearchResultsList;
+export default React.memo(SearchResultsList);
