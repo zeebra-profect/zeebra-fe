@@ -3,6 +3,7 @@ import { Client, type IMessage } from "@stomp/stompjs";
 import type { ChatMessage } from "@/utils/chat";
 class ChatWebSocket {
   private client: Client | null = null;
+  private apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
   private apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
