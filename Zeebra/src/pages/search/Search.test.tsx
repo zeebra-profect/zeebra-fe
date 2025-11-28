@@ -79,8 +79,7 @@ describe("UTTC-UT-PROD-FE-006: 검색을 하고 결과 페이지로 넘어감", 
         brandResponses: [],
         pagination: {
           currentPage: 0,
-          totalPages: 1,
-          totalCount: 1,
+          hasNext: false,
           pageSize: 20,
         },
       },
@@ -151,8 +150,7 @@ describe("UTTC-UT-PROD-FE-015: 엔터 키 검색", () => {
         brandResponses: [],
         pagination: {
           currentPage: 0,
-          totalPages: 1,
-          totalCount: 1,
+          hasNext: false,
           pageSize: 20,
         },
       },
@@ -192,8 +190,7 @@ describe("TC-UT-PROD-FE-003: 검색 결과가 없음", () => {
 
         pagination: {
           currentPage: 0,
-          totalPages: 0,
-          totalCount: 0,
+          hasNext: false,
           pageSize: 20,
         },
       },
@@ -256,8 +253,7 @@ describe("TC-UT-PROD-FE-014: 검색이 끝나면 검색바에 내용이 비워�
         brandResponses: [],
         pagination: {
           currentPage: 0,
-          totalPages: 1,
-          totalCount: 0,
+          hasNext: false,
           pageSize: 20,
         },
       },
@@ -324,8 +320,7 @@ describe("TC-UT-PROD-FE-017: 키보드 네비게이션", () => {
         brandResponses: [],
         pagination: {
           currentPage: 0,
-          totalPages: 1,
-          totalCount: 1,
+          hasNext: false,
           pageSize: 20,
         },
       },
@@ -440,8 +435,7 @@ describe("TC-UT-PROD-FE-016: 특수문자 / 이모지 검색", () => {
         brandResponses: [],
         pagination: {
           currentPage: 0,
-          totalPages: 0,
-          totalCount: 0,
+          hasNext: false,
           pageSize: 20,
         },
       },

@@ -20,7 +20,7 @@ vi.mock("@/utils/search", async (_importOriginal) => {
   };
 });
 vi.mock("@/utils/product", async (_importOriginal) => {
-  return { getProduct: vi.fn(), getProductOption: vi.fn() }; 
+  return { getProduct: vi.fn(), getProductOption: vi.fn() };
 });
 
 vi.mock("@/utils/favorite", () => ({
@@ -93,8 +93,7 @@ describe("UTTC-UT-PROD-FE-010: 상품 상세 페이지로 이동", () => {
       brandResponses: [],
       pagination: {
         currentPage: 0,
-        totalPages: 1,
-        totalCount: 1,
+        hasNext: false,
         pageSize: 20,
       },
     },
@@ -158,8 +157,7 @@ describe("UTTC-UT-PROD-FE-013: 관심 버튼 등록", () => {
       brandResponses: [],
       pagination: {
         currentPage: 0,
-        totalPages: 1,
-        totalCount: 1,
+        hasNext: false,
         pageSize: 20,
       },
     },
