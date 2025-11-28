@@ -31,8 +31,7 @@ export interface BrandResponse {
 export interface Pagination {
   currentPage: number;
   pageSize: number;
-  totalCount: number;
-  totalPages: number;
+  hasNext: boolean;
 }
 export interface SearchData {
   productDetailResponses: ProductDetailResponse[];

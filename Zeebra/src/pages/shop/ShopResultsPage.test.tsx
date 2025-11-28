@@ -21,8 +21,7 @@ describe("TC-UT-PROD-FE-009: 카테고리 버튼 클릭", () => {
       brandResponses: [],
       pagination: {
         currentPage: 0,
-        totalPages: 1,
-        totalCount: 0,
+        hasNext: false,
         pageSize: 20,
       },
     },
