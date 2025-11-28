@@ -13,7 +13,6 @@ import {
   type ProductDetail,
   type ProductOption,
 } from "@/utils/product";
-import { resetSearchState } from "@/store/searchSlice";
 
 vi.mock("@/utils/search", async (_importOriginal) => {
   return {
@@ -179,7 +178,6 @@ describe("UTTC-UT-PROD-FE-013: 관심 버튼 등록", () => {
 
   // 4. 🔽 API 모킹 초기화
   beforeEach(() => {
-    store.dispatch(resetSearchState());
     vi.mocked(getProducts).mockReset();
     vi.mocked(addFavorite).mockReset();
     vi.mocked(getFavorites).mockReset();

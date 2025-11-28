@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import { store } from "@/store";
 import { vi, describe, test, expect, beforeEach } from "vitest";
 import { getProducts, type SearchRes } from "@/utils/search";
-import { resetSearchState } from "@/store/searchSlice";
 
 vi.mock("@/utils/search", () => ({
   getProducts: vi.fn(),
@@ -33,7 +32,6 @@ describe("TC-UT-PROD-FE-009: 카테고리 버튼 클릭", () => {
   beforeEach(() => {
     vi.mocked(getProducts).mockReset();
     vi.mocked(getProducts).mockResolvedValue(fakeSearchData);
-    store.dispatch(resetSearchState());
   });
 
   test("다른 카테고리 버튼('상의')을 누르면 해당 버튼이 활성화되고 결과 페이지로 이동한다", async () => {
