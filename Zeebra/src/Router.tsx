@@ -23,7 +23,7 @@ const OrderHistoryPage = React.lazy(
   () => import("./pages/myPage/OrderHistoryPage")
 );
 const ShopPage = React.lazy(() => import("./pages/shop/ShopPage"));
-const ShopContent = React.lazy(() => import("./pages/shop/ShopContent"));
+import ShopContent from "./pages/shop/ShopContent";
 const ShopResultsPage = React.lazy(
   () => import("@/pages/shop/ShopResultsPage")
 );

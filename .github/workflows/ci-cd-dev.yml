@@ -6,14 +6,12 @@ on:
   push:
     branches: [develop]
     paths-ignore:
-      - '**.md'
-      - '**/README*'
+      - "**.md"
+      - "**/README*"
 
 concurrency:
   group: backend-develop
   cancel-in-progress: true
-
-
 
 jobs:
   ci:
@@ -28,13 +26,13 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22"
 
       - name: Install dependencies
         run: |
           cd Zeebra
           npm ci
-  
+
       - name: Build
         env:
           # 빌드 타임 환경변수 (GitHub Secrets에서 가져오기)
@@ -57,7 +55,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22"
 
       - name: Install dependencies
         run: |
@@ -69,6 +67,7 @@ jobs:
           TOSS_PAYMENT_CLIENT_KEY: ${{ secrets.REACT_TOSS_PAYMENT_CLIENT_KEY }}
           VITE_VAPID_PUBLIC_KEY: ${{ secrets.VITE_VAPID_PUBLIC_KEY }}
           VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+          VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
           REACT_APP_ENV: "dev"
         run: |
           cd Zeebra

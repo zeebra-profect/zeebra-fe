@@ -1,3 +1,4 @@
+import React from "react";
 import searchIcon from "../../img/icons/search.png";
 import bagIcon from "../../img/icons/bag.png";
 import NotificationModal from "../../components/notification/NotificationModal";
@@ -7,9 +8,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 
-export default function Header() {
+function Header() {
   const Navigate = useNavigate();
-  const { isAuthed, logout } = useAuth();
+  const { isAuthed, logout } = useAuth(); ///TODO:해당 글로벌 스테이트로 인해 비ㅣ용 최소화 필요 
   const [isNotiModalOpen, setIsNotiModalOpen] = useState(false);
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
   const [hasUnreadNoti, setHasUnreadNoti] = useState(false);
@@ -18,7 +19,7 @@ export default function Header() {
     await logout();
     Navigate("/");
   };
-
+  console.log("헤더 렌더링됨 : " + isAuthed);
   return (
     <>
       <div
@@ -52,11 +53,9 @@ export default function Header() {
                 className="cursor-pointer"
                 onClick={() => setIsNotiModalOpen(true)}
               >
-                {
-                  hasUnreadNoti
-                  ? <div className="w-1 h-1 rounded-2xl bg-red-600 absolute left-5"></div>
-                  : null
-                }
+                {hasUnreadNoti ? (
+                  <div className="w-1 h-1 rounded-2xl bg-red-600 absolute left-5"></div>
+                ) : null}
                 알림
               </div>
               <NotificationModal
@@ -130,3 +129,5 @@ export default function Header() {
     </>
   );
 }
+
+export default React.memo(Header);

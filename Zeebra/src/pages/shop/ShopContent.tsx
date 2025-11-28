@@ -1,120 +1,111 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import SearchResultsList from "@/pages/search/SearchResultsList";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import {
-  fetchProducts,
-  selectProducts,
-  selectSearchPagination,
-  selectSearchTerm,
-  selectSearchError,
-  resetSearchState,
-} from "@/store/searchSlice";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
-import type { SearchReq } from "@/utils/search";
+import {
+  getProducts,
+  type ProductDetailResponse,
+  type SearchReq,
+} from "@/utils/search";
 
 const ALL_PRODUCTS_KEYWORD = "";
 
 function ShopContent() {
-  const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
+  const keyword = searchParams.get("keyword") || ALL_PRODUCTS_KEYWORD;
 
-  const products = useAppSelector(selectProducts);
-  const { currentPage, totalPages, isLoading } = useAppSelector(
-    selectSearchPagination
-  );
-  const error = useAppSelector(selectSearchError);
+  const [products, setProducts] = useState<ProductDetailResponse[]>([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const urlKeyword = searchParams.get("keyword") || ALL_PRODUCTS_KEYWORD;
-  const currentKeyword = useAppSelector(selectSearchTerm);
-
-  // ✅ 초기 로딩 완료 플래그
   const isInitializedRef = useRef(false);
-  // ✅ 요청한 페이지 추적
   const requestedPagesRef = useRef(new Set<number>());
 
-  // -----------------------------------------------------------
-  // 1. ✅ 키워드 변경 감지 및 초기화
-  // -----------------------------------------------------------
+
+  const fetchProductsData = useCallback(
+    async (
+      pageNum: number,
+      searchKeyword: string,
+      isReset: boolean = false
+    ) => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const form: SearchReq = {
+          keyWord: searchKeyword,
+          page: pageNum,
+          size: 20,
+          sort: ["createdAt,desc"],
+        };
+
+        const res = await getProducts(form);
+        const data = res.data;
+        const newItems = data.productDetailResponses;
+
+        // 상태 업데이트
+        setProducts((prev) => {
+          // 리셋(검색어 변경 등)인 경우 새 데이터로 덮어쓰기
+          if (isReset) return newItems;
+
+          // 무한 스크롤인 경우: 기존 데이터 + 새 데이터 (중복 제거 포함)
+          const existingIds = new Set(prev.map((p) => p.productId));
+          const filteredNewItems = newItems.filter(
+            (p) => !existingIds.has(p.productId)
+          );
+          return [...prev, ...filteredNewItems];
+        });
+
+        setTotalPages(data.pagination.totalPages);
+        setCurrentPage(data.pagination.currentPage);
+        isInitializedRef.current = true; // 데이터 로드 성공 표시
+      } catch (err) {
+        console.error(err);
+        setError("상품을 불러오는 중 오류가 발생했습니다.");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    []
+  );
+
   useEffect(() => {
-    if (urlKeyword !== currentKeyword) {
-      console.log(`[Keyword Change] "${currentKeyword}" → "${urlKeyword}"`);
+    // URL 키워드가 바뀌면 상태를 초기화하고 0페이지 요청
+    window.scrollTo(0, 0);
+    requestedPagesRef.current.clear();
+    requestedPagesRef.current.add(0); // 0페이지 요청 기록
 
-      // 상태 완전 초기화
-      dispatch(resetSearchState());
-      isInitializedRef.current = false;
-      requestedPagesRef.current.clear();
-      window.scrollTo(0, 0);
-    }
-  }, [urlKeyword, currentKeyword, dispatch]);
+    // 리셋 모드(true)로 호출
+    fetchProductsData(0, keyword, true);
+  }, [keyword, fetchProductsData]);
 
-  // -----------------------------------------------------------
-  // 2. ✅ 초기 로딩 (한 번만 실행)
-  // -----------------------------------------------------------
-  useEffect(() => {
-    // 초기화가 안 됐고, 상품이 없고, 로딩 중이 아닐 때만
-    if (!isInitializedRef.current && products.length === 0 && !isLoading) {
-      console.log(`[Initial Load] 첫 페이지 요청 (keyword: "${urlKeyword}")`);
 
-      isInitializedRef.current = true;
-      requestedPagesRef.current.add(0);
-
-      const form: SearchReq = {
-        keyWord: urlKeyword,
-        page: 0,
-        size: 20,
-        sort: ["createdAt,desc"],
-      };
-
-      dispatch(fetchProducts(form));
-    }
-  }, [products.length, isLoading, urlKeyword, dispatch]);
-
-  // -----------------------------------------------------------
-  // 3. ✅ 다음 페이지 로드 핸들러
-  // -----------------------------------------------------------
   const loadNextPage = useCallback(() => {
     const nextPage = currentPage + 1;
 
-    // ✅ 중복 요청 방지 조건들
+    // 더 이상 페이지가 없거나, 로딩 중이거나, 이미 요청한 페이지면 스킵
     if (
       isLoading ||
       nextPage >= totalPages ||
       requestedPagesRef.current.has(nextPage)
     ) {
-      console.log(`[Infinite Scroll] 요청 스킵 - Page ${nextPage}`, {
-        isLoading,
-        nextPage,
-        totalPages,
-        alreadyRequested: requestedPagesRef.current.has(nextPage),
-      });
       return;
     }
 
     console.log(`[Infinite Scroll] 다음 페이지 요청: ${nextPage}`);
     requestedPagesRef.current.add(nextPage);
 
-    const form: SearchReq = {
-      keyWord: urlKeyword,
-      page: nextPage,
-      size: 20,
-      sort: ["createdAt,desc"],
-    };
+    // 추가 로드 모드(false)로 호출
+    fetchProductsData(nextPage, keyword, false);
+  }, [isLoading, currentPage, totalPages, keyword, fetchProductsData]);
 
-    dispatch(fetchProducts(form));
-  }, [isLoading, currentPage, totalPages, urlKeyword, dispatch]);
-
+  // 7. 훅 연결
   const observerTargetRef = useInfiniteScroll(loadNextPage);
-
-  // -----------------------------------------------------------
-  // 4. 렌더링
-  // -----------------------------------------------------------
+  
   if (error) {
-    return (
-      <div className="w-full max-w-[1200px] text-center py-10">
-        <p className="text-red-500">{error}</p>
-      </div>
-    );
+    return <div className="text-center py-10 text-red-500">{error}</div>;
   }
 
   return (
@@ -125,7 +116,7 @@ function ShopContent() {
         error={error}
       />
 
-      {/* ✅ 다음 페이지가 있고, 로딩 중이 아닐 때만 observer */}
+      {/* ✅ 무한 스크롤 센서 (다음 페이지가 있고, 로딩 중 아닐 때) */}
       {currentPage + 1 < totalPages && !isLoading && (
         <div
           ref={observerTargetRef}
