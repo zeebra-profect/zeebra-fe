@@ -23,7 +23,6 @@ function ShopContent() {
   const isInitializedRef = useRef(false);
   const requestedPagesRef = useRef(new Set<number>());
 
-
   const fetchProductsData = useCallback(
     async (
       pageNum: number,
@@ -81,7 +80,6 @@ function ShopContent() {
     fetchProductsData(0, keyword, true);
   }, [keyword, fetchProductsData]);
 
-
   const loadNextPage = useCallback(() => {
     const nextPage = currentPage + 1;
 
@@ -103,7 +101,7 @@ function ShopContent() {
 
   // 7. 훅 연결
   const observerTargetRef = useInfiniteScroll(loadNextPage);
-  
+
   if (error) {
     return <div className="text-center py-10 text-red-500">{error}</div>;
   }
