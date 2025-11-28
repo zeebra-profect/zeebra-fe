@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.9.2",
+    "@sentry/react": "^10.27.0",
+    "@sentry/tracing": "^7.120.4",
     "@stomp/stompjs": "^7.2.1",
     "@tailwindcss/vite": "^4.1.15",
     "@tosspayments/payment-sdk": "^1.9.1",
@@ -24,6 +26,7 @@
     "react-dom": "^19.1.1",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.4",
+    "redux-persist": "^6.0.0",
     "sockjs-client": "^1.6.1",
     "uuid": "^13.0.0"
   },

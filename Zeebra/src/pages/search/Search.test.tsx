@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import { store } from "@/store";
 import { getProducts, type SearchRes } from "@/utils/search";
 import { vi, describe, test, expect, beforeEach } from "vitest";
-import { resetSearchState } from "@/store/searchSlice";
 
 vi.mock("@/utils/search", async (_importOriginal) => {
   return {
@@ -16,7 +15,6 @@ vi.mock("@/utils/search", async (_importOriginal) => {
 
 beforeEach(() => {
   vi.mocked(getProducts).mockReset(); // API 모킹 리셋
-  store.dispatch(resetSearchState()); // Redux 상태 리셋
 });
 
 describe("UTTC-UT-PROD-FE-002: 이전 화면으로 돌아감", () => {
@@ -220,7 +218,6 @@ describe("TC-UT-PROD-FE-003: 검색 결과가 없음", () => {
 
 describe("TC-UT-PROD-FE-004: 검색어를 초기화함", () => {
   test("X 버튼을 누르면 검색 input에 작성해둔 값이 사라진다", async () => {
-    store.dispatch(resetSearchState()); // 상태 초기화
 
     render(
       <Provider store={store}>
@@ -407,7 +404,6 @@ describe("TC-UT-PROD-FE-018: 네트워크 오류 예외 처리", () => {
 
 describe("TC-UT-PROD-FE-005: 검색어를 길게 작성함", () => {
   test("매우 긴 검색어(60자)를 입력하면 최대 길이(50자)까지만 입력되어야 한다", async () => {
-    store.dispatch(resetSearchState());
 
     render(
       <Provider store={store}>
