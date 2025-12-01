@@ -3,6 +3,7 @@ import { useAppSelector } from "@/store/hooks";
 import FavoriteBtn from "@/components/btn/FavoriteBtn";
 import type { ProductDetailResponse } from "@/utils/search";
 import { useNavigate } from "react-router-dom";
+import { getImageUrl } from "@/utils/image";
 
 interface SearchResultsCardProps {
   product: ProductDetailResponse;
@@ -46,7 +47,7 @@ function SearchResultsCard({ product }: SearchResultsCardProps) {
       onClick={handleCardClick}
     >
       <img
-        src={product.ProductThumbnail}
+        src={getImageUrl(product.ProductThumbnail, product.productId)}
         alt={product.productName}
         className="w-40 h-40 md:w-[200px] md:h-[200px] lg:w-[238px] lg:h-[238px] object-cover rounded-lg"
       />
