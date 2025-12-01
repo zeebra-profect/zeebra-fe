@@ -20,7 +20,7 @@ function ShopContent() {
   // ✅ 변경 1: totalPages 삭제 -> hasNext 추가
   const [hasNext, setHasNext] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const isInitializedRef = useRef(false);
