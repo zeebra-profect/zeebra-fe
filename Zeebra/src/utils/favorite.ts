@@ -46,11 +46,7 @@ export async function getFavorites(page = 0): Promise<FavoritesData | null> {
       `favorite-products`,
       {
         params: { page, size: 20 }, // ✅ 페이지 파라미터 추가!
-        headers: {
-          "Cache-Control": "no-cache",
-          Pragma: "no-cache",
-          Expires: "0",
-        },
+        headers: {},
       }
     );
 

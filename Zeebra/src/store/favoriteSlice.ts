@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getFavorites, type FavoriteRes } from "@/utils/favorite";
+import { getFavorites, type FavoriteRes } from "@/utils/favorite"; // 경로 확인
 import { AxiosError } from "axios";
 import type { RootState } from "./index";
 
@@ -15,38 +15,32 @@ const initialState: FavoritesState = {
   error: null,
 };
 
-// 비동기 thunk - 관심상품 목록 가져오기
 export const fetchFavorites = createAsyncThunk(
   "favorites/fetchFavorites",
   async (_, { rejectWithValue }) => {
     try {
-      const data = await getFavorites();
-      console.log("📦 getFavorites 응답:", data);
-      console.log("📦 응답 개수:", data.length);
+      const response = await getFavorites(); // 👈 이제 객체(FavoritesData)가 옴
+      console.log("📦 getFavorites 응답:", response);
 
-      if (!Array.isArray(data)) {
-        console.error("❌ getFavorites가 배열이 아님:", data);
-        return [];
+      // ✅ [수정] 객체 내부의 배열을 꺼내서 반환!
+      if (response && response.favoriteProductResponses) {
+        return response.favoriteProductResponses;
       }
 
-      return data;
+      // 데이터가 없거나 형식이 다르면 빈 배열
+      return [];
     } catch (error) {
-      // 👈 error: any 대신 catch (error) 사용
-
-      // ❌ 에러 로깅은 catch 블록 상단에 유지
       console.error("❌ getFavorites 에러:", error);
 
-      // ✅ error가 AxiosError 인스턴스인지 확인
       if (error instanceof AxiosError) {
-        // 401 에러는 빈 배열 반환 (비로그인)
         if (error.response?.status === 401) {
           return [];
         }
       }
-
-      // ✅ rejectWithValue로 오류를 리덕스에 전달 (원래 로직 유지)
-      // AxiosError가 아니거나, 401이 아닌 다른 오류인 경우
-      return rejectWithValue(error);
+      // 에러 메시지 문자열로 변환하여 전달
+      return rejectWithValue(
+        error instanceof Error ? error.message : "알 수 없는 에러"
+      );
     }
   }
 );
@@ -67,21 +61,26 @@ const favoritesSlice = createSlice({
       })
       .addCase(fetchFavorites.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.favorites = action.payload || []; // ✅ null/undefined 방어
+        // ✅ Thunk에서 이미 배열을 꺼내서 리턴했으므로 그대로 사용 가능
+        state.favorites = action.payload;
       })
       .addCase(fetchFavorites.rejected, (state, action) => {
         state.isLoading = false;
-        state.favorites = []; // ✅ 에러 시 빈 배열
-        state.error = action.error.message || "Failed to fetch favorites";
+        state.favorites = [];
+        state.error = (action.payload as string) || "Failed to fetch favorites";
       });
   },
 });
 
+export const { clearFavorites } = favoritesSlice.actions;
+
+// Selector
 export const selectFavorites = (state: RootState) => state.favorites.favorites;
 export const selectFavoritesLoading = (state: RootState) =>
   state.favorites.isLoading;
+
+// ✅ Selector 최적화 (배열 메서드 find/some 사용)
 export const selectIsFavorite = (state: RootState, productId: number) =>
   state.favorites.favorites.some((fav) => fav.productId === productId);
 
-export const { clearFavorites } = favoritesSlice.actions;
 export default favoritesSlice.reducer;

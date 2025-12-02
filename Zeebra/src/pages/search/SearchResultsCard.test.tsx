@@ -180,12 +180,37 @@ describe("UTTC-UT-PROD-FE-013: 관심 버튼 등록", () => {
     vi.mocked(addFavorite).mockReset();
     vi.mocked(getFavorites).mockReset();
 
+    // 1. 상품 검색 Mock (이건 그대로)
     vi.mocked(getProducts).mockResolvedValue(fakeSearchData);
 
+    // 2. 찜 추가 Mock (이건 그대로)
     vi.mocked(addFavorite).mockResolvedValue(fakeFavoriteResponse);
 
-    vi.mocked(getFavorites).mockResolvedValueOnce([]);
-    vi.mocked(getFavorites).mockResolvedValueOnce([fakeFavoriteResponse]);
+    // 3. ✅ [수정] 찜 목록 조회 Mock (배열 -> 객체로 변경!)
+
+    // (1) 처음엔 찜 목록이 '비어있는' 상태 (객체로 리턴)
+    vi.mocked(getFavorites).mockResolvedValueOnce({
+      favoriteProductResponses: [], // 👈 빈 배열은 여기로 들어감
+      pagination: {
+        currentPage: 0,
+        pageSize: 20,
+        hasNext: false,
+        totalCount: 0,
+        totalPages: 0,
+      },
+    });
+
+    // (2) 두 번째 호출에선 찜이 '추가된' 상태 (객체로 리턴)
+    vi.mocked(getFavorites).mockResolvedValueOnce({
+      favoriteProductResponses: [fakeFavoriteResponse], // 👈 데이터 있음
+      pagination: {
+        currentPage: 0,
+        pageSize: 20,
+        hasNext: false,
+        totalCount: 1,
+        totalPages: 1,
+      },
+    });
   });
 
   test("상품 카드에서 빈 하트(찜하기)를 클릭하면 찜이 등록되고 하트가 채워진다.", async () => {
