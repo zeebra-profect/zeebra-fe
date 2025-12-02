@@ -9,9 +9,9 @@
 //   return `https://loremflickr.com/600/600/fashion,clothes?lock=${lockIndex}`;
 // };
 
-
 export const getImageUrl = (path: string | null, productId: number) => {
   // 1. 만약 DB에 진짜 이미지 주소(http...)가 있다면 그걸 우선 사용
+  console.log(`[이미지확인] ID: ${productId}, Path값:`, path, typeof path);
   if (path && path.startsWith("http")) return path;
 
   // 2. 이미지가 없다면 Placehold.co 사용
