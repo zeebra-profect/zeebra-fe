@@ -49,8 +49,12 @@ function SearchResultsList({
   // 검색 결과 표시
   return (
     <div className="flex flex-row gap-x-3 md:gap-x-1 lg:gap-x-0.5 gap-y-2 md:gap-y-5 w-full max-w-[1200px] flex-wrap justify-center md:justify-start">
-      {products.map((product) => (
-        <SearchResultsCard key={product.productId} product={product} />
+      {products.map((product, index) => (
+        <SearchResultsCard
+          key={product.productId}
+          product={product}
+          index={index}
+        />
       ))}
     </div>
   );
