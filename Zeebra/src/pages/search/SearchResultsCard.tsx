@@ -7,9 +7,10 @@ import { getImageUrl } from "@/utils/image";
 
 interface SearchResultsCardProps {
   product: ProductDetailResponse;
+  index: number;
 }
 
-function SearchResultsCard({ product }: SearchResultsCardProps) {
+function SearchResultsCard({ product, index }: SearchResultsCardProps) {
   const navigate = useNavigate();
   const favorites = useAppSelector((state) => state.favorites?.favorites ?? []);
 
@@ -50,6 +51,7 @@ function SearchResultsCard({ product }: SearchResultsCardProps) {
         src={getImageUrl(product.ProductThumbnail, product.productId)}
         alt={product.productName}
         className="w-40 h-40 md:w-[200px] md:h-[200px] lg:w-[238px] lg:h-[238px] object-cover rounded-lg"
+        fetchPriority={index < 2 ? "high" : "auto"}
       />
       <div className="flex flex-col gap-y-[5px] font-pretendard text-main-text px-3">
         <div className="flex flex-row justify-between items-center">
