@@ -18,11 +18,13 @@ export interface ApiResponse<T = void> {
 }
 
 export interface FavoritesData {
-  favoriteProductResponses: FavoriteRes[]; // ✅ dtos → favoriteProductResponses
+  favoriteProductResponses: FavoriteRes[];
   pagination: {
-    totalCount: number;
-    pageNumber: number;
+    currentPage: number;
     pageSize: number;
+    totalCount?: number;
+    totalPages?: number;
+    hasNext?: boolean;
   };
 }
 
@@ -38,46 +40,36 @@ export async function deleteFavorite(productId: number): Promise<void> {
   return;
 }
 
-export async function getFavorites(): Promise<FavoriteRes[]> {
+export async function getFavorites(page = 0): Promise<FavoritesData | null> {
   try {
-    // ✅ [수정 1] 'data' 대신 'responseBody'로 구조 분해하여 '읽히지 않음' 경고 제거
     const { data: responseBody } = await http.get<ApiResponse<FavoritesData>>(
       `favorite-products`,
       {
+        params: { page, size: 20 }, // ✅ 페이지 파라미터 추가!
         headers: {
-          "Cache-Control": "no-cache", // 캐싱하지 않도록 지시
+          "Cache-Control": "no-cache",
           Pragma: "no-cache",
           Expires: "0",
         },
       }
     );
 
-    console.log("🔍 API 전체 응답:", responseBody);
+    console.log("🔍 찜 목록 응답:", responseBody);
 
-    // ✅ responseBody를 사용하여 데이터에 접근
-    if (responseBody?.data?.favoriteProductResponses) {
-      return responseBody.data.favoriteProductResponses;
+    if (responseBody?.data) {
+      return responseBody.data; // ✅ 리스트+페이지네이션 통째로 반환
     }
 
-    console.warn("⚠️ getFavorites 응답이 예상과 다름:", responseBody);
-
-    // ✅ [수정 2] if 문에 해당하지 않을 경우에도 명시적으로 Promise<FavoriteRes[]> 타입을 반환
-    return [];
+    return null;
   } catch (error) {
-    // 3. AxiosError인지 확인하고 처리
     if (error instanceof AxiosError) {
       console.error("❌ getFavorites API Axios 에러:", error);
-
-      // 401 에러는 빈 배열 반환 (비로그인)
       if (error.response?.status === 401) {
-        return [];
+        return null;
       }
     } else {
-      // 그 외 일반적인 오류 (네트워크 문제 등)
       console.error("❌ getFavorites API 일반 에러:", error);
     }
-
-    // 4. 오류를 다시 던집니다.
     throw error;
   }
 }
