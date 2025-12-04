@@ -45,7 +45,10 @@ function ShopContent() {
 
         const res = await getProducts(form);
         const data = res.data;
-        const newItems = data.productDetailResponses;
+
+        console.log("🔥 API 응답 데이터 확인:", data);
+
+        const newItems = data.products || [];
 
         setProducts((prev) => {
           if (isReset) return newItems;

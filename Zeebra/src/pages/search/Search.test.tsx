@@ -59,7 +59,7 @@ describe("UTTC-UT-PROD-FE-006: 검색을 하고 결과 페이지로 넘어감", 
       status: "success",
       message: "조회 성공",
       data: {
-        productDetailResponses: [
+        products: [
           {
             productId: 999,
             productName: "테스트용 아디다스 신발",
@@ -67,12 +67,13 @@ describe("UTTC-UT-PROD-FE-006: 검색을 하고 결과 페이지로 넘어감", 
             categoryId: 1,
             productDescription: "설명",
             modelNumber: "123",
-            ProductThumbnail: "",
+            productThumbnail: "",
             images: [],
-            lowPrice: 10000,
+            minPrice: 10000,
             reviewCount: 0,
             favoriteProductCount: 0,
             createdAt: new Date().toISOString(),
+            score: 0,
           },
         ],
         categoryResponses: [],
@@ -130,7 +131,7 @@ describe("UTTC-UT-PROD-FE-015: 엔터 키 검색", () => {
       status: "success",
       message: "조회 성공",
       data: {
-        productDetailResponses: [
+        products: [
           {
             productId: 999,
             productName: "테스트용 아디다스 신발",
@@ -138,12 +139,13 @@ describe("UTTC-UT-PROD-FE-015: 엔터 키 검색", () => {
             categoryId: 1,
             productDescription: "설명",
             modelNumber: "123",
-            ProductThumbnail: "",
+            productThumbnail: "",
             images: [],
-            lowPrice: 10000,
+            minPrice: 10000,
             reviewCount: 0,
             favoriteProductCount: 0,
             createdAt: new Date().toISOString(),
+            score: 0,
           },
         ],
         categoryResponses: [],
@@ -169,8 +171,6 @@ describe("UTTC-UT-PROD-FE-015: 엔터 키 검색", () => {
 
 describe("TC-UT-PROD-FE-003: 검색 결과가 없음", () => {
   test("데이터에 존재하지 않는 검색어를 입력하면 '텅 비었어요.'가 출력된다", async () => {
-    
-
     render(
       <Provider store={store}>
         <MemoryRouter initialEntries={["/search"]}>
@@ -184,7 +184,7 @@ describe("TC-UT-PROD-FE-003: 검색 결과가 없음", () => {
       status: "success",
       message: "조회 성공",
       data: {
-        productDetailResponses: [],
+        products: [],
         categoryResponses: [],
         brandResponses: [],
 
@@ -215,7 +215,6 @@ describe("TC-UT-PROD-FE-003: 검색 결과가 없음", () => {
 
 describe("TC-UT-PROD-FE-004: 검색어를 초기화함", () => {
   test("X 버튼을 누르면 검색 input에 작성해둔 값이 사라진다", async () => {
-
     render(
       <Provider store={store}>
         <MemoryRouter initialEntries={["/search"]}>
@@ -243,12 +242,11 @@ describe("TC-UT-PROD-FE-004: 검색어를 초기화함", () => {
 
 describe("TC-UT-PROD-FE-014: 검색이 끝나면 검색바에 내용이 비워짐", () => {
   test("검색을 진행하고 검색 페이지에 재진입하면 입력값이 초기화되어 있어야 한다", async () => {
-
     const fakeSearchData: SearchRes = {
       status: "success",
       message: "조회 성공",
       data: {
-        productDetailResponses: [],
+        products: [],
         categoryResponses: [],
         brandResponses: [],
         pagination: {
@@ -300,20 +298,21 @@ describe("TC-UT-PROD-FE-017: 키보드 네비게이션", () => {
       status: "success",
       message: "성공",
       data: {
-        productDetailResponses: [
+        products: [
           {
             productId: 999,
-            productName: "키보드 검색 상품", // 👈 결과 확인용
+            productName: "테스트용 아디다스 신발",
             brandId: 1,
             categoryId: 1,
-            productDescription: "",
-            modelNumber: "",
-            ProductThumbnail: "",
+            productDescription: "설명",
+            modelNumber: "123",
+            productThumbnail: "",
             images: [],
-            lowPrice: 1000,
+            minPrice: 10000,
             reviewCount: 0,
             favoriteProductCount: 0,
-            createdAt: "",
+            createdAt: new Date().toISOString(),
+            score: 0,
           },
         ],
         categoryResponses: [],
@@ -362,7 +361,6 @@ describe("TC-UT-PROD-FE-017: 키보드 네비게이션", () => {
 
 describe("TC-UT-PROD-FE-018: 네트워크 오류 예외 처리", () => {
   test("검색 중 네트워크 오류(500)가 발생하면 에러 알림 메시지가 표시된다", async () => {
-
     const alertMock = vi.spyOn(window, "alert").mockImplementation(() => {});
 
     vi.mocked(getProducts).mockRejectedValue(new Error("Network Error 500"));
@@ -375,8 +373,6 @@ describe("TC-UT-PROD-FE-018: 네트워크 오류 예외 처리", () => {
       </Provider>
     );
     const user = userEvent.setup();
-
-  
 
     // 입력창 찾기 및 입력
     const searchInput = await screen.findByPlaceholderText(/브랜드, 상품 등/i);
@@ -399,7 +395,6 @@ describe("TC-UT-PROD-FE-018: 네트워크 오류 예외 처리", () => {
 
 describe("TC-UT-PROD-FE-005: 검색어를 길게 작성함", () => {
   test("매우 긴 검색어(60자)를 입력하면 최대 길이(50자)까지만 입력되어야 한다", async () => {
-
     render(
       <Provider store={store}>
         <MemoryRouter initialEntries={["/search"]}>
@@ -425,12 +420,11 @@ describe("TC-UT-PROD-FE-005: 검색어를 길게 작성함", () => {
 
 describe("TC-UT-PROD-FE-016: 특수문자 / 이모지 검색", () => {
   test("이모지 혹은 특수문자를 검색하면 검색 결과가 없음을 표시한다", async () => {
-
     const emptySearchData: SearchRes = {
       status: "success",
       message: "조회 성공",
       data: {
-        productDetailResponses: [], // 👈 빈 결과
+        products: [], // 👈 빈 결과
         categoryResponses: [],
         brandResponses: [],
         pagination: {
