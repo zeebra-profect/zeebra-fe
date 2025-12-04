@@ -13,12 +13,13 @@ export interface ProductDetailResponse {
   productName: string;
   productDescription: string;
   modelNumber: string;
-  ProductThumbnail: string;
+  productThumbnail: string;
   images: string[];
-  lowPrice: number;
+  minPrice: number;
   reviewCount: number;
   favoriteProductCount: number;
   createdAt: string; // ISO 8601 형식의 날짜 문자열
+  score: number;
 }
 export interface CategoryResponse {
   categoryId: number;
@@ -34,10 +35,21 @@ export interface Pagination {
   hasNext: boolean;
 }
 export interface SearchData {
-  productDetailResponses: ProductDetailResponse[];
+  products: ProductDetailResponse[];
   categoryResponses: CategoryResponse[];
   brandResponses: BrandResponse[];
   pagination: Pagination;
+}
+
+export interface SuggestionData {
+  suggestions: string[];
+}
+
+export interface SuggestionRes {
+  status: string;
+  message: string | null;
+  data: SuggestionData;
+  sendTime: string;
 }
 
 export interface SearchReq {
@@ -48,6 +60,21 @@ export interface SearchReq {
   page?: number;
   size?: number;
   sort?: string[];
+}
+
+export async function getSuggestions(keyword: string): Promise<string[]> {
+  if (!keyword.trim()) return [];
+
+  try {
+    const { data } = await http.get<SuggestionRes>(`/products/suggestions`, {
+      params: { searchWord: keyword },
+    });
+
+    return data.data.suggestions;
+  } catch (e) {
+    console.error("추천 검색어 로딩 실패", e);
+    return [];
+  }
 }
 
 export async function getProducts(form: SearchReq): Promise<SearchRes> {

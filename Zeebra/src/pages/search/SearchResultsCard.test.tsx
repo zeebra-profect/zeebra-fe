@@ -33,16 +33,17 @@ describe("UTTC-UT-PROD-FE-010: 상품 상세 페이지로 이동", () => {
   const fakeProduct = {
     productId: 123,
     productName: "테스트용 신발",
-    ProductThumbnail: "image.jpg",
+    productThumbnail: "image.jpg",
     brandId: 1,
     categoryId: 1,
     productDescription: "",
     modelNumber: "",
     images: [],
-    lowPrice: 0,
+    minPrice: 0,
     reviewCount: 0,
     favoriteProductCount: 0,
     createdAt: "",
+    score: 0,
   };
 
   const fakeProductDetail: ProductDetail = {
@@ -88,7 +89,7 @@ describe("UTTC-UT-PROD-FE-010: 상품 상세 페이지로 이동", () => {
     status: "success",
     message: "조회 성공",
     data: {
-      productDetailResponses: [fakeProduct],
+      products: [fakeProduct],
       categoryResponses: [],
       brandResponses: [],
       pagination: {
@@ -137,22 +138,23 @@ describe("UTTC-UT-PROD-FE-013: 관심 버튼 등록", () => {
   const fakeProduct = {
     productId: FAKE_PRODUCT_ID,
     productName: "테스트용 찜 상품",
-    ProductThumbnail: "image.jpg",
+    productThumbnail: "image.jpg",
     brandId: 1,
     categoryId: 1,
     productDescription: "",
     modelNumber: "",
     images: [],
-    lowPrice: 10000,
+    minPrice: 10000,
     reviewCount: 5,
     favoriteProductCount: 10,
     createdAt: "",
+    score: 0,
   };
   const fakeSearchData: SearchRes = {
     status: "success",
     message: "조회 성공",
     data: {
-      productDetailResponses: [fakeProduct],
+      products: [fakeProduct],
       categoryResponses: [],
       brandResponses: [],
       pagination: {
