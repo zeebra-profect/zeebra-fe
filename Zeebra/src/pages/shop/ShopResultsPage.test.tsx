@@ -16,7 +16,7 @@ describe("TC-UT-PROD-FE-009: 카테고리 버튼 클릭", () => {
     status: "success",
     message: "조회 성공",
     data: {
-      productDetailResponses: [],
+      products: [],
       categoryResponses: [],
       brandResponses: [],
       pagination: {
