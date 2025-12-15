@@ -16,7 +16,7 @@ BE - 박가영, 이정민, 윤태우
 
 사용한 기술 스택 & 툴 & 라이브러리
 
-공통 - DBeaver, ERD CLOUD, SWAGGER, 
+공통 - DBeaver, ERD CLOUD, SWAGGER
 FE - REACT (19.2), VITE, RTK (Redux toolkit), VITEST, RTL(React test library), Cypress, lorem flickr, google lighthouse, weserv.nl, Sentry
 BE - 
 infra - 
