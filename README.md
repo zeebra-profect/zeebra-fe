@@ -94,3 +94,4 @@ https://www.figma.com/proto/Cnv1MQC3jFtZTLCEZeolRI/ZEEBRA?node-id=0-1&t=XeArg0Xl
 - <img width="3356" height="1766" alt="image" src="https://github.com/user-attachments/assets/7684503c-33c7-4828-b619-ef645724ef55" />
 <img width="1801" height="903" alt="image" src="https://github.com/user-attachments/assets/86b5cb21-d149-4e93-b14c-f10446fd754a" />
 
+보충충 자료 : https://velog.io/@mebung2/Jest%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%BD%94%EB%93%9C-%EC%9E%91%EC%84%B1%EA%B3%BC-%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C-%EA%B3%A0%EB%8F%84%ED%99%94-0-
