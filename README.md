@@ -45,6 +45,14 @@ BE - 박가영, 이정민, 윤태우, 홍성경 <br>
 
 <img width="3450" height="1642" alt="KakaoTalk_20251215_170838674" src="https://github.com/user-attachments/assets/1c2f0e46-e8d1-433a-89aa-cfe601cc5365" />
 
+**요구사항 명세서** <br>
+
+<img width="1517" height="652" alt="image" src="https://github.com/user-attachments/assets/5df2217b-9516-44c7-98cc-911c85369b19" />
+
+**와이어 프레임**
+<img width="1081" height="598" alt="image" src="https://github.com/user-attachments/assets/3dd9861a-d2b3-4ab0-a78f-62dced9975dd" />
+
+https://www.figma.com/proto/Cnv1MQC3jFtZTLCEZeolRI/ZEEBRA?node-id=0-1&t=XeArg0XlDyKBHxB4-1
 
 
 
