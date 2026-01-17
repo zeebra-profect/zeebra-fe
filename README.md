@@ -21,8 +21,8 @@
 시연 영상 : https://www.youtube.com/watch?v=LEjwIThP93Q <br>
 
 **팀원 구성** <br>
-FE - 이한음, 홍성경 <br>
-BE - 박가영, 이정민, 윤태우 <br>
+FE - 이한음 <br>
+BE - 박가영, 이정민, 윤태우, 홍성경 <br>
 
 <hr>
 
